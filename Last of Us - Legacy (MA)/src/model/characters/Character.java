@@ -130,21 +130,6 @@ public abstract class Character {
 	}
 
 
-
-public void onCharacterDeath(Character dead){
-	//Handling when health reaches zero is done in other methods where Health is reached 0
-	if (dead.getCurrentHp()<=0){
-		dead.getLocation() = null;
-	}
-}
-
-
-
-
-
-
-	
-	
 }
 
 //extends is for farafeer
