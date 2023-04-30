@@ -1,4 +1,5 @@
 package model.characters;
+import engine.Game;
 
 import java.util.ArrayList;
 import model.collectibles.Supply;
@@ -84,7 +85,14 @@ public abstract class Hero extends Character {
 			this.supplyInventory = supplyInventory;
 		}
 
-		
+	public void onCharacterDeath(Hero dead){
+	//Handling when health reaches zero is done in other methods where Health is reached 0
+	if (dead.getCurrentHp()<=0){
+		dead.getLocation() = null;
+	}
+	Game.heroes.remove(dead);
+
+}
 
 		
 
