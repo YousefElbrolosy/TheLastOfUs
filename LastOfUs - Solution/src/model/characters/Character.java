@@ -86,17 +86,15 @@ public abstract class Character {
 		else
 			return false;
 	}
-	public static void main(String[] args) {
-		Point x = new Point(0,0);
-		Point y = new Point(2,0);
 
-	}
-	
-	public void onCharacterDeath(Character dead){
+	public void onCharacterDeath(){
 		//Handling when health reaches zero is done in other methods where Health is reached 0
-		if (dead.getCurrentHp()<=0){
-			dead.getLocation() = null;
+		if (this.target.getCurrentHp()<=0){
+			this.target.setLocation() = null;
 		}
 	}
-	
+	public void defend(Chracacter c){
+		this.setTarget(Character c);
+		c.setCurrentHp(c.getCurrentHp-c.getAttackDmg/2);
+	}
 }
