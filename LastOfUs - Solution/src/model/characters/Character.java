@@ -26,12 +26,15 @@ public abstract class Character {
 	public Character getTarget() {
 		return target;
 	}
-
 	public void setTarget(Character target) {
 		this.target = target;
 	}
-	
-	public String getName() {
+	public void defend(Chracacter c){
+		this.setCurrentHp(this.currentHp-c.attackDmg);
+		this.setTarget(Character c);
+		c.setCurrentHp(c.getCurrentHp-c.getAttackDmg/2);
+	}
+    	public String getName() {
 		return name;
 	}
 
