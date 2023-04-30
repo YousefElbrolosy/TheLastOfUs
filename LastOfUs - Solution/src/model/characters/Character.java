@@ -30,7 +30,6 @@ public abstract class Character {
 		this.target = target;
 	}
 	public void defend(Chracacter c){
-		this.setCurrentHp(this.currentHp-c.attackDmg);
 		this.setTarget(Character c);
 		c.setCurrentHp(c.getCurrentHp-c.getAttackDmg/2);
 	}
