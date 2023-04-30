@@ -92,8 +92,10 @@ public abstract class Character {
 	public static boolean isAdjacent(Point point1, Point point2) {
 		int x = point1.x + point1.y ;
 		int y = point2.x + point2.y ;
-		if (x-y==0 || Math.abs(x-y)==2||Math.abs(x-y)==1)
+		if (x-y==0 ||Math.abs(x-y)==1)
 			return true;
+		if(Math.abs(x-y)==2 && ((x==y)||(point1.x - point1.y)==(point2.x - point2.y)))
+		return true;
 		
 		else
 			return false;
