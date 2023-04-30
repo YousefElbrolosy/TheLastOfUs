@@ -68,7 +68,29 @@ public abstract class Hero extends Character {
 			return supplyInventory;
 		}
 
+		public void setVaccineInventory(ArrayList<Vaccine> vaccineInventory) {
+			this.vaccineInventory = vaccineInventory;
+		}
 
+
+
+
+
+		public void setSupplyInventory(ArrayList<Supply> supplyInventory) {
+			this.supplyInventory = supplyInventory;
+		}
+
+		public void attack() throws MovementException, NotEnoughActionsException {
+			if(this.getActionsAvailable()>=1) {
+				super.attack();
+				int x = this.getActionsAvailable();
+				this.setActionsAvailable(--x);
+			}else 
+				throw new NotEnoughActionsException("No enough actions avaliable");
+			
+			
+		}
+		
 
 		
 
