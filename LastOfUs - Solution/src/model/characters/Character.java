@@ -90,16 +90,19 @@ public abstract class Character {
 
 
 	public static boolean isAdjacent(Point point1, Point point2) {
-		if ((point1.x == point2.x)||
-				(point1.y == point2.y)||
-				((point1.y + point1.x) == (point2.x + point2.y))
-				||(Math.abs(point1.y - point1.x) == Math.abs(point2.x - point2.y)))
+		int x = point1.x + point1.y ;
+		int y = point2.x + point2.y ;
+		if (x-y==0 || Math.abs(x-y)==2||Math.abs(x-y)==1)
 			return true;
 		
 		else
 			return false;
 	}
+	public static void main(String[] args) {
+		Point x = new Point(0,0);
+		Point y = new Point(2,0);
+		System.out.print(isAdjacent(x,y));
+	}
 
-	
 
 }
