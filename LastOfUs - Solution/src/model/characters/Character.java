@@ -89,8 +89,8 @@ public abstract class Character {
 	public static void main(String[] args) {
 		Point x = new Point(0,0);
 		Point y = new Point(2,0);
-		System.out.print(isAdjacent(x,y));
-	}
 
+	}
+	
 
 }
