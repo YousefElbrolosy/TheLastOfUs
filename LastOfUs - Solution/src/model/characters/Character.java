@@ -63,11 +63,11 @@ public abstract class Character {
 	public int getAttackDmg() {
 		return attackDmg;
 	}
-		public void attack() throws MovementException, NotEnoughActionsException {
+		public void attack() throws InvalidTargetException, NotEnoughActionsException {
 		Point targetLoc = getTarget().location;
 		Point characterLoc = this.getLocation();
 		if (!isAdjacent(targetLoc, characterLoc))
-			throw new MovementException("Cannot attack this cell");
+			throw new InvalidTargetException("Cannot attack this cell");
 //		else {
 //			if (this.getAttackDmg() >= this.target.getCurrentHp()) {
 //				this.target.setCurrentHp(0);
@@ -82,6 +82,7 @@ public abstract class Character {
 //			}
 //
 //		} Haso da goz2 defend aktr 
+
 		else {
 			this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 		}
