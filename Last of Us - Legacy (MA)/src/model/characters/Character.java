@@ -122,6 +122,7 @@ public abstract class Character {
 		(target.getLocation().getX() - target.getLocation().getY()) )
 		){
 			return true;
+			//Hi baskat
 		}
 		else
 			return false;
