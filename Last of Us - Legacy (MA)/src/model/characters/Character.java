@@ -131,3 +131,5 @@ public abstract class Character {
 	
 	
 }
+
+//extends is for farafeer
