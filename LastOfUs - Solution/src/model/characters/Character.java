@@ -1,7 +1,7 @@
 package model.characters;
 
 import java.awt.Point;
-
+import java.lang.Math;
 
 public abstract class Character {
 	private String name;
@@ -76,15 +76,13 @@ public abstract class Character {
 
 
 	public static boolean isAdjacent(Point point1, Point point2) {
-		int x = point1.x + point1.y ;
-		int y = point2.x + point2.y ;
-		if (x-y==0 ||Math.abs(x-y)==1)
+		int x =(point2.x-point1.x);
+		int y = (point2.y-point1.y);
+		double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+		if(d==1 || d==Math.sqrt(2))
 			return true;
-		if(Math.abs(x-y)==2 && ((x==y)||(point1.x - point1.y)==(point2.x - point2.y)))
-		return true;
-		
-		else
-			return false;
+		else 
+			return false ; 
 	}
 
 	public void onCharacterDeath(){
@@ -97,4 +95,10 @@ public abstract class Character {
 		this.setTarget(Character c);
 		c.setCurrentHp(c.getCurrentHp-c.getAttackDmg/2);
 	}
-}
+	public static void main(String[]args){
+		Point x=new Point(2,0);
+		Point y=new Point(0,2);
+		System.out.print(isAdjacent(x,y));
+
+	}
+	}
