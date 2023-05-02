@@ -22,7 +22,16 @@ public abstract class Character {
 		this.currentHp = maxHp;
 		this.attackDmg = attackDmg;
 	}
-		
+	public void attack() throws InvalidTargetException, NotEnoughActionsException {
+	Point targetLoc = getTarget().location;
+	Point characterLoc = this.getLocation();
+	if (!isAdjacent(targetLoc, characterLoc))
+		throw new InvalidTargetException("Cannot attack this cell");
+	else {
+		this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+		}
+
+	}
 	public Character getTarget() {
 		return target;
 	}

@@ -24,15 +24,23 @@ public abstract class Hero extends Character {
 			this.specialAction=false;
 		
 		}
-
+       
 		
-	
+	   public void attack() throws MovementException, NotEnoughActionsException {
+			if(this.getActionsAvailable()>=1) {
+				super.attack();
+				int x = this.getActionsAvailable();
+				this.setActionsAvailable(--x);
+			}else 
+				throw new NotEnoughActionsException("No enough actions avaliable");
+			
+		}	
 
 
 		public boolean isSpecialAction() {
 			return specialAction;
 		}
-
+       
 
 
 		public void setSpecialAction(boolean specialAction) {
