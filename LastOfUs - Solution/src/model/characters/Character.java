@@ -70,7 +70,7 @@ public abstract class Character {
 		throw new InvalidTargetException("Cannot attack this cell");
 	else {
 		this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
-		}
+	}
 
 	}
 
@@ -95,10 +95,5 @@ public abstract class Character {
 		this.setTarget(Character c);
 		c.setCurrentHp(c.getCurrentHp-c.getAttackDmg/2);
 	}
-	public static void main(String[]args){
-		Point x=new Point(2,0);
-		Point y=new Point(0,2);
-		System.out.print(isAdjacent(x,y));
-
-	}
-	}
+	
+}
