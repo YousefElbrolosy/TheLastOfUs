@@ -93,17 +93,23 @@ public abstract class Character {
 			else if (this.getCurrentHp() ==0 )
 
 				this.onCharacterDeath();
-			else
-
+			else{
+				this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 				this.target.defend(this);
+			}
+
+				
 	}
 
 	}
-	
-	// Defend method 
-	public void defend(Character target){
-		target.setCurrentHp(target.getCurrentHp()-this.getAttackDmg());
-		this.setCurrentHp(this.getCurrentHp()- (this.target.getAttackDmg()/2) );
+
+	// Defend method lw 2rena satr b satr fl example el hwa katbo fa dah el mafrood yt3ml 
+	// ya3ny hwa 2l en el hero will attack el target tmmam w ba3deen hayn2s meno el attack dmg w dah elana 3amlto f attack then el target hy defend w 2l hay3ml eh fl defend 2l eno hy set el target bta3 el taregt yb2a el hero w y attack 3aleh b nos el attack dmg 
+	public void defend(Character c){
+
+		this.setTarget(c);
+		c.setCurrentHp(c.getCurrentHp()-this.getAttackDmg()/2);
+		
 	}
 
 
