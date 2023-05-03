@@ -3,8 +3,8 @@ package model.characters;
 import java.util.ArrayList;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
-import world.*;
-import engine.*;
+import exceptions.MovementException;
+import exceptions.NotEnoughActionsException;
 
 public abstract class Hero extends Character {
 	
@@ -89,17 +89,5 @@ public abstract class Hero extends Character {
 		}
 		
 
-		public void onCharacterDeath(){
-			//Handling when health reaches zero is done in other methods where Health is reached 0
-			if (this..getCurrentHp()<=0){
-				dead.getLocation() = null;
-			}
-			Game.heroes.remove(dead);
-		
-		}
-
-		public void move(Direction d){
-			this.isVisible(true);
-			
-		}
+	
 }

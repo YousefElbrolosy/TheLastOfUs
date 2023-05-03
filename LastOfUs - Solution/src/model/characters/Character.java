@@ -3,6 +3,9 @@ package model.characters;
 import java.awt.Point;
 import java.lang.Math;
 
+import exceptions.MovementException;
+import exceptions.NotEnoughActionsException;
+
 public abstract class Character {
 	private String name;
 	private Point location;
@@ -63,18 +66,8 @@ public abstract class Character {
 	public int getAttackDmg() {
 		return attackDmg;
 	}
-	public void attack() throws InvalidTargetException, NotEnoughActionsException {
-	Point targetLoc = getTarget().location;
-	Point characterLoc = this.getLocation();
-	if (!isAdjacent(targetLoc, characterLoc))
-		throw new InvalidTargetException("Cannot attack this cell");
-	else {
-		this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
-	}
 
-	}
-
-
+	// check if the characters are adjacent and returns boolean 
 	public static boolean isAdjacent(Point point1, Point point2) {
 		int x =(point2.x-point1.x);
 		int y = (point2.y-point1.y);
@@ -85,15 +78,42 @@ public abstract class Character {
 			return false ; 
 	}
 
+	// attacking method 
+	public void attack() throws NotEnoughActionsException, MovementException {
+		Point targetLoc = getTarget().location;
+		Point characterLoc = this.getLocation();
+		if (!isAdjacent(targetLoc, characterLoc))
+			throw new MovementException("Cannot attack this cell");
+		else {
+			// this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+			if (this.target.getCurrentHp() ==0)
+
+				this.target.onCharacterDeath();
+
+			else if (this.getCurrentHp() ==0 )
+
+				this.onCharacterDeath();
+			else
+
+				this.target.defend(this);
+	}
+
+	}
+	
+	// Defend method 
+	public void defend(Character target){
+		target.setCurrentHp(target.getCurrentHp()-this.getAttackDmg());
+		this.setCurrentHp(this.getCurrentHp()- (this.target.getAttackDmg()/2) );
+	}
+
+
+	// On character Death method 
 	public void onCharacterDeath(){
 		//Handling when health reaches zero is done in other methods where Health is reached 0
-		if (this.target.getCurrentHp()<=0){
-			this.target.setLocation() = null;
-		}
+		// if (this.target.getCurrentHp()<=0){
+		// 	this.target.setLocation(null) ;
+		// }
 	}
-	public void defend(Chracacter c){
-		this.setTarget(Character c);
-		c.setCurrentHp(c.getCurrentHp-c.getAttackDmg/2);
-	}
+
 	
 }
