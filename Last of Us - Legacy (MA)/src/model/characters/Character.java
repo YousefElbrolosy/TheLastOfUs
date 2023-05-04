@@ -107,9 +107,6 @@ public abstract class Character {
 				this.target.onCharacterDeath();
 			else this.target.defend(this);
 			
-			if (this.getCurrentHp() ==0 )
-
-				this.onCharacterDeath();
 			
 
 					
@@ -120,7 +117,8 @@ public abstract class Character {
 
 		this.setTarget(c);
 		c.setCurrentHp(c.getCurrentHp()-this.getAttackDmg()/2);
-		
+		if (c.getCurrentHp() ==0 )
+			c.onCharacterDeath();
 	}
 	
 	/* 
