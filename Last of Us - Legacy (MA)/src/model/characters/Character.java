@@ -99,6 +99,7 @@ public abstract class Character {
 	public int getAttackDmg() {
 		return attackDmg;
 	}
+	/* 
 	public void attack(Character target) throws NotEnoughActionsException, InvalidTargetException{
 		Hero h = (Hero) this;
 		
@@ -129,6 +130,7 @@ public abstract class Character {
 	}	
 
 	}
+	*/
 	/* 
 	public boolean getAdjacency(Character target){
 		// is it better to use | instead of || ?
@@ -156,15 +158,15 @@ public static boolean isAdjacent(Point point1, Point point2) {
 	else 
 		return false ; 
 }
-
-
+public void onCharacterDeath(){}
+/*
 public void onCharacterDeath(Character dead){
 	//Handling when health reaches zero is done in other methods where Health is reached 0
 	if (dead.getCurrentHp()<=0){
 		dead.setLocation(null);
 	}
 }
-
+ */
 
 
 
