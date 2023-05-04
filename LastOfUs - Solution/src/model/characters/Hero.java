@@ -91,6 +91,8 @@ public abstract class Hero extends Character {
 			
 		}
 		// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think en ehna mafrood n5ly mn el awl el hero yb2a visible kol el adjacent cells el hwaleh w msh 3aref ezay mafrood n access hewar el cell w hya asln abstract 
+
+		
 		public void move(Direction d) throws MovementException,NotEnoughActionsException{
 			int z = this.getActionsAvailable();
 			if (z<1)
@@ -99,30 +101,49 @@ public abstract class Hero extends Character {
 				if(d.equals(Direction.UP)){
 					int x=(this.getLocation().x)-1;
 					int y = this.getLocation().y;
-					this.setLocation(new Point (x,y));
-					this.setActionsAvailable(--z);
+					if (x<0)
+						throw new MovementException("Invalid move");
+					else{
+						this.setLocation(new Point (x,y));
+						this.setActionsAvailable(--z);
+					}
+					
 				}
 				if(d.equals(Direction.DOWN)){
 					int x=(this.getLocation().x)+1;
 					int y = this.getLocation().y;
-					this.setLocation(new Point (x,y));
-					this.setActionsAvailable(--z);
+					if (x>15)
+						throw new MovementException("Invalid move");
+					else{
+						this.setLocation(new Point (x,y));
+						this.setActionsAvailable(--z);
+					}
+					
 
 				}
 
 				if(d.equals(Direction.LEFT)){
 					int x=(this.getLocation().x);
 					int y = (this.getLocation().y)-1;
-					this.setLocation(new Point (x,y));
-					this.setActionsAvailable(--z);
-
+					if (y<0)
+						throw new MovementException("Invalid move");
+					else{
+						this.setLocation(new Point (x,y));
+						this.setActionsAvailable(--z);
+						}
+				
 				}
 
 				if(d.equals(Direction.RIGHT)){
 					int x=(this.getLocation().x);
 					int y = (this.getLocation().y)+1;
-					this.setLocation(new Point (x,y));
-					this.setActionsAvailable(--z);
+					if (y>15)
+						throw new MovementException("Invalid move");
+					else{
+						this.setLocation(new Point (x,y));
+						this.setActionsAvailable(--z);
+						}
+
 
 				}
 				else
