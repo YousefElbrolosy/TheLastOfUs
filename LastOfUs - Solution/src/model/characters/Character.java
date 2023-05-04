@@ -85,7 +85,8 @@ public abstract class Character {
 		if (!isAdjacent(targetLoc, characterLoc))
 			throw new InvalidTargetException("Cannot attack this cell");
 		else {
-			// this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+			this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+			this.target.defend(this);
 			if (this.target.getCurrentHp() ==0)
 
 				this.target.onCharacterDeath();
@@ -93,12 +94,9 @@ public abstract class Character {
 			else if (this.getCurrentHp() ==0 )
 
 				this.onCharacterDeath();
-			else{
-				this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
-				this.target.defend(this);
-			}
+			
 
-				
+					
 	}
 
 	}
