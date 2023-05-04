@@ -105,7 +105,7 @@ public abstract class Character {
 
 			if (this.target.getCurrentHp() <=0)
 				this.target.onCharacterDeath();
-			else this.target.defend(this);
+			else this.getTarget().defend(this);
 			
 			
 
