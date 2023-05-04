@@ -14,10 +14,10 @@ import model.world.Cell;
 
 public class Game {
 	
-	public static Cell [][] map ;
+	public static Cell [][] map  = new Cell [15][15] ;
 	public static ArrayList <Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList <Hero> heroes =  new ArrayList<Hero>();
-	public static ArrayList <Zombie> zombies =  new ArrayList<Zombie>();
+	public static ArrayList <Zombie> zombies =  new ArrayList<Zombie>(10);
 	
 	
 	

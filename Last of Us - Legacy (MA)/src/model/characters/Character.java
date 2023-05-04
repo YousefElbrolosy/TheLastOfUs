@@ -1,9 +1,13 @@
 package model.characters;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Random;
 
+import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
+import model.world.CharacterCell;
 
 
 public abstract class Character {
@@ -100,12 +104,17 @@ public abstract class Character {
 		return attackDmg;
 	}
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		
+		//check attack on newLogic
 			this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
-			if (this.target.getCurrentHp() <=0)
+			if (this.target.getCurrentHp() <=0){
+				this.getTarget().defend(this);
 				this.target.onCharacterDeath();
-			else this.getTarget().defend(this);		
+			}
+			else{
+				this.getTarget().defend(this);
+			}
+					
 	}
 
 	
@@ -176,7 +185,101 @@ public static boolean isAdjacent(Point point1, Point point2) {
 	else 
 		return false ; 
 }
-public void onCharacterDeath(){}
+//here I am assuming that the Zombie generated randomly on the map
+public void onCharacterDeath(){
+	//called only for attack not for cure guaranteeing respawning of zombie upon death
+	//make character cell empty? so that it can be used as a trap cell for example if 
+	//turn ended?
+	if(this instanceof Zombie){
+		//I dont remove last since last may be a Zombie that has Health < MaxHealth
+		//when accessing zombies out of the list? Is the actions done on them updated?
+		//int length = Game.zombies.size();
+		setCharacter(null);
+		Game.zombies.remove((Zombie)this);
+		Zombie z = new Zombie();
+		//Randomizing point
+		Point p = notOccRandomPointGenerator();
+		z.setLocation(p);
+		Game.zombies.add(z);
+		// does where I place it in the new zombies List matter?
+		
+		
+		/*Start of first comment
+		Does this mean that I have to check before every operation 
+		that the zombie is in the list?
+		Should I handle target to become null?*/
+		/*Start of 2nd comment
+		 Random Generation of new Full Healthed zombie in map
+		 */
+		
+	}
+	else{
+		if(this instanceof Hero){
+			//need to search for this and remove it specifically
+			//do I type cast it to hero?
+			Game.heroes.remove((Hero) this);
+
+		}
+	}
+	// I think this line is useless because since they are not in the array
+	//they won't be used and therefore their locations won't be used
+	this.setLocation(null);
+}
+public Point notOccRandomPointGenerator(){
+	//length of columns (no. of rows)
+	int numberOfRows = Game.map[0].length; 
+	//length of rows (no. of columns)
+	int numberOfColumns = Game.map.length;
+	//based on the Point(row,column)
+ 	Random r = new Random();
+	int xNew = r.nextInt(numberOfRows);
+	int yNew = r.nextInt(numberOfColumns);
+	Point p = new Point();
+	p.x = xNew;
+	p.y = yNew;
+	if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)
+		return p;
+	else 
+		return notOccRandomPointGenerator();
+}
+public boolean isOccupiedZombies(Point p){
+	/*Zombie z = new Zombie();
+	z.setLocation(p);
+	if(Game.zombies.contains(z)){
+		return true;
+	}*/
+	int i = 0;
+	while(i<Game.zombies.size()){
+		if(Game.zombies.get(i).getLocation()==p){
+			return true;
+		}
+		else{
+			i++;
+		}
+	}
+	return false;
+
+
+}
+public boolean isOccupiedHeroes(Point p){
+	/*Zombie z = new Zombie();
+	z.setLocation(p);
+	if(Game.zombies.contains(z)){
+		return true;
+	}*/
+	int i = 0;
+	while(i<Game.heroes.size()){
+		if(Game.heroes.get(i).getLocation()==p){
+			return true;
+		}
+		else{
+			i++;
+		}
+	}
+	return false;
+
+
+}
 /*
 public void onCharacterDeath(Character dead){
 	//Handling when health reaches zero is done in other methods where Health is reached 0
