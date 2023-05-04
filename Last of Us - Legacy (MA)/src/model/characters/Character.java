@@ -33,13 +33,6 @@ public abstract class Character {
 	//this is important for attack rule
 	public void setTarget(Character target)throws InvalidTargetException{
 		if(target != this){
-			if(this instanceof Hero){
-				if(target instanceof Zombie){
-					this.target = target;
-					System.out.print("Now target of hero is zombie");
-				}
-				else throw new InvalidTargetException("Please Select a valid Target");
-			}	
 			if(this instanceof Zombie){
 				if(target instanceof Hero){
 					this.target = target;
