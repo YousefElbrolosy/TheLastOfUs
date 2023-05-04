@@ -194,6 +194,7 @@ public void onCharacterDeath(){
 		//I dont remove last since last may be a Zombie that has Health < MaxHealth
 		//when accessing zombies out of the list? Is the actions done on them updated?
 		//int length = Game.zombies.size();
+		//missing setting Character cell to be null
 		setCharacter(null);
 		Game.zombies.remove((Zombie)this);
 		Zombie z = new Zombie();
