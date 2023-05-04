@@ -99,6 +99,35 @@ public abstract class Character {
 	public int getAttackDmg() {
 		return attackDmg;
 	}
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+		/*Point targetLoc = getTarget().location;
+		Point characterLoc = this.getLocation();
+		if (!isAdjacent(targetLoc, characterLoc))
+			throw new InvalidTargetException("Cannot attack this cell");
+		else {*/
+
+			// this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+			if (this.target.getCurrentHp() ==0)
+
+				this.target.onCharacterDeath();
+
+			else if (this.getCurrentHp() ==0 )
+
+				this.onCharacterDeath();
+			else{
+				this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+				this.target.defend(this);
+			}
+
+				
+	}
+	public void defend(Character c) throws InvalidTargetException{
+
+		this.setTarget(c);
+		c.setCurrentHp(c.getCurrentHp()-this.getAttackDmg()/2);
+		
+	}
+	
 	/* 
 	public void attack(Character target) throws NotEnoughActionsException, InvalidTargetException{
 		Hero h = (Hero) this;

@@ -1,5 +1,7 @@
 package model.characters;
 import engine.Game;
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughActionsException;
 
 import java.util.ArrayList;
 import model.collectibles.Supply;
@@ -94,7 +96,16 @@ public abstract class Hero extends Character {
 
 }
 
-		
+public void attack() throws InvalidTargetException, NotEnoughActionsException {
+	if(this.getActionsAvailable()>=1) {
+		super.attack();
+		int x = this.getActionsAvailable();
+		this.setActionsAvailable(--x);
+	}else 
+		throw new NotEnoughActionsException("No enough actions avaliable");
+	
+	
+}
 
 	
 }
