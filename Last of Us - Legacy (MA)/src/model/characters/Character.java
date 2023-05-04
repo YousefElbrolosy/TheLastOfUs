@@ -31,8 +31,28 @@ public abstract class Character {
 		
 	}
 	//this is important for attack rule
-	public void setTarget(Character target) {
-		this.target = target;
+	public void setTarget(Character target)throws InvalidTargetException{
+		if(target != this){
+			if(this instanceof Hero){
+				if(target instanceof Zombie){
+					this.target = target;
+					System.out.print("Now target of hero is zombie");
+				}
+				else throw new InvalidTargetException("Please Select a valid Target");
+			}	
+			if(this instanceof Zombie){
+				if(target instanceof Hero){
+					this.target = target;
+					System.out.print("Now target of zombie is hero");
+				}
+				else throw new InvalidTargetException("Please Select a valid Target");
+			}
+
+		}
+		else throw new InvalidTargetException("Please Select a valid Target");
+
+
+		//this.target = target;
 		// I think target is set by if there is a character in the cell you want to move to
 		// if last move was to the left then left is target when  attacking
 		// if last move was to the left and there is a zombie in front of you 
@@ -134,9 +154,11 @@ public abstract class Character {
 public void onCharacterDeath(Character dead){
 	//Handling when health reaches zero is done in other methods where Health is reached 0
 	if (dead.getCurrentHp()<=0){
-		dead.getLocation() = null;
+		dead.setLocation(null);
 	}
 }
+
+
 
 
 

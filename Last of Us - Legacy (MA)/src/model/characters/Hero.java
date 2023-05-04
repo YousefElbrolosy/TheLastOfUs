@@ -88,7 +88,7 @@ public abstract class Hero extends Character {
 	public void onCharacterDeath(Hero dead){
 	//Handling when health reaches zero is done in other methods where Health is reached 0
 	if (dead.getCurrentHp()<=0){
-		dead.getLocation() = null;
+		dead.setLocation(null);
 	}
 	Game.heroes.remove(dead);
 

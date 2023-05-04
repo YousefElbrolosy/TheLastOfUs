@@ -1,6 +1,6 @@
 package model.characters;
 
-
+import engine.Game;
 
 public class Zombie extends Character {
 	static int ZOMBIES_COUNT = 1;
@@ -14,9 +14,9 @@ public class Zombie extends Character {
 	public void onCharacterDeath(Zombie dead){
 	//Handling when health reaches zero is done in other methods where Health is reached 0
 	if (dead.getCurrentHp()<=0){
-		dead.getLocation() = null;
+		dead.setLocation(null);
 	}
-	bro.zombies.remove(dead);
+	Game.zombies.remove(dead);
 
 }
 
