@@ -3,7 +3,7 @@ package model.characters;
 import java.awt.Point;
 import java.lang.Math;
 
-import exceptions.MovementException;
+import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
 
 public abstract class Character {
@@ -79,11 +79,11 @@ public abstract class Character {
 	}
 
 	// attacking method 
-	public void attack() throws NotEnoughActionsException, MovementException {
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		Point targetLoc = getTarget().location;
 		Point characterLoc = this.getLocation();
 		if (!isAdjacent(targetLoc, characterLoc))
-			throw new MovementException("Cannot attack this cell");
+			throw new InvalidTargetException("Cannot attack this cell");
 		else {
 			// this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 			if (this.target.getCurrentHp() ==0)
@@ -122,5 +122,4 @@ public abstract class Character {
 		// }
 	}
 
-	
 }
