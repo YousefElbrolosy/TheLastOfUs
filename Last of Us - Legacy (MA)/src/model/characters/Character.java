@@ -105,11 +105,11 @@ public abstract class Character {
 	}
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		//check attack on newLogic
-			this.target.setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+			this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
-			if (this.target.getCurrentHp() <=0){
+			if (this.getTarget().getCurrentHp() <=0){
 				this.getTarget().defend(this);
-				this.target.onCharacterDeath();
+				this.getTarget().onCharacterDeath();
 			}
 			else{
 				this.getTarget().defend(this);
