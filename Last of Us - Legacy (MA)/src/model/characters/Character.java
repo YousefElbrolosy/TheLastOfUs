@@ -32,12 +32,14 @@ public abstract class Character {
 	}
 	//this is important for attack rule
 	public void setTarget(Character target)throws InvalidTargetException{
+		// the reason I removed the condition that both must not be heroes is that 
+		// A medic can set another hero as its target to heal it
 		if(target != this){
-			if(isAdjacent(location, target.getLocation())){
-				if(this instanceof Zombie){
-					if(target instanceof Hero){
+			if(isAdjacent(this.getLocation(), target.getLocation())){
+				if(this instanceof Hero){
+					if(target instanceof Zombie){
 						this.target = target;
-						System.out.print("Now target of zombie is hero");
+						System.out.print("Now target of Hero is Zombie");
 					}
 					else throw new InvalidTargetException("Please Select a valid Target");
 				}
