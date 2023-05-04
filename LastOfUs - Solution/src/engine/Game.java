@@ -14,7 +14,7 @@ import model.world.Cell;
 
 public class Game {
 	
-	public static Cell [][] map ;
+	public static Cell [15][15] map ;
 	public static ArrayList <Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList <Hero> heroes =  new ArrayList<Hero>();
 	public static ArrayList <Zombie> zombies =  new ArrayList<Zombie>();
@@ -47,11 +47,67 @@ public class Game {
 			
 		}
 		br.close();
-
-		
-		
+	
+	}
+	public Point generatePoint(){
+		int x=(int)(Math.random()*16);
+		int y=(int)(Math.random()*16);
+		Point res=new Point(x,y);
+		return res;
+	}
+    public static void startGame(Hero h){
+		int i1=0;
+		while(i1<5){
+			Vaccine v=new Vaccine();
+			Collectiblecell c=new CollectibleCell(v);
+			Point p=new Point();
+			if (map[p.x][p.y]==null){
+				
+				map[p.x][p.y]==c;
+			}else{
+				while(map[p.x][p.y]!=null){
+                    Point p=new Point();
+					if (map[p.x][p.y]==null)
+					    map[p.x][p.y]=c;
+				}
+			}
+			i1++;
+		}
+		int i2=0;
+		while(i2<5){
+			Supply v=new Supply();
+			Collectiblecell c=new CollectibleCell(v);
+			Point p=new Point();
+			if (map[p.x][p.y]==null){
+				map[p.x][p.y]==c;
+			}else{
+				while(map[p.x][p.y]!=null){
+                    Point p=new Point();
+					if (map[p.x][p.y]==null)
+					    map[p.x][p.y]=c;
+				}
+			}
+			i2++;
+		}
+		int i3=0;
+		while(i3<10){
+			Zombie v=new Zombie();
+			zombies.add(v);
+			CharacterCell c=new CharacterCell(v);
+			Point p=new Point();
+			if (map[p.x][p.y]==null){
+				
+				map[p.x][p.y]==c;
+			}else{
+				while(map[p.x][p.y]!=null){
+                    Point p=new Point();
+					if (map[p.x][p.y]==null)
+					    map[p.x][p.y]=c;
+				}
+			}
+			i3++;
+		}
 	}
 
-
-
+    
 }
