@@ -33,14 +33,16 @@ public abstract class Character {
 	//this is important for attack rule
 	public void setTarget(Character target)throws InvalidTargetException{
 		if(target != this){
-			if(this instanceof Zombie){
-				if(target instanceof Hero){
-					this.target = target;
-					System.out.print("Now target of zombie is hero");
+			if(isAdjacent(location, target.getLocation())){
+				if(this instanceof Zombie){
+					if(target instanceof Hero){
+						this.target = target;
+						System.out.print("Now target of zombie is hero");
+					}
+					else throw new InvalidTargetException("Please Select a valid Target");
 				}
-				else throw new InvalidTargetException("Please Select a valid Target");
 			}
-
+			else throw new InvalidTargetException("Please Select a valid Target");
 		}
 		else throw new InvalidTargetException("Please Select a valid Target");
 
@@ -125,6 +127,7 @@ public abstract class Character {
 	}	
 
 	}
+	/* 
 	public boolean getAdjacency(Character target){
 		// is it better to use | instead of || ?
 		if((location.getX() == target.getLocation().getX())
@@ -141,7 +144,16 @@ public abstract class Character {
 			return false;
 			
 	}
-
+*/
+public static boolean isAdjacent(Point point1, Point point2) {
+	int x =(point2.x-point1.x);
+	int y = (point2.y-point1.y);
+	double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+	if(d==1 || d==Math.sqrt(2))
+		return true;
+	else 
+		return false ; 
+}
 
 
 public void onCharacterDeath(Character dead){
