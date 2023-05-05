@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +11,9 @@ import model.characters.Fighter;
 import model.characters.Hero;
 import model.characters.Medic;
 import model.characters.Zombie;
+import model.collectibles.*;
 import model.world.Cell;
+import model.world.*;
 
 public class Game {
 	
@@ -50,6 +53,65 @@ public class Game {
 
 		
 		
+	}
+	public static Point generatePoint(){
+		int x=(int)(Math.random()*16);
+		int y=(int)(Math.random()*16);
+		Point res=new Point(x,y);
+		return res;
+	}
+    public static void startGame(Hero h){
+		int i1=0;
+		while(i1<5){
+			Vaccine v=new Vaccine();
+			CollectibleCell c=new CollectibleCell(v);
+			Point p= generatePoint();
+			if (map[p.x][p.y]==null){
+				
+				map[p.x][p.y]=c;
+			}else{
+				while(map[p.x][p.y]!=null){
+                    p= generatePoint();
+					if (map[p.x][p.y]==null)
+					    map[p.x][p.y]=c;
+				}
+			}
+			i1++;
+		}
+		int i2=0;
+		while(i2<5){
+			Supply v=new Supply();
+			CollectibleCell c=new CollectibleCell(v);
+			Point p=generatePoint();
+			if (map[p.x][p.y]==null){
+				map[p.x][p.y]=c;
+			}else{
+				while(map[p.x][p.y]!=null){
+                     p=generatePoint();
+					if (map[p.x][p.y]==null)
+					    map[p.x][p.y]=c;
+				}
+			}
+			i2++;
+		}
+		int i3=0;
+		while(i3<10){
+			Zombie v=new Zombie();
+			zombies.add(v);
+			CharacterCell c=new CharacterCell(v);
+			Point p=new Point();
+			if (map[p.x][p.y]==null){
+				
+				map[p.x][p.y]=c;
+			}else{
+				while(map[p.x][p.y]!=null){
+                    p=generatePoint();
+					if (map[p.x][p.y]==null)
+					    map[p.x][p.y]=c;
+				}
+			}
+			i3++;
+		}
 	}
 
 
