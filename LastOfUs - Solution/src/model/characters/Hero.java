@@ -5,10 +5,11 @@ import java.util.ArrayList;
 
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
+import model.world.*;
 import exceptions.InvalidTargetException;
 import exceptions.MovementException;
 import exceptions.NotEnoughActionsException;
-
+import engine.*;
 public abstract class Hero extends Character {
 	
 
@@ -106,6 +107,9 @@ public abstract class Hero extends Character {
 					else{
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
+						Point loc=this.getLocation();
+						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
 					}
 					
 				}
@@ -117,6 +121,9 @@ public abstract class Hero extends Character {
 					else{
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
+						Point loc=this.getLocation();
+						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
 					}
 					
 
@@ -130,6 +137,9 @@ public abstract class Hero extends Character {
 					else{
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
+						Point loc=this.getLocation();
+						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
 						}
 				
 				}
@@ -142,6 +152,9 @@ public abstract class Hero extends Character {
 					else{
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
+						Point loc=this.getLocation();
+						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
 						}
 
 
