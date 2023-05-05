@@ -2,6 +2,9 @@ package model.characters;
 
 import java.awt.Point;
 
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughActionsException;
+
 
 public abstract class Character {
 	private String name;
