@@ -1,5 +1,6 @@
 package engine;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,11 +11,15 @@ import model.characters.Fighter;
 import model.characters.Hero;
 import model.characters.Medic;
 import model.characters.Zombie;
+import model.collectibles.Supply;
+import model.collectibles.Vaccine;
 import model.world.Cell;
+import model.world.CharacterCell;
+import model.world.CollectibleCell;
 
 public class Game {
 	
-	public static Cell [15][15] map ;
+	public static Cell [][] map=new Cell[15][15] ;
 	public static ArrayList <Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList <Hero> heroes =  new ArrayList<Hero>();
 	public static ArrayList <Zombie> zombies =  new ArrayList<Zombie>();
@@ -49,7 +54,7 @@ public class Game {
 		br.close();
 	
 	}
-	public Point generatePoint(){
+	public static Point generatePoint(){
 		int x=(int)(Math.random()*16);
 		int y=(int)(Math.random()*16);
 		Point res=new Point(x,y);
@@ -59,14 +64,14 @@ public class Game {
 		int i1=0;
 		while(i1<5){
 			Vaccine v=new Vaccine();
-			Collectiblecell c=new CollectibleCell(v);
-			Point p=new Point();
+			CollectibleCell c=new CollectibleCell(v);
+			Point p= generatePoint();
 			if (map[p.x][p.y]==null){
 				
-				map[p.x][p.y]==c;
+				map[p.x][p.y]=c;
 			}else{
 				while(map[p.x][p.y]!=null){
-                    Point p=new Point();
+                    p= generatePoint();
 					if (map[p.x][p.y]==null)
 					    map[p.x][p.y]=c;
 				}
@@ -76,13 +81,13 @@ public class Game {
 		int i2=0;
 		while(i2<5){
 			Supply v=new Supply();
-			Collectiblecell c=new CollectibleCell(v);
-			Point p=new Point();
+			CollectibleCell c=new CollectibleCell(v);
+			Point p=generatePoint();
 			if (map[p.x][p.y]==null){
-				map[p.x][p.y]==c;
+				map[p.x][p.y]=c;
 			}else{
 				while(map[p.x][p.y]!=null){
-                    Point p=new Point();
+                     p=generatePoint();
 					if (map[p.x][p.y]==null)
 					    map[p.x][p.y]=c;
 				}
@@ -97,10 +102,10 @@ public class Game {
 			Point p=new Point();
 			if (map[p.x][p.y]==null){
 				
-				map[p.x][p.y]==c;
+				map[p.x][p.y]=c;
 			}else{
 				while(map[p.x][p.y]!=null){
-                    Point p=new Point();
+                    p=generatePoint();
 					if (map[p.x][p.y]==null)
 					    map[p.x][p.y]=c;
 				}
