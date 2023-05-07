@@ -7,7 +7,7 @@ import java.util.Random;
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
-import model.world.CharacterCell;
+import model.world.*;
 
 
 public abstract class Character {
@@ -195,7 +195,15 @@ public void onCharacterDeath(){
 		//when accessing zombies out of the list? Is the actions done on them updated?
 		//int length = Game.zombies.size();
 		//missing setting Character cell to be null
-		setCharacter(null);
+		if(Game.map[(int) this.getLocation().getX()][(int) this.getLocation().getY()] instanceof CharacterCell){
+			//this made sure that the location is same
+			CharacterCell characterCell = new CharacterCell(this);
+			//this makes it null
+			characterCell.setCharacter(null);
+			
+
+		}
+		
 		Game.zombies.remove((Zombie)this);
 		Zombie z = new Zombie();
 		//Randomizing point
