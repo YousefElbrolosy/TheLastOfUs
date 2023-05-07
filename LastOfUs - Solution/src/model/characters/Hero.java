@@ -28,6 +28,23 @@ public abstract class Hero extends Character {
 			this.specialAction=false;
 		
 		}
+		public void useSpecia() throws NotEnoughActionsException{
+			if (actionsAvailable==0|| isSpecialAction==false){
+				throw new NotEnoughActionsException();
+			}
+			if (this.getClass()=="class model.characters.Fighter"){
+	
+			}else{
+				if (this.getClass()=="class model.characters.Medic"){
+	
+				}else{
+					if (this.getClass()=="class model.characters.Explorer"){
+						
+					}
+				}
+			}
+			
+		   }
 
 		
 	
