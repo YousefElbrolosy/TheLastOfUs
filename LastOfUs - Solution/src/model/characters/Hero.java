@@ -108,8 +108,19 @@ public abstract class Hero extends Character {
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
 						Point loc=this.getLocation();
-						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+						if(Game.map[loc.x][loc.y] instanceof TrapCell){
 							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
+							if(this.getCurrentHp()<=0){
+								this.onCharacterDeath();
+
+
+							}
+							else{
+								Game.map[loc.x][loc.y]=new CharacterCell(this);
+
+							}
+						}
+						
 					}
 					
 				}
@@ -122,8 +133,19 @@ public abstract class Hero extends Character {
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
 						Point loc=this.getLocation();
-						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+						if(Game.map[loc.x][loc.y] instanceof TrapCell){
 							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
+							if(this.getCurrentHp()<=0){
+								this.onCharacterDeath();
+
+
+							}
+							else{
+								Game.map[loc.x][loc.y]=new CharacterCell(this);
+
+							}
+						}
+					
 					}
 					
 
@@ -138,8 +160,19 @@ public abstract class Hero extends Character {
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
 						Point loc=this.getLocation();
-						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+						if(Game.map[loc.x][loc.y] instanceof TrapCell){
 							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
+							if(this.getCurrentHp()<=0){
+								this.onCharacterDeath();
+
+
+							}
+							else{
+								Game.map[loc.x][loc.y]=new CharacterCell(this);
+
+							}
+						}
+						
 						}
 				
 				}
@@ -153,19 +186,47 @@ public abstract class Hero extends Character {
 						this.setLocation(new Point (x,y));
 						this.setActionsAvailable(--z);
 						Point loc=this.getLocation();
-						if(Game.map[loc.x][loc.y] instanceof TrapCell)
+						if(Game.map[loc.x][loc.y] instanceof TrapCell){
 							this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
+							if(this.getCurrentHp()<=0){
+								this.onCharacterDeath();
+
+
+							}
+							else{
+								Game.map[loc.x][loc.y]=new CharacterCell(this);
+
+							}
+						}
+							
+							
 						}
 
 
 				}
+
 				else
 					throw new MovementException("Invalid move");
+				for(int i =0;i<Game.map.length;i++){
+					for (int j =0;j<Game.map[i].length;j++){
+						if(isAdjacent(this.getLocation(),new Point(i, j) )){
+							Game.map[i][j].setVisible(true);
+						}
+					}
 
+				}
 			}
 			
 		}
-			
+		public static boolean isAdjacent(Point point1, Point point2) {
+		int x =(point2.x-point1.x);
+		int y = (point2.y-point1.y);
+		double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+		if(d==1 || d==Math.sqrt(2))
+			return true;
+		else 
+			return false ; 
+	}
 		
 	
 }
