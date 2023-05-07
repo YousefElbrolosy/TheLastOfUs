@@ -17,7 +17,7 @@ public abstract class Hero extends Character {
 		private ArrayList<Vaccine> vaccineInventory;
 		private ArrayList<Supply> supplyInventory;
 		private boolean specialAction;
-	
+	    
 		
 		public Hero(String name,int maxHp, int attackDmg, int maxActions) {
 			super(name,maxHp, attackDmg);
@@ -28,20 +28,30 @@ public abstract class Hero extends Character {
 			this.specialAction=false;
 		
 		}
-		public void useSpecia() throws NotEnoughActionsException{
-			if (actionsAvailable==0|| isSpecialAction==false){
+		public void useSpecial() throws NotEnoughActionsException,NoAvailableResourcesException{
+			if (actionsAvailable==0 || isSpecialAction==false){
 				throw new NotEnoughActionsException();
 			}
-			if (this.getClass()=="class model.characters.Fighter"){
-	
+			if (this.getClass().equals("class model.characters.Fighter")){
+	           boolean specialTurn=true;
 			}else{
-				if (this.getClass()=="class model.characters.Medic"){
-	
+				if (this.getClass().equals("class model.characters.Medic")){
+	              if (this.getCurrentHp<this.getMaxHp){
+					this.setCurrentHp=this.getMaxHp;
+				  }else{
+					this.target.currentHp=this.target.setCurrentHp(this.target.getMaxHp);
+				  }
+				  this.getSupplyInventory.remove(getSupplyInventory.size-1);
 				}else{
-					if (this.getClass()=="class model.characters.Explorer"){
-						
+					if (this.getClass().equals("class model.characters.Explorer")){
+						for(int i=0;i<15,i++){
+							for(int j=0;j<15;j++){
+								Cell[i][j].setVisible(true);	
+							}
+						}
 					}
 				}
+	          this.getSupplyInventory().remove(this.getSupplyInventory().size()-1);
 			}
 			
 		   }
@@ -108,7 +118,7 @@ public abstract class Hero extends Character {
 			
 		}
 		// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think en ehna mafrood n5ly mn el awl el hero yb2a visible kol el adjacent cells el hwaleh w msh 3aref ezay mafrood n access hewar el cell w hya asln abstract 
-
+       
 		
 		public void move(Direction d) throws MovementException,NotEnoughActionsException{
 			int z = this.getActionsAvailable();

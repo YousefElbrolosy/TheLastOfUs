@@ -123,6 +123,7 @@ public class Game {
 		heroes.add(h);
 		CharacterCell c=new CharacterCell(h);
 		map[25][0]=c;
+	
 	}
 	public Point generatePoint(){
 		int x=(int)(Math.random()*16);
@@ -130,6 +131,7 @@ public class Game {
 		Point res=new Point(x,y);
 		return res;
 	}
-
+	
+	
 
 }

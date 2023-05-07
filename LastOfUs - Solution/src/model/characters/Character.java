@@ -110,7 +110,7 @@ public abstract class Character {
 		c.setCurrentHp(c.getCurrentHp()-this.getAttackDmg()/2);
 		
 	}
-
+    
 
 	// On character Death method 
 	public void onCharacterDeath(){
