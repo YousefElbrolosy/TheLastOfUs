@@ -35,41 +35,10 @@ public abstract class Character {
 		
 	}
 	//this is important for attack rule
-	public void setTarget(Character target)throws InvalidTargetException{
-		// the reason I removed the condition that both must not be heroes is that 
-		// A medic can set another hero as its target to heal it
-		if(target != this){
-			if(isAdjacent(this.getLocation(), target.getLocation())){
-				if(this instanceof Hero){
-					if(target instanceof Zombie){
-						this.target = target;
-						System.out.print("Now target of Hero is Zombie");
-					}
-					else throw new InvalidTargetException("Please Select a valid Target");
-				}
-			}
-			else throw new InvalidTargetException("Please Select a valid Target");
-		}
-		else throw new InvalidTargetException("Please Select a valid Target");
-
-
-		//this.target = target;
-		// I think target is set by if there is a character in the cell you want to move to
-		// if last move was to the left then left is target when  attacking
-		// if last move was to the left and there is a zombie in front of you 
-		// as well as a zombie to the right of that zombie
-		// priority of target goes to the one right in front first
-		//then if death set target to diagonally adjacent right, then diagonally adjacent left?
-		// or when I kill A zombie I take its place? no
-		/*
-
-		 summing up, always kill the zombie right in front of you, if you went left imagine
-		 that the character looked left and found a zombie in front of him
-		 that's priority 1 
-		 priority 2 if he didn't find an immediantly adjacent zombie tackle right diagonal
-		 before left diagonal
-		*/
-	}
+	public void setTarget(Character target){
+		
+	this.target = target;
+}
 	
 	public String getName() {
 		return name;
@@ -105,6 +74,7 @@ public abstract class Character {
 	}
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		//check attack on newLogic
+		if((this instanceof Hero && this.getTarget() instanceof Zombie)||(this instanceof Zombie && this.getTarget() instanceof Hero)){
 			this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
 			if (this.getTarget().getCurrentHp() <=0){
@@ -116,7 +86,74 @@ public abstract class Character {
 			}
 					
 	}
+	else throw new InvalidTargetException("Please select a valid target");
+	}
+	
+	public void attackZombie() throws NotEnoughActionsException, InvalidTargetException{
+			int x = this.getLocation().x;
+			int y = this.getLocation().y;
 
+			Point p1 = new Point(x+1, y);
+			Point p2 = new Point(x-1, y);
+			Point p3 = new Point(x+1, y+1);
+			Point p4 = new Point(x+1, y-1);
+			Point p5 = new Point(x-1, y+1);
+			Point p6 = new Point(x-1, y-1);
+			Point p7 = new Point(x, y-1);
+			Point p8 = new Point(x, y+1);
+			
+			if((isOccupiedHeroes(p1))){
+				if((isAdjacent(this.getLocation(), p1))==true){
+						this.setTarget(getOccupiedHeroes(p1));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p2))){
+				if((isAdjacent(this.getLocation(), p2))==true){
+						this.setTarget(getOccupiedHeroes(p2));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p3))){
+				if((isAdjacent(this.getLocation(), p3))==true){
+						this.setTarget(getOccupiedHeroes(p3));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p4))){
+				if((isAdjacent(this.getLocation(), p4))==true){
+						this.setTarget(getOccupiedHeroes(p4));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p5))){
+				if((isAdjacent(this.getLocation(), p5))==true){
+						this.setTarget(getOccupiedHeroes(p5));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p6))){
+				if((isAdjacent(this.getLocation(), p6))==true){
+						this.setTarget(getOccupiedHeroes(p6));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p7))){
+				if((isAdjacent(this.getLocation(), p7))==true){
+						this.setTarget(getOccupiedHeroes(p7));
+						this.attack();
+				}
+			}
+			if((isOccupiedHeroes(p8))){
+				if((isAdjacent(this.getLocation(), p8))==true){
+						this.setTarget(getOccupiedHeroes(p8));
+						this.attack();
+				}
+			}
+
+
+	}
+			
 	
 	public void defend(Character c) throws InvalidTargetException{
 
@@ -126,76 +163,30 @@ public abstract class Character {
 			c.onCharacterDeath();
 	}
 	
-	/* 
-	public void attack(Character target) throws NotEnoughActionsException, InvalidTargetException{
-		Hero h = (Hero) this;
-		
-		int actions_available = h.getActionsAvailable();
-	//if ((this == h && target == z)||(this == z && target == h)){
-	//if (this!=target){ (equivilant as above)	
-	if((this.getAdjacency(target) == true) && (this!=target)){
-		if(this.getTarget() == target){
-// does zombie has actions available?
-// missing handling special ability if this was fighter and ability is used
-// should I immplement attack seperately in each sub class? why implement it in character in 
-// 1st place?
-			if (this == h){
-				if(actions_available>0){
-					actions_available--;
-				}
-				else{
-					throw new NotEnoughActionsException("There aren't enough actions");
-				}
-			}
-			int currHp = target.getCurrentHp();
-			int newHp = currHp - this.getAttackDmg();
-			target.setCurrentHp(newHp);
-		}
+public static boolean isAdjacent(Point point1, Point point2) {
+	if ((point1.x>=0)&&(point1.y>=0)&(point2.y>=0)&&(point2.y>=0)){
+			int x =(point2.x-point1.x);
+			int y = (point2.y-point1.y);
+			double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+			if(d==1 || d==Math.sqrt(2))
+				return true; 
+			else
+				return false;
 	}
 	else{
-		throw new InvalidTargetException("Invalid target");
-	}	
-
+		return false;
 	}
-	*/
-	/* 
-	public boolean getAdjacency(Character target){
-		// is it better to use | instead of || ?
-		if((location.getX() == target.getLocation().getX())
-		| (location.getY() == target.getLocation().getY())
-		| ( (location.getX() + location.getY()) ==
-		(target.getLocation().getX() + target.getLocation().getY()) )
-		| ( (location.getX() - location.getY()) ==
-		(target.getLocation().getX() - target.getLocation().getY()) )
-		){
-			return true;
-			// Hi baskat Sameh Sakr
-		}
-		else
-			return false;
-			
-	}
-*/
-public static boolean isAdjacent(Point point1, Point point2) {
-	int x =(point2.x-point1.x);
-	int y = (point2.y-point1.y);
-	double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-	if(d==1 || d==Math.sqrt(2))
-		return true;
-	else 
-		return false ; 
 }
 //here I am assuming that the Zombie generated randomly on the map
 public void onCharacterDeath(){
 	//called only for attack not for cure guaranteeing respawning of zombie upon death
 	//make character cell empty? so that it can be used as a trap cell for example if 
 	//turn ended?
-	if(this instanceof Zombie){
-		//I dont remove last since last may be a Zombie that has Health < MaxHealth
+	//I dont remove last since last may be a Zombie that has Health < MaxHealth
 		//when accessing zombies out of the list? Is the actions done on them updated?
 		//int length = Game.zombies.size();
 		//missing setting Character cell to be null
-		if(Game.map[(int) this.getLocation().getX()][(int) this.getLocation().getY()] instanceof CharacterCell){
+		if(Game.map[(int) this.getLocation().getY()][(int) this.getLocation().getX()] instanceof CharacterCell){
 			//this made sure that the location is same
 			CharacterCell characterCell = new CharacterCell(this);
 			//this makes it null
@@ -203,6 +194,8 @@ public void onCharacterDeath(){
 			
 
 		}
+	if(this instanceof Zombie){
+		
 		
 		Game.zombies.remove((Zombie)this);
 		Zombie z = new Zombie();
@@ -246,17 +239,17 @@ public Point notOccRandomPointGenerator(){
 	Point p = new Point();
 	p.x = xNew;
 	p.y = yNew;
-	if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)
+	/* 
+	if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)*/
+	//note that here x and y are inverted
+	if(!((Game.map[(int) p.getY()][(int) p.getX()] instanceof CharacterCell)||
+	(Game.map[(int) p.getY()][(int) p.getX()] instanceof TrapCell)||
+	(Game.map[(int) p.getY()][(int) p.getX()] instanceof CollectibleCell)))
 		return p;
 	else 
 		return notOccRandomPointGenerator();
 }
 public boolean isOccupiedZombies(Point p){
-	/*Zombie z = new Zombie();
-	z.setLocation(p);
-	if(Game.zombies.contains(z)){
-		return true;
-	}*/
 	int i = 0;
 	while(i<Game.zombies.size()){
 		if(Game.zombies.get(i).getLocation()==p){
@@ -270,12 +263,8 @@ public boolean isOccupiedZombies(Point p){
 
 
 }
+//or isoccupied that check for if intance of character cell
 public boolean isOccupiedHeroes(Point p){
-	/*Zombie z = new Zombie();
-	z.setLocation(p);
-	if(Game.zombies.contains(z)){
-		return true;
-	}*/
 	int i = 0;
 	while(i<Game.heroes.size()){
 		if(Game.heroes.get(i).getLocation()==p){
@@ -288,24 +277,21 @@ public boolean isOccupiedHeroes(Point p){
 	return false;
 
 
-}
-/*
-public void onCharacterDeath(Character dead){
-	//Handling when health reaches zero is done in other methods where Health is reached 0
-	if (dead.getCurrentHp()<=0){
-		dead.setLocation(null);
+}	
+public Character getOccupiedHeroes(Point p){
+	int i = 0;
+	while(i<Game.heroes.size()){
+		if(Game.heroes.get(i).getLocation()==p){
+			return Game.heroes.get(i);
+		}
+		else{
+			i++;
+		}
 	}
-}
- */
+	return null;
 
 
-
-
-
-
-
-	
-	
+}	
 }
 
 //extends is for farafeer
