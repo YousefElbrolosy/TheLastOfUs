@@ -6,11 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import model.characters.Explorer;
-import model.characters.Fighter;
-import model.characters.Hero;
-import model.characters.Medic;
-import model.characters.Zombie;
+import model.characters.*;
+import model.characters.Character;
 import model.collectibles.*;
 import model.world.Cell;
 import model.world.*;
@@ -113,7 +110,34 @@ public class Game {
 			i3++;
 		}
 	}
+	public static boolean checkWin(){
+		int hero =0;
+	for(int i =0;i<map.length;i++){
+		for(int j =0;j<map[i].length;j++){
+			Cell z=map[i][j];
+			if(z instanceof CollectibleCell ){
+				Collectible x=((CollectibleCell) map[i][j]).getCollectible();
+				if(x instanceof Vaccine){
+					return false;
+				}
+			}
+			if(z instanceof CharacterCell){
+				Character x = ((CharacterCell) map[i][j]).getCharacter();
+				if(x instanceof Hero){
+					hero++;
+					if(((Hero) x).getVaccineInventory().size()!=0 )
+						return false;
+				}
 
+			}
 
+		}
+
+	}
+	if(hero<5)
+		return false;
+	else
+		return true;
+	}
 
 }
