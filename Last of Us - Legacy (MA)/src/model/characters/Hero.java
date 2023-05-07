@@ -87,14 +87,6 @@ public abstract class Hero extends Character {
 			this.supplyInventory = supplyInventory;
 		}
 
-	public void onCharacterDeath(Hero dead){
-	//Handling when health reaches zero is done in other methods where Health is reached 0
-	if (dead.getCurrentHp()<=0){
-		dead.setLocation(null);
-	}
-	Game.heroes.remove(dead);
-
-}
 
 public void attack() throws InvalidTargetException, NotEnoughActionsException {
 	if(this.getActionsAvailable()>=1) {
@@ -106,6 +98,17 @@ public void attack() throws InvalidTargetException, NotEnoughActionsException {
 	
 	
 }
+public void cure()throws InvalidTargetException{
+	if(this.getTarget()instanceof Zombie){
+		if(this.getActionsAvailable()>0){
+			if(isAdjacent(this.getLocation(),this.getTarget().getLocation())){
 
+
+				int x = this.getActionsAvailable();
+				this.setActionsAvailable(x--);
+			}
+		}
+	}
+}
 	
 }
