@@ -36,7 +36,6 @@ public abstract class Character {
 	}
 	//this is important for attack rule
 	public void setTarget(Character target){
-		
 	this.target = target;
 }
 	
@@ -186,14 +185,12 @@ public void onCharacterDeath(){
 		//when accessing zombies out of the list? Is the actions done on them updated?
 		//int length = Game.zombies.size();
 		//missing setting Character cell to be null
-		if(Game.map[(int) this.getLocation().getY()][(int) this.getLocation().getX()] instanceof CharacterCell){
+		//if(Game.map[(int) this.getLocation().getY()][(int) this.getLocation().getX()] instanceof CharacterCell){
 			//this made sure that the location is same
-			CharacterCell characterCell = new CharacterCell(this);
-			//this makes it null
+			CharacterCell characterCell = (CharacterCell) Game.map[this.getLocation().x][this.getLocation().y];
 			characterCell.setCharacter(null);
-			
 
-		}
+		
 	if(this instanceof Zombie){
 		
 		
@@ -242,9 +239,9 @@ public Point notOccRandomPointGenerator(){
 	/* 
 	if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)*/
 	//note that here x and y are inverted
-	if(!((Game.map[(int) p.getY()][(int) p.getX()] instanceof CharacterCell)||
-	(Game.map[(int) p.getY()][(int) p.getX()] instanceof TrapCell)||
-	(Game.map[(int) p.getY()][(int) p.getX()] instanceof CollectibleCell)))
+	if(!(((Game.map[(int) p.getX()][(int) p.getY()] instanceof CharacterCell)&& (((CharacterCell) (Game.map[(int) p.getX()][(int) p.getY()])).getCharacter()!=null))||
+	(Game.map[(int) p.getX()][(int) p.getY()] instanceof TrapCell)||
+	(Game.map[(int) p.getX()][(int) p.getY()] instanceof CollectibleCell)))
 		return p;
 	else 
 		return notOccRandomPointGenerator();
