@@ -9,11 +9,11 @@ import java.util.Random;
 
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
-import model.characters.Explorer;
-import model.characters.Fighter;
-import model.characters.Hero;
-import model.characters.Medic;
-import model.characters.Zombie;
+import model.characters.*;
+import model.characters.Character;
+import model.collectibles.Collectible;
+import model.collectibles.Supply;
+import model.collectibles.Vaccine;
 import model.world.Cell;
 import model.world.CharacterCell;
 import model.world.CollectibleCell;
@@ -58,12 +58,140 @@ public class Game {
 		
 		
 	}
+	public static Point generatePoint() {
+		Random random = new Random();
+		int x = random.nextInt(15);
+		int y = random.nextInt(15);
+		Point res = new Point(x, y);
+		return res;
+	}
+
+	public static void startGame(Hero h) {
+		map = new Cell[15][15];
+		int i1 = 0;
+		while (i1 < 5) {
+			Vaccine v = new Vaccine();
+			CollectibleCell c = new CollectibleCell(v);
+			Point p = generatePoint();
+			if (map[p.x][p.y] == null) {
+
+				map[p.x][p.y] = c;
+			} else {
+				while (map[p.x][p.y] != null) {
+					p = generatePoint();
+				}
+				map[p.x][p.y] = c;
+			}
+			i1++;
+		}
+		int i2 = 0;
+		while (i2 < 5) {
+			Supply v = new Supply();
+			CollectibleCell c = new CollectibleCell(v);
+			Point p = generatePoint();
+			if (map[p.x][p.y] == null) {
+				map[p.x][p.y] = c;
+			} else {
+				while (map[p.x][p.y] != null) {
+					p = generatePoint();
+
+				}
+				map[p.x][p.y] = c;
+			}
+			i2++;
+		}
+
+		int i3 = 0;
+		while (i3 < 10) {
+			Zombie v = new Zombie();
+			zombies.add(v);
+			CharacterCell c = new CharacterCell(v);
+			Point p = generatePoint();
+			if (map[p.x][p.y] == null) {
+
+				map[p.x][p.y] = c;
+			} else {
+				while (map[p.x][p.y] != null) {
+					p = generatePoint();
+				}
+				map[p.x][p.y] = c;
+			}
+			i3++;
+		}
+
+		int i4 = 0;
+		while (i4 < 5) {
+			TrapCell v = new TrapCell();
+			Point p = generatePoint();
+			if (map[p.x][p.y] == null) {
+				map[p.x][p.y] = v;
+			} else {
+				while (map[p.x][p.y] != null) {
+					p = generatePoint();
+
+				}
+				map[p.x][p.y] = v;
+			}
+			i4++;
+		}
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (map[i][j] == null) {
+					map[i][j] = new CharacterCell(null);
+				}
+			}
+		}
+
+		map[0][0] = new CharacterCell(h);
+		map[0][0].setVisible(true);
+		heroes.add(h);
+		availableHeroes.remove(h);
+		h.setLocation(new Point(0, 0));
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+					if (isAdjacent(h.getLocation(), new Point(i, j))) {
+						map[i][j].setVisible(true);
+					}
+				}		
+		}
+	}
+	public static boolean checkWin() {
+		int hero = 0;
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				Cell z = map[i][j];
+				if (z instanceof CollectibleCell) {
+					Collectible x = ((CollectibleCell) map[i][j]).getCollectible();
+					if (x instanceof Vaccine) {
+						return false;
+					}
+				}
+				if (z instanceof CharacterCell) {
+					Character x = ((CharacterCell) map[i][j]).getCharacter();
+					if (x instanceof Hero) {
+						hero++;
+						if (((Hero) x).getVaccineInventory().size() != 0)
+							return false;
+					}
+
+				}
+
+			}
+
+		}
+		if (hero < 5)
+			return false;
+		else
+			return true;
+	}
+	
+	
 	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException{
 		//iterates through zombie list and makes each zombie attack if possible
 		//is there a way to make it all at once?
 		int i = 0; int j = 0;
 		while(i<Game.zombies.size()){
-			Game.zombies.get(i).attackZombie();
+			attackZombie(Game.zombies.get(i));
 			i++;
 		}
 		
@@ -109,7 +237,99 @@ public class Game {
 		new CharacterCell(z);
 
 	}
-	
+	public static void attackZombie(Zombie z) throws NotEnoughActionsException, InvalidTargetException{
+		int x = z.getLocation().x;
+		int y = z.getLocation().y;
+
+		Point p1 = new Point(x+1, y);
+		Point p2 = new Point(x-1, y);
+		Point p3 = new Point(x+1, y+1);
+		Point p4 = new Point(x+1, y-1);
+		Point p5 = new Point(x-1, y+1);
+		Point p6 = new Point(x-1, y-1);
+		Point p7 = new Point(x, y-1);
+		Point p8 = new Point(x, y+1);
+		
+		if((isOccupiedHeroes(p1))){
+			if((isAdjacent(z.getLocation(), p1))==true){
+					z.setTarget(getOccupiedHeroes(p1));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p2))){
+			if((isAdjacent(z.getLocation(), p2))==true){
+					z.setTarget(getOccupiedHeroes(p2));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p3))){
+			if((isAdjacent(z.getLocation(), p3))==true){
+					z.setTarget(getOccupiedHeroes(p3));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p4))){
+			if((isAdjacent(z.getLocation(), p4))==true){
+					z.setTarget(getOccupiedHeroes(p4));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p5))){
+			if((isAdjacent(z.getLocation(), p5))==true){
+					z.setTarget(getOccupiedHeroes(p5));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p6))){
+			if((isAdjacent(z.getLocation(), p6))==true){
+					z.setTarget(getOccupiedHeroes(p6));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p7))){
+			if((isAdjacent(z.getLocation(), p7))==true){
+					z.setTarget(getOccupiedHeroes(p7));
+					z.attack();
+			}
+		}
+		if((isOccupiedHeroes(p8))){
+			if((isAdjacent(z.getLocation(), p8))==true){
+					z.setTarget(getOccupiedHeroes(p8));
+					z.attack();
+			}
+		}
+
+
+}
+public static boolean isOccupiedHeroes(Point p){
+	int i = 0;
+	while(i<Game.heroes.size()){
+		if(Game.heroes.get(i).getLocation()==p){
+			return true;
+		}
+		else{
+			i++;
+		}
+	}
+	return false;
+
+
+}	
+public static Hero getOccupiedHeroes(Point p){
+	int i = 0;
+	while(i<Game.heroes.size()){
+		if(Game.heroes.get(i).getLocation()==p){
+			return Game.heroes.get(i);
+		}
+		else{
+			i++;
+		}
+	}
+	return null;
+
+
+}	
+
 	public static Point notOccRandomPointGenerator(){
 		//length of columns (no. of rows)
 		int numberOfRows = Game.map[0].length; 
