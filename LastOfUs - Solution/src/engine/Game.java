@@ -99,15 +99,21 @@ public class Game {
 			zombies.add(v);
 			CharacterCell c = new CharacterCell(v);
 			Point p = generatePoint();
+			Point loc;
 			if (map[p.x][p.y] == null) {
 
 				map[p.x][p.y] = c;
+				loc = new Point(p.x, p.y);
+
 			} else {
 				while (map[p.x][p.y] != null) {
 					p = generatePoint();
 				}
 				map[p.x][p.y] = c;
+				loc = new Point(p.x, p.y);
 			}
+			v.setLocation(loc);
+
 			i3++;
 		}
 
@@ -141,10 +147,10 @@ public class Game {
 		h.setLocation(new Point(0, 0));
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-					if (isAdjacent(h.getLocation(), new Point(i, j))) {
-						map[i][j].setVisible(true);
-					}
-				}		
+				if (isAdjacent(h.getLocation(), new Point(i, j))) {
+					map[i][j].setVisible(true);
+				}
+			}
 		}
 	}
 
@@ -213,99 +219,120 @@ public class Game {
 		else
 			return false;
 	}
-	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException{
-		//iterates through zombie list and makes each zombie attack if possible
-		//is there a way to make it all at once?
-		int i = 0; int j = 0;
-		while(i<Game.zombies.size()){
+
+	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException {
+		// iterates through zombie list and makes each zombie attack if possible
+		// is there a way to make it all at once?
+		int i = 0;
+		int j = 0;
+		while (i < Game.zombies.size()) {
 			Game.zombies.get(i).attackZombie();
 			i++;
 		}
-		//resetting each heroes maxActions
-		while(j<Game.heroes.size()){
+
+		// resetting each heroes maxActions
+		while (j < Game.heroes.size()) {
 			Game.heroes.get(i).setActionsAvailable(Game.heroes.get(i).getMaxActions());
-			//here I assumed initial target of each hero is null
+			// here I assumed initial target of each hero is null
 			Game.heroes.get(i).setTarget(null);
 			Game.heroes.get(i).setSpecialAction(false);
 			j++;
 		}
-		//Updating map //setting visibility of each adjacent cell to each hero to true
-		for(int k = 0; k<Game.heroes.size() ; k++){
+		// setting visibility of whole map to false
+		int x = 0;
+		int y = 0;
+		// x denotes no of rows and y denotes no of columns
+		while (x < Game.map.length) {
+			Cell cell = Game.map[x][y];
+			cell.setVisible(false);
+			x++;
+		}
+		while (y < Game.map[0].length) {
+			Cell cell = Game.map[x][y];
+			cell.setVisible(false);
+			y++;
+		}
+
+		// Updating map //setting visibility of each adjacent cell to each hero to true
+		for (int k = 0; k < Game.heroes.size(); k++) {
 			ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
-			for(int y = 0; y<adjPoints.size(); y++){
+			for (y = 0; y < adjPoints.size(); y++) {
 				CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(y).x][adjPoints.get(y).y];
 				heroCell.setVisible(true);
 			}
 		}
-		//spawning a Zombie Randomly on the map
+		// spawning a Zombie Randomly on the map
 		Zombie z = new Zombie();
-		//Randomizing point
+		// Randomizing point
 		Point p = notOccRandomPointGenerator();
 		z.setLocation(p);
 		Game.zombies.add(z);
-		//instead of initialising a variable I won't use
+		// instead of initialising a variable I won't use
 		new CharacterCell(z);
 
 	}
-	
-	public static Point notOccRandomPointGenerator(){
-		//length of columns (no. of rows)
-		int numberOfRows = Game.map[0].length; 
-		//length of rows (no. of columns)
+
+	public static Point notOccRandomPointGenerator() {
+		// length of columns (no. of rows)
+		int numberOfRows = Game.map[0].length;
+		// length of rows (no. of columns)
 		int numberOfColumns = Game.map.length;
-		//based on the Point(row,column)
+		// based on the Point(row,column)
 		Random r = new Random();
 		int xNew = r.nextInt(numberOfRows);
 		int yNew = r.nextInt(numberOfColumns);
 		Point p = new Point();
 		p.x = xNew;
 		p.y = yNew;
-		/* 
-		if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)*/
-		//note that here x and y are inverted
-		if(!(((Game.map[(int) p.getX()][(int) p.getY()] instanceof CharacterCell)&& (((CharacterCell) (Game.map[(int) p.getX()][(int) p.getY()])).getCharacter()!=null))||
-		(Game.map[(int) p.getX()][(int) p.getY()] instanceof TrapCell)||
-		(Game.map[(int) p.getX()][(int) p.getY()] instanceof CollectibleCell)))
+		/*
+		 * if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)
+		 */
+		// note that here x and y are inverted
+		if (!(((Game.map[(int) p.getX()][(int) p.getY()] instanceof CharacterCell)
+				&& (((CharacterCell) (Game.map[(int) p.getX()][(int) p.getY()])).getCharacter() != null)) ||
+				(Game.map[(int) p.getX()][(int) p.getY()] instanceof TrapCell) ||
+				(Game.map[(int) p.getX()][(int) p.getY()] instanceof CollectibleCell)))
 			return p;
-		else 
+		else
 			return notOccRandomPointGenerator();
 	}
-	public static ArrayList <Point> getAdjacent(Point p){
-		//Point[] adjPoints = new Point[8];
-		//Should it be 0 or 8?
-		ArrayList <Point> adjPoints =  new ArrayList<Point>(0);
+
+	public static ArrayList<Point> getAdjacent(Point p) {
+		// Point[] adjPoints = new Point[8];
+		// Should it be 0 or 8?
+		ArrayList<Point> adjPoints = new ArrayList<Point>(0);
 		int x = p.x;
 		int y = p.y;
-		Point p1 = new Point(x+1, y);
-		Point p2 = new Point(x-1, y);
-		Point p3 = new Point(x+1, y+1);
-		Point p4 = new Point(x+1, y-1);
-		Point p5 = new Point(x-1, y+1);
-		Point p6 = new Point(x-1, y-1);
-		Point p7 = new Point(x, y-1);
-		Point p8 = new Point(x, y+1);
-		if(isAdjacent(p1, p)){
+		Point p1 = new Point(x + 1, y);
+		Point p2 = new Point(x - 1, y);
+		Point p3 = new Point(x + 1, y + 1);
+		Point p4 = new Point(x + 1, y - 1);
+		Point p5 = new Point(x - 1, y + 1);
+		Point p6 = new Point(x - 1, y - 1);
+		Point p7 = new Point(x, y - 1);
+		Point p8 = new Point(x, y + 1);
+		if (isAdjacent(p1, p)) {
 			adjPoints.add(p1);
 		}
-		if(isAdjacent(p2, p)){
+		if (isAdjacent(p2, p)) {
 			adjPoints.add(p2);
 		}
-		if(isAdjacent(p3, p)){
+		if (isAdjacent(p3, p)) {
 			adjPoints.add(p3);
 		}
-		if(isAdjacent(p4, p)){
+		if (isAdjacent(p4, p)) {
 			adjPoints.add(p4);
 		}
-		if(isAdjacent(p5, p)){
+		if (isAdjacent(p5, p)) {
 			adjPoints.add(p5);
 		}
-		if(isAdjacent(p6, p)){
+		if (isAdjacent(p6, p)) {
 			adjPoints.add(p6);
 		}
-		if(isAdjacent(p7, p)){
+		if (isAdjacent(p7, p)) {
 			adjPoints.add(p7);
 		}
-		if(isAdjacent(p8, p)){
+		if (isAdjacent(p8, p)) {
 			adjPoints.add(p8);
 		}
 		return adjPoints;

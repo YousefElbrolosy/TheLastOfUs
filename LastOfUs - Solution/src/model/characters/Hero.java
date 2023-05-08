@@ -68,11 +68,15 @@ public abstract class Hero extends Character {
 	}
 
 	public void attack() throws InvalidTargetException, NotEnoughActionsException {
-		if (this.getActionsAvailable() >= 1) {
+		if (this.getTarget() == null)
+			throw new InvalidTargetException("Invalid target");
+		else if (this.getActionsAvailable() >= 1) {
 			super.attack();
 			int x = this.getActionsAvailable();
 			this.setActionsAvailable(--x);
-		} else
+		}
+
+		else
 			throw new NotEnoughActionsException("No enough actions avaliable");
 	}
 	// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think
@@ -88,7 +92,7 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.UP)) {
 				int x = (this.getLocation().x) + 1;
 				int y = this.getLocation().y;
-				if (x > 14 || isOccupied(new Point(x, y)))
+				if (x > 14 || super.isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
@@ -120,7 +124,7 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.DOWN)) {
 				int x = (this.getLocation().x) - 1;
 				int y = this.getLocation().y;
-				if (x < 0 || isOccupied(new Point(x, y)))
+				if (x < 0 || super.isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
@@ -153,7 +157,7 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.LEFT)) {
 				int x = (this.getLocation().x);
 				int y = (this.getLocation().y) - 1;
-				if (y < 0 || isOccupied(new Point(x, y)))
+				if (y < 0 || super.isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
@@ -186,7 +190,7 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.RIGHT)) {
 				int x = (this.getLocation().x);
 				int y = (this.getLocation().y) + 1;
-				if (y > 14 || isOccupied(new Point(x, y)))
+				if (y > 14 || super.isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
@@ -238,17 +242,17 @@ public abstract class Hero extends Character {
 	}
 
 	// or isoccupied that check for if instance of character cell
-	public boolean isOccupied(Point p) {
-		if (Game.map[p.x][p.y] instanceof CharacterCell) {
-			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
-				return false;
-			else
-				return true;
+	// public boolean isOccupied(Point p) {
+	// 	if (Game.map[p.x][p.y] instanceof CharacterCell) {
+	// 		if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+	// 			return false;
+	// 		else
+	// 			return true;
 
-		}
-		return false;
+	// 	}
+	// 	return false;
 
-	}
+	// }
 
 	public boolean isTrapCell(Point p) {
 
@@ -256,7 +260,7 @@ public abstract class Hero extends Character {
 
 	}
 
-	public void cure() throws InvalidTargetException, NoAvailableResourcesException {
+	public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
 		if (this.getVaccineInventory().size() > 0) {
 			if (this.getTarget() instanceof Zombie) {
 				if (this.getActionsAvailable() > 0) {
@@ -267,6 +271,7 @@ public abstract class Hero extends Character {
 						Random r = new Random();
 						int yRand = r.nextInt(y);
 						Hero h = Game.availableHeroes.get(yRand);
+						Game.heroes.add(h);
 						h.setLocation(this.getTarget().getLocation());
 						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this
 								.getTarget().getLocation().y];
@@ -275,12 +280,17 @@ public abstract class Hero extends Character {
 						this.getTarget().setLocation(null);
 						// modifying Points and Array
 						int x = this.getActionsAvailable();
-						this.setActionsAvailable(x--);
+						this.setActionsAvailable(--x);
 						v.use(this);
-					}
-				}
-			}
-		}
+					} else
+						throw new InvalidTargetException("Invalid Target");
+				} else
+					throw new NotEnoughActionsException("No enough actions avaliable");
+
+			} else
+				throw new InvalidTargetException("Invalid target");
+		} else
+			throw new NoAvailableResourcesException("No vaccines available");
 	}
 
 	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException {

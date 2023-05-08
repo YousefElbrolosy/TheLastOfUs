@@ -84,20 +84,15 @@ public abstract class Character {
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		Point targetLoc = getTarget().location;
 		Point characterLoc = this.getLocation();
-		if (!isAdjacent(targetLoc, characterLoc))
+		if (!isAdjacent(targetLoc, characterLoc) || this.getTarget() == null || !(this.getTarget() instanceof Zombie))
 			throw new InvalidTargetException("Cannot attack this cell");
 
 		else {
 			this.target.setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
 			this.target.defend(this);
-			if (this.target.getCurrentHp() == 0)
-
+			if (this.target.getCurrentHp() == 0) {
 				this.target.onCharacterDeath();
-
-			else if (this.getCurrentHp() == 0)
-
-				this.onCharacterDeath();
-
+			}
 		}
 
 	}
@@ -117,15 +112,8 @@ public abstract class Character {
 	}
 
 	public void onCharacterDeath() {
-
 		if (this instanceof Zombie) {
-
-			if (Game.map[this.getLocation().x][this.getLocation().y] instanceof CharacterCell) {
-				CharacterCell characterCell = new CharacterCell(this);
-				characterCell.setCharacter(null);
-
-			}
-
+			Game.map[this.getLocation().x][this.getLocation().y] = null;
 			Game.zombies.remove((Zombie) this);
 			Zombie z = new Zombie();
 
@@ -141,117 +129,96 @@ public abstract class Character {
 			}
 		}
 
-		this.setLocation(null);
 	}
 
 	public static Point notOccRandomPointGenerator() {
-		// length of columns (no. of rows)
-		int numberOfRows = Game.map[0].length;
-		// length of rows (no. of columns)
-		int numberOfColumns = Game.map.length;
-		// based on the Point(row,column)
 		Random r = new Random();
-		int xNew = r.nextInt(numberOfRows);
-		int yNew = r.nextInt(numberOfColumns);
-		Point p = new Point();
-		p.x = xNew;
-		p.y = yNew;
-		if ((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)
+		int x = r.nextInt(15);
+		int y = r.nextInt(15);
+		Point p = new Point(x, y);
+
+		if (!isOccupied(p))
 			return p;
 		else
 			return notOccRandomPointGenerator();
 	}
 
-	public static boolean isOccupiedZombies(Point p) {
-		int i = 0;
-		while (i < Game.zombies.size()) {
-			if (Game.zombies.get(i).getLocation() == p) {
+	public static boolean isOccupied(Point p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
 				return true;
-			} else {
-				i++;
-			}
+
 		}
 		return false;
 
 	}
 
-	public static boolean isOccupiedHeroes(Point p) {
+	// public void attackZombie() throws NotEnoughActionsException,
+	// InvalidTargetException {
+	// int x = this.getLocation().x;
+	// int y = this.getLocation().y;
 
-		int i = 0;
-		while (i < Game.heroes.size()) {
-			if (Game.heroes.get(i).getLocation() == p) {
-				return true;
-			} else {
-				i++;
-			}
-		}
-		return false;
+	// Point p1 = new Point(x + 1, y);
+	// Point p2 = new Point(x - 1, y);
+	// Point p3 = new Point(x + 1, y + 1);
+	// Point p4 = new Point(x + 1, y - 1);
+	// Point p5 = new Point(x - 1, y + 1);
+	// Point p6 = new Point(x - 1, y - 1);
+	// Point p7 = new Point(x, y - 1);
+	// Point p8 = new Point(x, y + 1);
 
-	}
+	// if ((isOccupiedHeroes(p1))) {
+	// if ((isAdjacent(this.getLocation(), p1)) == true) {
+	// this.setTarget(getOccupiedHeroes(p1));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p2))) {
+	// if ((isAdjacent(this.getLocation(), p2)) == true) {
+	// this.setTarget(getOccupiedHeroes(p2));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p3))) {
+	// if ((isAdjacent(this.getLocation(), p3)) == true) {
+	// this.setTarget(getOccupiedHeroes(p3));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p4))) {
+	// if ((isAdjacent(this.getLocation(), p4)) == true) {
+	// this.setTarget(getOccupiedHeroes(p4));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p5))) {
+	// if ((isAdjacent(this.getLocation(), p5)) == true) {
+	// this.setTarget(getOccupiedHeroes(p5));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p6))) {
+	// if ((isAdjacent(this.getLocation(), p6)) == true) {
+	// this.setTarget(getOccupiedHeroes(p6));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p7))) {
+	// if ((isAdjacent(this.getLocation(), p7)) == true) {
+	// this.setTarget(getOccupiedHeroes(p7));
+	// this.attack();
+	// }
+	// }
+	// if ((isOccupiedHeroes(p8))) {
+	// if ((isAdjacent(this.getLocation(), p8)) == true) {
+	// this.setTarget(getOccupiedHeroes(p8));
+	// this.attack();
+	// }
+	// }
 
-	public void attackZombie() throws NotEnoughActionsException, InvalidTargetException {
-		int x = this.getLocation().x;
-		int y = this.getLocation().y;
-
-		Point p1 = new Point(x + 1, y);
-		Point p2 = new Point(x - 1, y);
-		Point p3 = new Point(x + 1, y + 1);
-		Point p4 = new Point(x + 1, y - 1);
-		Point p5 = new Point(x - 1, y + 1);
-		Point p6 = new Point(x - 1, y - 1);
-		Point p7 = new Point(x, y - 1);
-		Point p8 = new Point(x, y + 1);
-
-		if ((isOccupiedHeroes(p1))) {
-			if ((isAdjacent(this.getLocation(), p1)) == true) {
-				this.setTarget(getOccupiedHeroes(p1));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p2))) {
-			if ((isAdjacent(this.getLocation(), p2)) == true) {
-				this.setTarget(getOccupiedHeroes(p2));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p3))) {
-			if ((isAdjacent(this.getLocation(), p3)) == true) {
-				this.setTarget(getOccupiedHeroes(p3));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p4))) {
-			if ((isAdjacent(this.getLocation(), p4)) == true) {
-				this.setTarget(getOccupiedHeroes(p4));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p5))) {
-			if ((isAdjacent(this.getLocation(), p5)) == true) {
-				this.setTarget(getOccupiedHeroes(p5));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p6))) {
-			if ((isAdjacent(this.getLocation(), p6)) == true) {
-				this.setTarget(getOccupiedHeroes(p6));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p7))) {
-			if ((isAdjacent(this.getLocation(), p7)) == true) {
-				this.setTarget(getOccupiedHeroes(p7));
-				this.attack();
-			}
-		}
-		if ((isOccupiedHeroes(p8))) {
-			if ((isAdjacent(this.getLocation(), p8)) == true) {
-				this.setTarget(getOccupiedHeroes(p8));
-				this.attack();
-			}
-		}
-
-	}
+	// }
 
 	public static ArrayList<Point> getAdjacent(Point p) {
 		// Point[] adjPoints = new Point[8];
@@ -308,39 +275,6 @@ public abstract class Character {
 	}
 }
 
-// package model.characters;
-
-// import java.awt.Point;
-// import java.util.ArrayList;
-// import java.util.Random;
-
-// import engine.Game;
-// import exceptions.InvalidTargetException;
-// import exceptions.NotEnoughActionsException;
-// import model.world.*;
-
-// public abstract class Character {
-// private String name;
-// private Point location;
-// private int maxHp;
-// private int currentHp;
-// private int attackDmg;
-// private Character target;
-
-// public Character() {
-// }
-
-// public Character(String name, int maxHp, int attackDmg) {
-// this.name=name;
-// this.maxHp = maxHp;
-// this.currentHp = maxHp;
-// this.attackDmg = attackDmg;
-// }
-
-// public Character getTarget() {
-// return target;
-
-// }
 // //this is important for attack rule
 // public void setTarget(Character target)throws InvalidTargetException{
 // // the reason I removed the condition that both must not be heroes is that
@@ -471,32 +405,9 @@ public abstract class Character {
 // }
 // */
 // /*
-// public boolean getAdjacency(Character target){
-// // is it better to use | instead of || ?
-// if((location.getX() == target.getLocation().getX())
-// | (location.getY() == target.getLocation().getY())
-// | ( (location.getX() + location.getY()) ==
-// (target.getLocation().getX() + target.getLocation().getY()) )
-// | ( (location.getX() - location.getY()) ==
-// (target.getLocation().getX() - target.getLocation().getY()) )
-// ){
-// return true;
-// // Hi baskat Sameh Sakr
-// }
-// else
-// return false;
 
-// }
 // */
-// public static boolean isAdjacent(Point point1, Point point2) {
-// int x =(point2.x-point1.x);
-// int y = (point2.y-point1.y);
-// double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-// if(d==1 || d==Math.sqrt(2))
-// return true;
-// else
-// return false ;
-// }
+
 // //here I am assuming that the Zombie generated randomly on the map
 // public void onCharacterDeath(){
 // //called only for attack not for cure guaranteeing respawning of zombie upon
