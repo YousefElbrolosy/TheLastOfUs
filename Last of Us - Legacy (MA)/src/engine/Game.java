@@ -14,7 +14,6 @@ import model.characters.Fighter;
 import model.characters.Hero;
 import model.characters.Medic;
 import model.characters.Zombie;
-import model.characters.Character;
 import model.world.Cell;
 import model.world.CharacterCell;
 import model.world.CollectibleCell;
