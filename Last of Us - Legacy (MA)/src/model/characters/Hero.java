@@ -102,6 +102,36 @@ public void attack() throws InvalidTargetException, NotEnoughActionsException {
 	
 	
 }
+public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException {
+	if (actionsAvailable == 0 || !isSpecialAction()) {
+		throw new NotEnoughActionsException();
+	} else if (this instanceof Medic) {
+		ArrayList<Supply> x = this.getSupplyInventory();
+		if (x.size() > 0) {
+			x.remove(x.size() - 1);
+			this.setSupplyInventory(x);
+			if (this.getCurrentHp() < this.getMaxHp()) {
+				this.setCurrentHp(this.getMaxHp());
+			} else {
+				this.getTarget().setCurrentHp(this.getTarget().getMaxHp());
+			}
+		} else
+			throw new NoAvailableResourcesException("No enough supplies in the inventory");
+
+		// }else{
+		// if (this.getClass().equals("class model.characters.Explorer")){
+		// for(int i=0;i<15;i++){
+		// for(int j=0;j<15;j++){
+		// Game.map[i][j].setVisible(true);
+		// }
+		// }
+		// }
+		// }
+		// this.getSupplyInventory().remove(this.getSupplyInventory().size()-1);
+		// }
+	}
+
+}
 public void cure()throws InvalidTargetException,NoAvailableResourcesException{
 	if(this.getVaccineInventory().size()>0){	
 		if(this.getTarget()instanceof Zombie){	
