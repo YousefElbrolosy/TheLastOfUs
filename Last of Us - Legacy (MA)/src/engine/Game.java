@@ -67,6 +67,7 @@ public class Game {
 			Game.zombies.get(i).attackZombie();
 			i++;
 		}
+		
 		//resetting each heroes maxActions
 		while(j<Game.heroes.size()){
 			Game.heroes.get(i).setActionsAvailable(Game.heroes.get(i).getMaxActions());
@@ -75,10 +76,26 @@ public class Game {
 			Game.heroes.get(i).setSpecialAction(false);
 			j++;
 		}
+		//setting visibility of whole map to false
+		int x = 0;
+		int y = 0;
+		//x denotes no of rows and y denotes no of columns
+		while(x<Game.map.length){
+				Cell cell = Game.map[x][y];
+				cell.setVisible(false);
+				x++;
+		}
+		while(y<Game.map[0].length){
+			Cell cell = Game.map[x][y];
+			cell.setVisible(false);
+			y++;
+		}
+			
+		
 		//Updating map //setting visibility of each adjacent cell to each hero to true
 		for(int k = 0; k<Game.heroes.size() ; k++){
 			ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
-			for(int y = 0; y<adjPoints.size(); y++){
+			for(y = 0; y<adjPoints.size(); y++){
 				CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(y).x][adjPoints.get(y).y];
 				heroCell.setVisible(true);
 			}
@@ -106,6 +123,7 @@ public class Game {
 		Point p = new Point();
 		p.x = xNew;
 		p.y = yNew;
+
 		/* 
 		if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)*/
 		//note that here x and y are inverted
