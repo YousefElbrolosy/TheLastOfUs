@@ -3,6 +3,9 @@ package model.characters;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+
+import engine.Game;
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
 import exceptions.InvalidTargetException;
@@ -28,8 +31,9 @@ public abstract class Hero extends Character {
 			this.specialAction=false;
 		
 		}
+		
 		public boolean getspecialTurn(){
-			return.this.specialTurn;
+			return this.specialTurn;
 		}
 		public void setspecialTurn(boolean b){
 			this.specialTurn=b;
@@ -50,9 +54,9 @@ public abstract class Hero extends Character {
 				  this.getSupplyInventory.remove(getSupplyInventory.size-1);
 				}else{
 					if (this.getClass().equals("class model.characters.Explorer")){
-						for(int i=0;i<15,i++){
+						for(int i=0;i<15;i++){
 							for(int j=0;j<15;j++){
-								map[i][j].setVisible(true);	
+								Game.map[i][j].setVisible(true);	
 							}
 						}
 					}
