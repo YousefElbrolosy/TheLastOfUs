@@ -45,14 +45,14 @@ public abstract class Hero extends Character {
 	              if (this.getCurrentHp<this.getMaxHp){
 					this.setCurrentHp=this.getMaxHp;
 				  }else{
-					this.target.currentHp=this.target.setCurrentHp(this.target.getMaxHp);
+					this.getTarget.setCurrentHp(this.getTarget.getMaxHp);
 				  }
 				  this.getSupplyInventory.remove(getSupplyInventory.size-1);
 				}else{
 					if (this.getClass().equals("class model.characters.Explorer")){
 						for(int i=0;i<15,i++){
 							for(int j=0;j<15;j++){
-								Cell[i][j].setVisible(true);	
+								map[i][j].setVisible(true);	
 							}
 						}
 					}
