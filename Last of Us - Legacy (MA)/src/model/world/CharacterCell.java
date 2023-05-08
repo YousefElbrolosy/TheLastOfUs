@@ -15,6 +15,8 @@ public class CharacterCell extends Cell {
 		this.isSafe = isSafe;
 	
 	}
+	//I think we should say that if Character.getLocation() entering the constructor of 
+	//character cell = null then Charactercell = null
 	
 	public CharacterCell(Character character) {
 	
