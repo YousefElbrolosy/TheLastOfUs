@@ -29,7 +29,6 @@ public abstract class Hero extends Character {
 		this.vaccineInventory = new ArrayList<Vaccine>();
 		this.supplyInventory = new ArrayList<Supply>();
 		this.specialAction = false;
-
 	}
 
 	public boolean isSpecialAction() {
@@ -89,22 +88,22 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.UP)) {
 				int x = (this.getLocation().x) + 1;
 				int y = this.getLocation().y;
-				if (x > 14 || isOccupiedHeroes(new Point(x, y)))
+				if (x > 14 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
-					if(isTrapCell(loc)){
-						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
-						if(curr<=0){
+					if (isTrapCell(loc)) {
+						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y]=new CharacterCell(null);
+							Game.map[loc.x][loc.y] = new CharacterCell(null);
 						}
-							
-						else{
+
+						else {
 							this.setCurrentHp(curr);
-							Game.map[loc.x][loc.y]=new CharacterCell(this);
+							Game.map[loc.x][loc.y] = new CharacterCell(this);
 
 						}
 					}
@@ -121,22 +120,22 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.DOWN)) {
 				int x = (this.getLocation().x) - 1;
 				int y = this.getLocation().y;
-				if (x < 0 || isOccupiedHeroes(new Point(x, y)))
+				if (x < 0 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
-					if(isTrapCell(loc)){
-						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
-						if(curr<=0){
+					if (isTrapCell(loc)) {
+						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y]=new CharacterCell(null);
+							Game.map[loc.x][loc.y] = new CharacterCell(null);
 						}
-							
-						else{
+
+						else {
 							this.setCurrentHp(curr);
-							Game.map[loc.x][loc.y]=new CharacterCell(this);
+							Game.map[loc.x][loc.y] = new CharacterCell(this);
 
 						}
 					}
@@ -154,22 +153,22 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.LEFT)) {
 				int x = (this.getLocation().x);
 				int y = (this.getLocation().y) - 1;
-				if (y<0 || isOccupiedHeroes(new Point(x, y)))
+				if (y < 0 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
-					if(isTrapCell(loc)){
-						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
-						if(curr<=0){
+					if (isTrapCell(loc)) {
+						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y]=new CharacterCell(null);
+							Game.map[loc.x][loc.y] = new CharacterCell(null);
 						}
-							
-						else{
+
+						else {
 							this.setCurrentHp(curr);
-							Game.map[loc.x][loc.y]=new CharacterCell(this);
+							Game.map[loc.x][loc.y] = new CharacterCell(this);
 
 						}
 					}
@@ -187,22 +186,22 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.RIGHT)) {
 				int x = (this.getLocation().x);
 				int y = (this.getLocation().y) + 1;
-				if (y > 14 || isOccupiedHeroes(new Point(x, y)))
+				if (y > 14 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
-					if(isTrapCell(loc)){
-						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
-						if(curr<=0){
+					if (isTrapCell(loc)) {
+						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y]=new CharacterCell(null);
+							Game.map[loc.x][loc.y] = new CharacterCell(null);
 						}
-							
-						else{
+
+						else {
 							this.setCurrentHp(curr);
-							Game.map[loc.x][loc.y]=new CharacterCell(this);
+							Game.map[loc.x][loc.y] = new CharacterCell(this);
 
 						}
 					}
@@ -216,7 +215,6 @@ public abstract class Hero extends Character {
 
 			}
 
-			
 			for (int i = 0; i < Game.map.length; i++) {
 				for (int j = 0; j < Game.map[i].length; j++) {
 					if (isAdjacent(this.getLocation(), new Point(i, j))) {
@@ -240,7 +238,7 @@ public abstract class Hero extends Character {
 	}
 
 	// or isoccupied that check for if instance of character cell
-	public boolean isOccupiedHeroes(Point p) {
+	public boolean isOccupied(Point p) {
 		if (Game.map[p.x][p.y] instanceof CharacterCell) {
 			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
 				return false;
@@ -283,5 +281,36 @@ public abstract class Hero extends Character {
 				}
 			}
 		}
+	}
+
+	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException {
+		if (actionsAvailable == 0 || !isSpecialAction()) {
+			throw new NotEnoughActionsException();
+		} else if (this instanceof Medic) {
+			ArrayList<Supply> x = this.getSupplyInventory();
+			if (x.size() > 0) {
+				x.remove(x.size() - 1);
+				this.setSupplyInventory(x);
+				if (this.getCurrentHp() < this.getMaxHp()) {
+					this.setCurrentHp(this.getMaxHp());
+				} else {
+					this.getTarget().setCurrentHp(this.getTarget().getMaxHp());
+				}
+			} else
+				throw new NoAvailableResourcesException("No enough supplies in the inventory");
+
+			// }else{
+			// if (this.getClass().equals("class model.characters.Explorer")){
+			// for(int i=0;i<15;i++){
+			// for(int j=0;j<15;j++){
+			// Game.map[i][j].setVisible(true);
+			// }
+			// }
+			// }
+			// }
+			// this.getSupplyInventory().remove(this.getSupplyInventory().size()-1);
+			// }
+		}
+
 	}
 }
