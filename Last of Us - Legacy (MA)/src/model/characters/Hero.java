@@ -254,6 +254,23 @@ public void move(Direction d) throws MovementException, NotEnoughActionsExceptio
 	}
 
 }
+public boolean isOccupied(Point p) {
+	if (Game.map[p.x][p.y] instanceof CharacterCell) {
+		if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+			return false;
+		else
+			return true;
+
+	}
+	return false;
+
+}
+
+public boolean isTrapCell(Point p) {
+
+	return (Game.map[p.x][p.y] instanceof TrapCell) ? true : false;
+
+}
 public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException {
 	if (actionsAvailable == 0 || !isSpecialAction()) {
 		throw new NotEnoughActionsException();
