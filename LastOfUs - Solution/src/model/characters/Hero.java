@@ -2,6 +2,7 @@ package model.characters;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.collectibles.Collectible;
 import model.collectibles.Supply;
@@ -265,5 +266,29 @@ public abstract class Hero extends Character {
 		return false;
 
 	}
-
+	public void cure()throws InvalidTargetException,NoAvailableResourcesException{
+		if(this.getVaccineInventory().size()>0){	
+			if(this.getTarget()instanceof Zombie){	
+				if(this.getActionsAvailable()>0){
+					if(isAdjacent(this.getLocation(),this.getTarget().getLocation())){
+						Vaccine v = getVaccineInventory().get(getVaccineInventory().size()-1);
+						//Mechanics of curing
+						int y = Game.availableHeroes.size();
+						Random r = new Random();
+						int yRand = r.nextInt(y);
+						Hero h = Game.availableHeroes.get(yRand);
+						h.setLocation(this.getTarget().getLocation());
+						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this.getTarget().getLocation().y];
+						zombieCell.setCharacter(h);
+						Game.zombies.remove(this.getTarget());
+						this.getTarget().setLocation(null);
+						//modifying Points and Array
+						int x = this.getActionsAvailable();
+						this.setActionsAvailable(x--);
+						v.use(this);
+					}
+				}
+			}
+		}
+	}
 }

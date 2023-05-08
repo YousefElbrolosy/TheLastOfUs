@@ -10,7 +10,6 @@ import java.util.Random;
 import model.characters.*;
 import model.characters.Character;
 import model.collectibles.*;
-import model.world.Cell;
 import model.world.*;
 
 public class Game {
@@ -109,6 +108,7 @@ public class Game {
 			}
 			i3++;
 		}
+		
 		int i4 = 0;
 		while (i4 < 5) {
 			TrapCell v = new TrapCell();
@@ -129,10 +129,15 @@ public class Game {
 		h.setLocation(new Point(0, 0));
 		// for(int i =0;i<map.length;i++){
 		// 	for (int j =0;j<map[i].length;j++){
-		// 		if(isAdjacent(new Point(0,0),new Point(i, j) )){
-		// 			map[i][j].setVisible(true);
+		// 		if(map[i][j] instanceof CharacterCell){
+		// 			Character characater = ((CharacterCell) map[i][j]).getCharacter();
+				
+
+		// 			if(isAdjacent(characater.getLocation(),new Point(i, j))){
+		// 				map[i][j].setVisible(true);
 		// 		}
 		// 	}
+		// }
 
 		// }
 	}
