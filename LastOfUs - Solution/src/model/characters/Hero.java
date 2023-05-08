@@ -75,160 +75,159 @@ public abstract class Hero extends Character {
 			this.setActionsAvailable(--x);
 		} else
 			throw new NotEnoughActionsException("No enough actions avaliable");
-
 	}
 	// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think
 	// en ehna mafrood n5ly mn el awl el hero yb2a visible kol el adjacent cells el
 	// hwaleh w msh 3aref ezay mafrood n access hewar el cell w hya asln abstract
 
-	public void move(Direction d) throws MovementException,NotEnoughActionsException, NoAvailableResourcesException{
+	public void move(Direction d) throws MovementException, NotEnoughActionsException, NoAvailableResourcesException {
 		int z = this.getActionsAvailable();
-		if (z<1)
+		if (z < 1)
 			throw new NotEnoughActionsException("No enough actions avaliable");
-		else if (d.equals(Direction.UP) || d.equals(Direction.RIGHT)||d.equals(Direction.DOWN)||d.equals(Direction.LEFT) ) {
-			if(d.equals(Direction.UP)){
-				int x=(this.getLocation().x)+1;
+		else if (d.equals(Direction.UP) || d.equals(Direction.RIGHT) || d.equals(Direction.DOWN)
+				|| d.equals(Direction.LEFT)) {
+			if (d.equals(Direction.UP)) {
+				int x = (this.getLocation().x) + 1;
 				int y = this.getLocation().y;
-				if (x>14 || isOccupiedHeroes(new Point(x, y)) || isOccupiedZombies(new Point(x, y)))
+				if (x > 14 || isOccupiedHeroes(new Point(x, y)))
 					throw new MovementException("Invalid move");
-				else{
-					this.setLocation(new Point (x,y));
+				else {
+					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
-					Point loc=this.getLocation();
-					if(Game.map[loc.x][loc.y] instanceof TrapCell){
-						this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
-						if(this.getCurrentHp()<=0){
+					Point loc = this.getLocation();
+					if(isTrapCell(loc)){
+						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
+						if(curr<=0){
 							this.onCharacterDeath();
-
-
+							Game.map[loc.x][loc.y]=new CharacterCell(null);
 						}
+							
 						else{
+							this.setCurrentHp(curr);
 							Game.map[loc.x][loc.y]=new CharacterCell(this);
 
 						}
 					}
-					if(Game.map[loc.x][loc.y] instanceof CollectibleCell){
-						Collectible collect=((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
+					if (Game.map[loc.x][loc.y] instanceof CollectibleCell) {
+						Collectible collect = ((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
 						collect.pickUp(this);
-						Game.map[loc.x][loc.y]=new CharacterCell(this);
+						Game.map[loc.x][loc.y] = new CharacterCell(this);
 					}
-					Game.map[loc.x][loc.y]=new CharacterCell(this);
-					
+					Game.map[loc.x][loc.y] = new CharacterCell(this);
+
 				}
-				
-			}
-			if(d.equals(Direction.DOWN)){
-				int x=(this.getLocation().x)-1;
-				int y = this.getLocation().y;
-				if (x<0 || isOccupiedHeroes(new Point(x, y)) || isOccupiedZombies(new Point(x, y)))
-					throw new MovementException("Invalid move");
-				else{
-					this.setLocation(new Point (x,y));
-					this.setActionsAvailable(--z);
-					Point loc=this.getLocation();
-					if(Game.map[loc.x][loc.y] instanceof TrapCell){
-						this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
-						if(this.getCurrentHp()<=0){
-							this.onCharacterDeath();
-
-
-						}
-						else{
-							Game.map[loc.x][loc.y]=new CharacterCell(this);
-
-						}
-					}
-					if(Game.map[loc.x][loc.y] instanceof CollectibleCell){
-						Collectible collect=((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
-						collect.pickUp(this);
-						Game.map[loc.x][loc.y]=new CharacterCell(this);
-					}
-					Game.map[loc.x][loc.y]=new CharacterCell(this);
-
-				
-				}
-				
 
 			}
-
-			if(d.equals(Direction.LEFT)){
-				int x=(this.getLocation().x);
-				int y = (this.getLocation().y)-1;
-				if (y<0 || isOccupiedHeroes(new Point(x, y)) || isOccupiedZombies(new Point(x, y)))
+			if (d.equals(Direction.DOWN)) {
+				int x = (this.getLocation().x) - 1;
+				int y = this.getLocation().y;
+				if (x < 0 || isOccupiedHeroes(new Point(x, y)))
 					throw new MovementException("Invalid move");
-				else{
-					this.setLocation(new Point (x,y));
+				else {
+					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
-					Point loc=this.getLocation();
-					if(Game.map[loc.x][loc.y] instanceof TrapCell){
-						this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
-						if(this.getCurrentHp()<=0){
+					Point loc = this.getLocation();
+					if(isTrapCell(loc)){
+						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
+						if(curr<=0){
 							this.onCharacterDeath();
-
-
+							Game.map[loc.x][loc.y]=new CharacterCell(null);
 						}
+							
 						else{
+							this.setCurrentHp(curr);
 							Game.map[loc.x][loc.y]=new CharacterCell(this);
 
 						}
 					}
-					if(Game.map[loc.x][loc.y] instanceof CollectibleCell){
-						Collectible collect=((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
+					if (Game.map[loc.x][loc.y] instanceof CollectibleCell) {
+						Collectible collect = ((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
 						collect.pickUp(this);
-						Game.map[loc.x][loc.y]=new CharacterCell(this);
+						Game.map[loc.x][loc.y] = new CharacterCell(this);
 					}
-					Game.map[loc.x][loc.y]=new CharacterCell(this);
+					Game.map[loc.x][loc.y] = new CharacterCell(this);
 
+				}
+
+			}
+
+			if (d.equals(Direction.LEFT)) {
+				int x = (this.getLocation().x);
+				int y = (this.getLocation().y) - 1;
+				if (y<0 || isOccupiedHeroes(new Point(x, y)))
+					throw new MovementException("Invalid move");
+				else {
+					this.setLocation(new Point(x, y));
+					this.setActionsAvailable(--z);
+					Point loc = this.getLocation();
+					if(isTrapCell(loc)){
+						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
+						if(curr<=0){
+							this.onCharacterDeath();
+							Game.map[loc.x][loc.y]=new CharacterCell(null);
+						}
+							
+						else{
+							this.setCurrentHp(curr);
+							Game.map[loc.x][loc.y]=new CharacterCell(this);
+
+						}
 					}
+					if (Game.map[loc.x][loc.y] instanceof CollectibleCell) {
+						Collectible collect = ((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
+						collect.pickUp(this);
+						Game.map[loc.x][loc.y] = new CharacterCell(this);
+					}
+					Game.map[loc.x][loc.y] = new CharacterCell(this);
+
+				}
+
+			}
+
+			if (d.equals(Direction.RIGHT)) {
+				int x = (this.getLocation().x);
+				int y = (this.getLocation().y) + 1;
+				if (y > 14 || isOccupiedHeroes(new Point(x, y)))
+					throw new MovementException("Invalid move");
+				else {
+					this.setLocation(new Point(x, y));
+					this.setActionsAvailable(--z);
+					Point loc = this.getLocation();
+					if(isTrapCell(loc)){
+						int curr=this.getCurrentHp()- ((TrapCell)(Game.map[loc.x][loc.y])).getTrapDamage();
+						if(curr<=0){
+							this.onCharacterDeath();
+							Game.map[loc.x][loc.y]=new CharacterCell(null);
+						}
+							
+						else{
+							this.setCurrentHp(curr);
+							Game.map[loc.x][loc.y]=new CharacterCell(this);
+
+						}
+					}
+					if (Game.map[loc.x][loc.y] instanceof CollectibleCell) {
+						Collectible collect = ((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
+						collect.pickUp(this);
+						Game.map[loc.x][loc.y] = new CharacterCell(this);
+					}
+					Game.map[loc.x][loc.y] = new CharacterCell(this);
+				}
+
+			}
+
 			
-			}
-
-			if(d.equals(Direction.RIGHT)){
-				int x=(this.getLocation().x);
-				int y = (this.getLocation().y)+1;
-				if (y>14 || isOccupiedHeroes(new Point(x, y)) || isOccupiedZombies(new Point(x, y)))
-					throw new MovementException("Invalid move");
-				else{
-					this.setLocation(new Point (x,y));
-					this.setActionsAvailable(--z);
-					Point loc=this.getLocation();
-					if(Game.map[loc.x][loc.y] instanceof TrapCell){
-						this.setCurrentHp(this.getCurrentHp()-(((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage()));
-						if(this.getCurrentHp()<=0){
-							this.onCharacterDeath();
-
-
-						}
-						else{
-							Game.map[loc.x][loc.y]=new CharacterCell(this);
-
-						}
-					}
-					if(Game.map[loc.x][loc.y] instanceof CollectibleCell){
-						Collectible collect=((CollectibleCell) Game.map[loc.x][loc.y]).getCollectible();
-						collect.pickUp(this);
-						Game.map[loc.x][loc.y]=new CharacterCell(this);
-					}
-					Game.map[loc.x][loc.y]=new CharacterCell(this);
-					}
-
-
-			}
-
-			else
-				throw new MovementException("Invalid move");
-			for(int i =0;i<Game.map.length;i++){
-				for (int j =0;j<Game.map[i].length;j++){
-					if(isAdjacent(this.getLocation(),new Point(i, j) )){
+			for (int i = 0; i < Game.map.length; i++) {
+				for (int j = 0; j < Game.map[i].length; j++) {
+					if (isAdjacent(this.getLocation(), new Point(i, j))) {
 						Game.map[i][j].setVisible(true);
 					}
 				}
 
 			}
 		}
-		
+
 	}
-	
 
 	public static boolean isAdjacent(Point point1, Point point2) {
 		int x = (point2.x - point1.x);
@@ -240,49 +239,43 @@ public abstract class Hero extends Character {
 			return false;
 	}
 
-	public boolean isOccupiedZombies(Point p) {
-		int i = 0;
-		while (i < Game.zombies.size()) {
-			if (Game.zombies.get(i).getLocation() == p) {
-				return true;
-			} else {
-				i++;
-			}
-		}
-		return false;
-
-	}
-
-	// or isoccupied that check for if intance of character cell
+	// or isoccupied that check for if instance of character cell
 	public boolean isOccupiedHeroes(Point p) {
-		int i = 0;
-		while (i < Game.heroes.size()) {
-			if (Game.heroes.get(i).getLocation() == p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
 				return true;
-			} else {
-				i++;
-			}
+
 		}
 		return false;
 
 	}
-	public void cure()throws InvalidTargetException,NoAvailableResourcesException{
-		if(this.getVaccineInventory().size()>0){	
-			if(this.getTarget()instanceof Zombie){	
-				if(this.getActionsAvailable()>0){
-					if(isAdjacent(this.getLocation(),this.getTarget().getLocation())){
-						Vaccine v = getVaccineInventory().get(getVaccineInventory().size()-1);
-						//Mechanics of curing
+
+	public boolean isTrapCell(Point p) {
+
+		return (Game.map[p.x][p.y] instanceof TrapCell) ? true : false;
+
+	}
+
+	public void cure() throws InvalidTargetException, NoAvailableResourcesException {
+		if (this.getVaccineInventory().size() > 0) {
+			if (this.getTarget() instanceof Zombie) {
+				if (this.getActionsAvailable() > 0) {
+					if (isAdjacent(this.getLocation(), this.getTarget().getLocation())) {
+						Vaccine v = getVaccineInventory().get(getVaccineInventory().size() - 1);
+						// Mechanics of curing
 						int y = Game.availableHeroes.size();
 						Random r = new Random();
 						int yRand = r.nextInt(y);
 						Hero h = Game.availableHeroes.get(yRand);
 						h.setLocation(this.getTarget().getLocation());
-						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this.getTarget().getLocation().y];
+						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this
+								.getTarget().getLocation().y];
 						zombieCell.setCharacter(h);
 						Game.zombies.remove(this.getTarget());
 						this.getTarget().setLocation(null);
-						//modifying Points and Array
+						// modifying Points and Array
 						int x = this.getActionsAvailable();
 						this.setActionsAvailable(x--);
 						v.use(this);

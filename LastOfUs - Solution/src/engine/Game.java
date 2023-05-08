@@ -57,7 +57,7 @@ public class Game {
 	}
 
 	public static void startGame(Hero h) {
-		map=new Cell[15][15];
+		map = new Cell[15][15];
 		int i1 = 0;
 		while (i1 < 5) {
 			Vaccine v = new Vaccine();
@@ -108,7 +108,7 @@ public class Game {
 			}
 			i3++;
 		}
-		
+
 		int i4 = 0;
 		while (i4 < 5) {
 			TrapCell v = new TrapCell();
@@ -124,22 +124,26 @@ public class Game {
 			}
 			i4++;
 		}
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (map[i][j] == null) {
+					map[i][j] = new CharacterCell(null);
+				}
+			}
+		}
+
+		map[0][0] = new CharacterCell(h);
+		map[0][0].setVisible(true);
 		heroes.add(h);
-		availableHeroes.remove(h);	
+		availableHeroes.remove(h);
 		h.setLocation(new Point(0, 0));
-		// for(int i =0;i<map.length;i++){
-		// 	for (int j =0;j<map[i].length;j++){
-		// 		if(map[i][j] instanceof CharacterCell){
-		// 			Character characater = ((CharacterCell) map[i][j]).getCharacter();
-				
-
-		// 			if(isAdjacent(characater.getLocation(),new Point(i, j))){
-		// 				map[i][j].setVisible(true);
-		// 		}
-		// 	}
-		// }
-
-		// }
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+					if (isAdjacent(h.getLocation(), new Point(i, j))) {
+						map[i][j].setVisible(true);
+					}
+				}		
+		}
 	}
 
 	public static boolean checkWin() {
@@ -197,16 +201,14 @@ public class Game {
 		return (flagvacc && flagused) || flagheroes;
 
 	}
-	
 
 	public static boolean isAdjacent(Point point1, Point point2) {
-	int x = (point2.x - point1.x);
-	int y = (point2.y - point1.y);
-	double d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-	if (d == 1 || d == Math.sqrt(2))
-		return true;
-	else
-		return false;
+		int x = (point2.x - point1.x);
+		int y = (point2.y - point1.y);
+		double d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+		if (d == 1 || d == Math.sqrt(2))
+			return true;
+		else
+			return false;
+	}
 }
-}
-
