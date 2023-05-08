@@ -15,6 +15,7 @@ public class Supply implements Collectible {
 		ArrayList<Supply> x = h.getSupplyInventory();
 		x.add(this);
 		h.setSupplyInventory(x);
+		
 	}
 
 	public void use(Hero h) throws NoAvailableResourcesException {
