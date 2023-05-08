@@ -116,11 +116,74 @@ public abstract class Character {
     
 
 	// On character Death method 
+	
 	public void onCharacterDeath(){
-		//Handling when health reaches zero is done in other methods where Health is reached 0
-		// if (this.target.getCurrentHp()<=0){
-		// 	this.target.setLocation(null) ;
-		// }
+		if (this instanceof Zombie) {
+
+			if (Game.map[this.getLocation().x][this.getLocation().y] instanceof CharacterCell) {
+				CharacterCell characterCell = new CharacterCell(this);
+				characterCell.setCharacter(null);
+
+			}
+
+			Game.zombies.remove((Zombie) this);
+			Zombie z = new Zombie();
+
+			Point p = notOccRandomPointGenerator();
+			z.setLocation(p);
+			Game.zombies.add(z);
+
+		} else {
+			if (this instanceof Hero) {
+
+				Game.heroes.remove((Hero) this);
+
+			}
+		}
+
+		this.setLocation(null);
 	}
+	public static Point notOccRandomPointGenerator() {
+		// length of columns (no. of rows)
+		int numberOfRows = Game.map[0].length;
+		// length of rows (no. of columns)
+		int numberOfColumns = Game.map.length;
+		// based on the Point(row,column)
+		Random r = new Random();
+		int xNew = r.nextInt(numberOfRows);
+		int yNew = r.nextInt(numberOfColumns);
+		Point p = new Point();
+		p.x = xNew;
+		p.y = yNew;
+		if ((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)
+			return p;
+		else
+			return notOccRandomPointGenerator();
+	}
+
+	public static boolean isOccupiedZombies(Point p) {
+		int i = 0;
+		while (i < Game.zombies.size()) {
+			if (Game.zombies.get(i).getLocation() == p) {
+				return true;
+			} else {
+				i++;
+			}
+		}
+		return false;
+
+	}
+
+	public static boolean isOccupiedHeroes(Point p) {
+
+		int i = 0;
+		while (i < Game.heroes.size()) {
+			if (Game.heroes.get(i).getLocation() == p) {
+				return true;
+			} else {
+				i++;
+			}
+		}
+		return false;}
 
 }
