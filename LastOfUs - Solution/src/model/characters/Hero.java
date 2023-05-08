@@ -17,7 +17,7 @@ public abstract class Hero extends Character {
 		private ArrayList<Vaccine> vaccineInventory;
 		private ArrayList<Supply> supplyInventory;
 		private boolean specialAction;
-	    
+	    private boolean specialTurn=false;
 		
 		public Hero(String name,int maxHp, int attackDmg, int maxActions) {
 			super(name,maxHp, attackDmg);
@@ -28,12 +28,18 @@ public abstract class Hero extends Character {
 			this.specialAction=false;
 		
 		}
+		public boolean getspecialTurn(){
+			return.this.specialTurn;
+		}
+		public void setspecialTurn(boolean b){
+			this.specialTurn=b;
+		}
 		public void useSpecial() throws NotEnoughActionsException,NoAvailableResourcesException{
 			if (actionsAvailable==0 || isSpecialAction==false){
 				throw new NotEnoughActionsException();
 			}
 			if (this.getClass().equals("class model.characters.Fighter")){
-	           boolean specialTurn=true;
+	            this.specialTurn==true;
 			}else{
 				if (this.getClass().equals("class model.characters.Medic")){
 	              if (this.getCurrentHp<this.getMaxHp){
@@ -94,7 +100,7 @@ public abstract class Hero extends Character {
 			return vaccineInventory;
 		}
 
-
+     
 		public ArrayList<Supply> getSupplyInventory() {
 			return supplyInventory;
 		}
@@ -118,7 +124,8 @@ public abstract class Hero extends Character {
 			
 		}
 		// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think en ehna mafrood n5ly mn el awl el hero yb2a visible kol el adjacent cells el hwaleh w msh 3aref ezay mafrood n access hewar el cell w hya asln abstract 
-       
+		
+		
 		
 		public void move(Direction d) throws MovementException,NotEnoughActionsException{
 			int z = this.getActionsAvailable();

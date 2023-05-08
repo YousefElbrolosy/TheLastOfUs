@@ -80,6 +80,7 @@ public abstract class Character {
 
 	// attacking method 
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+		
 		Point targetLoc = getTarget().location;
 		Point characterLoc = this.getLocation();
 		if (!isAdjacent(targetLoc, characterLoc))
@@ -94,11 +95,13 @@ public abstract class Character {
 			else if (this.getCurrentHp() ==0 )
 
 				this.onCharacterDeath();
-			
-
 					
 	}
-
+	if (this.getClass=="class model.characters.Fighter"&&Hero.getspecialTurn==true){
+		continue;
+	}else{
+		this.setActionsAvailable--;
+	}
 	}
 
 	// Defend method lw 2rena satr b satr fl example el hwa katbo fa dah el mafrood yt3ml 
