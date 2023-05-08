@@ -2,6 +2,7 @@ package model.characters;
 
 import java.awt.Point;
 import java.lang.Math;
+import java.util.ArrayList;
 import java.util.Random;
 
 import engine.Game;
@@ -85,6 +86,7 @@ public abstract class Character {
 		Point characterLoc = this.getLocation();
 		if (!isAdjacent(targetLoc, characterLoc))
 			throw new InvalidTargetException("Cannot attack this cell");
+
 		else {
 			this.target.setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
 			this.target.defend(this);
@@ -142,7 +144,7 @@ public abstract class Character {
 		this.setLocation(null);
 	}
 
-	public Point notOccRandomPointGenerator() {
+	public static Point notOccRandomPointGenerator() {
 		// length of columns (no. of rows)
 		int numberOfRows = Game.map[0].length;
 		// length of rows (no. of columns)
@@ -160,7 +162,7 @@ public abstract class Character {
 			return notOccRandomPointGenerator();
 	}
 
-	public boolean isOccupiedZombies(Point p) {
+	public static boolean isOccupiedZombies(Point p) {
 		int i = 0;
 		while (i < Game.zombies.size()) {
 			if (Game.zombies.get(i).getLocation() == p) {
@@ -173,7 +175,7 @@ public abstract class Character {
 
 	}
 
-	public boolean isOccupiedHeroes(Point p) {
+	public static boolean isOccupiedHeroes(Point p) {
 
 		int i = 0;
 		while (i < Game.heroes.size()) {
@@ -187,6 +189,123 @@ public abstract class Character {
 
 	}
 
+	public void attackZombie() throws NotEnoughActionsException, InvalidTargetException {
+		int x = this.getLocation().x;
+		int y = this.getLocation().y;
+
+		Point p1 = new Point(x + 1, y);
+		Point p2 = new Point(x - 1, y);
+		Point p3 = new Point(x + 1, y + 1);
+		Point p4 = new Point(x + 1, y - 1);
+		Point p5 = new Point(x - 1, y + 1);
+		Point p6 = new Point(x - 1, y - 1);
+		Point p7 = new Point(x, y - 1);
+		Point p8 = new Point(x, y + 1);
+
+		if ((isOccupiedHeroes(p1))) {
+			if ((isAdjacent(this.getLocation(), p1)) == true) {
+				this.setTarget(getOccupiedHeroes(p1));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p2))) {
+			if ((isAdjacent(this.getLocation(), p2)) == true) {
+				this.setTarget(getOccupiedHeroes(p2));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p3))) {
+			if ((isAdjacent(this.getLocation(), p3)) == true) {
+				this.setTarget(getOccupiedHeroes(p3));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p4))) {
+			if ((isAdjacent(this.getLocation(), p4)) == true) {
+				this.setTarget(getOccupiedHeroes(p4));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p5))) {
+			if ((isAdjacent(this.getLocation(), p5)) == true) {
+				this.setTarget(getOccupiedHeroes(p5));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p6))) {
+			if ((isAdjacent(this.getLocation(), p6)) == true) {
+				this.setTarget(getOccupiedHeroes(p6));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p7))) {
+			if ((isAdjacent(this.getLocation(), p7)) == true) {
+				this.setTarget(getOccupiedHeroes(p7));
+				this.attack();
+			}
+		}
+		if ((isOccupiedHeroes(p8))) {
+			if ((isAdjacent(this.getLocation(), p8)) == true) {
+				this.setTarget(getOccupiedHeroes(p8));
+				this.attack();
+			}
+		}
+
+	}
+
+	public static ArrayList<Point> getAdjacent(Point p) {
+		// Point[] adjPoints = new Point[8];
+		ArrayList<Point> adjPoints = new ArrayList<Point>(0);
+		int x = p.x;
+		int y = p.y;
+		Point p1 = new Point(x + 1, y);
+		Point p2 = new Point(x - 1, y);
+		Point p3 = new Point(x + 1, y + 1);
+		Point p4 = new Point(x + 1, y - 1);
+		Point p5 = new Point(x - 1, y + 1);
+		Point p6 = new Point(x - 1, y - 1);
+		Point p7 = new Point(x, y - 1);
+		Point p8 = new Point(x, y + 1);
+		if (isAdjacent(p1, p)) {
+			adjPoints.add(p1);
+		}
+		if (isAdjacent(p2, p)) {
+			adjPoints.add(p2);
+		}
+		if (isAdjacent(p3, p)) {
+			adjPoints.add(p3);
+		}
+		if (isAdjacent(p4, p)) {
+			adjPoints.add(p4);
+		}
+		if (isAdjacent(p5, p)) {
+			adjPoints.add(p5);
+		}
+		if (isAdjacent(p6, p)) {
+			adjPoints.add(p6);
+		}
+		if (isAdjacent(p7, p)) {
+			adjPoints.add(p7);
+		}
+		if (isAdjacent(p8, p)) {
+			adjPoints.add(p8);
+		}
+		return adjPoints;
+	}
+
+	// or isoccupied that check for if intance of character cell
+	public static Character getOccupiedHeroes(Point p) {
+		int i = 0;
+		while (i < Game.heroes.size()) {
+			if (Game.heroes.get(i).getLocation() == p) {
+				return Game.heroes.get(i);
+			} else {
+				i++;
+			}
+		}
+		return null;
+
+	}
 }
 
 // package model.characters;
