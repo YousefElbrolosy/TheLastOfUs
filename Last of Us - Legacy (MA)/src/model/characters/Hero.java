@@ -114,6 +114,7 @@ public void cure()throws InvalidTargetException,NoAvailableResourcesException{
 					Random r = new Random();
 					int yRand = r.nextInt(y);
 					Hero h = Game.availableHeroes.get(yRand);
+					Game.heroes.add(h);
 					h.setLocation(this.getTarget().getLocation());
 					CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this.getTarget().getLocation().y];
 					zombieCell.setCharacter(h);
