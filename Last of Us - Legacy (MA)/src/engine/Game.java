@@ -79,7 +79,6 @@ public class Game {
 		for(int k = 0; k<Game.heroes.size() ; k++){
 			ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
 			for(int y = 0; y<adjPoints.size(); y++){
-				adjPoints.get(y);
 				CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(y).x][adjPoints.get(y).y];
 				heroCell.setVisible(true);
 			}
