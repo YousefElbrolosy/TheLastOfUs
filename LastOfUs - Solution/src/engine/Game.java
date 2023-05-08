@@ -226,7 +226,7 @@ public class Game {
 		int i = 0;
 		int j = 0;
 		while (i < Game.zombies.size()) {
-			Game.zombies.get(i).attackZombie();
+			Game.zombies.get(i).attack();
 			i++;
 		}
 
