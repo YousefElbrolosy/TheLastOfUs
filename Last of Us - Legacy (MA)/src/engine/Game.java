@@ -184,7 +184,31 @@ public class Game {
 		else
 			return true;
 	}
-	
+	public static boolean checkGameOver() {
+		boolean flagvacc = true;
+		boolean flagused = true;
+		boolean flagheroes = true;
+
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				Cell z = map[i][j];
+				if (z instanceof CollectibleCell) {
+					Collectible x = ((CollectibleCell) map[i][j]).getCollectible();
+					if (x instanceof Vaccine) {
+						flagvacc = false;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < heroes.size(); i++) {
+			if (heroes.get(i).getVaccineInventory().size() != 0)
+				flagused = false;
+		}
+		if (availableHeroes.size() != 0 || heroes.size() != 0)
+			flagheroes = false;
+		return (flagvacc && flagused) || flagheroes;
+
+	}
 	
 	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException{
 		//iterates through zombie list and makes each zombie attack if possible
