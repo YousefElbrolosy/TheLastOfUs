@@ -62,7 +62,6 @@ public class Game {
 				map[p.x][p.y]==c;
 			}else{
 				while(map[p.x][p.y]!=null){
-                    Point p=new Point();
 					if (map[p.x][p.y]==null)
 					    map[p.x][p.y]=c;
 				}
