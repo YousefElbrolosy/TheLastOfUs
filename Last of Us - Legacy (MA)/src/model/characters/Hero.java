@@ -9,7 +9,6 @@ import java.util.Random;
 
 import model.collectibles.Supply;
 import model.collectibles.Vaccine;
-import model.world.Cell;
 import model.world.CharacterCell;
 
 
