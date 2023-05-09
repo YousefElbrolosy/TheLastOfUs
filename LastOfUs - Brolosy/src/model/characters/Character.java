@@ -190,4 +190,16 @@ public abstract class Character {
 			return false;
 		}
 	}
+
+	public static boolean isOccupied(Point p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
+				return true;
+
+		}
+		return false;
+
+	}
 }

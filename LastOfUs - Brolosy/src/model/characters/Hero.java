@@ -78,6 +78,17 @@ public abstract class Hero extends Character {
 			return supplyInventory;
 		}
 
+		public void attack() throws InvalidTargetException, NotEnoughActionsException {
+			if(this.getActionsAvailable()>=1) {
+				super.attack();
+				int x = this.getActionsAvailable();
+				this.setActionsAvailable(--x);
+			}else 
+				throw new NotEnoughActionsException("No enough actions avaliable");
+			
+			
+		}
+
 
 		public void move(Direction d) throws MovementException, NotEnoughActionsException, NoAvailableResourcesException {
 			int z = this.getActionsAvailable();
@@ -248,6 +259,39 @@ public abstract class Hero extends Character {
 			}
 		}
 
+
+
+		public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
+			if (this.getVaccineInventory().size() > 0) {
+				if (this.getTarget() instanceof Zombie) {
+					if (this.getActionsAvailable() > 0) {
+						if (isAdjacent(this.getLocation(), this.getTarget().getLocation())) {
+							Vaccine v = getVaccineInventory().get(getVaccineInventory().size() - 1);
+							// Mechanics of curing
+							int y = Game.availableHeroes.size();
+							Random r = new Random();
+							int yRand = r.nextInt(y);
+							Hero h = Game.availableHeroes.get(yRand);
+							Game.heroes.add(h);
+							h.setLocation(this.getTarget().getLocation());
+							CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this.getTarget().getLocation().y];
+							zombieCell.setCharacter(h);
+							Game.zombies.remove(this.getTarget());
+							this.getTarget().setLocation(null);
+							// modifying Points and Array
+							int x = this.getActionsAvailable();
+							this.setActionsAvailable(--x);
+							v.use(this);
+						} else
+							throw new InvalidTargetException("Invalid Target");
+					} else
+						throw new NotEnoughActionsException("No enough actions avaliable");
 		
+				} else
+					throw new InvalidTargetException("Invalid target");
+			} else
+				throw new NoAvailableResourcesException("No vaccines available");
+		}
+
 	
 }
