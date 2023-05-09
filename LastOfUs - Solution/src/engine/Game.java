@@ -246,28 +246,25 @@ public class Game {
 				y++;
 			}
 		
-		// spawning a Zombie Randomly on the map
-		
 
-			// Updating map //setting visibility of each adjacent cell to each hero to true
-			for (int k = 0; k < Game.heroes.size(); k++) {
-				ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
-				for (int f = 0; f < adjPoints.size(); f++) {
-					CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(f).x][adjPoints.get(f).y];
-					heroCell.setVisible(true);
-				}
-			}
-			// spawning a Zombie Randomly on the map
-			Zombie z = new Zombie();
-			// Randomizing point
-			Point p = notOccRandomPointGenerator();
-			z.setLocation(p);
-			Game.zombies.add(z);
-			// instead of initialising a variable I won't use
-			Game.map[p.x][p.y] = new CharacterCell(z);
+	// Updating map //setting visibility of each adjacent cell to each hero to true
+	for(
+
+	int k = 0;k<Game.heroes.size();k++)
+	{
+		ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
+		for (int f = 0; f < adjPoints.size(); f++) {
+			CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(f).x][adjPoints.get(f).y];
+			heroCell.setVisible(true);
 		}
-
-	
+	}
+	// spawning a Zombie Randomly on the map
+	Zombie z = new Zombie();
+	// Randomizing point
+	Point p = notOccRandomPointGenerator();z.setLocation(p);Game.zombies.add(z);
+	// instead of initialising a variable I won't use
+	Game.map[p.x][p.y]=new CharacterCell(z);
+	}
 
 	public static boolean isOccupiedHeroes(Point p) {
 		int i = 0;
