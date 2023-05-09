@@ -5,10 +5,14 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.lang.model.util.ElementScanner14;
+
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
 import model.world.CharacterCell;
+import model.world.CollectibleCell;
+import model.world.TrapCell;
 
 public abstract class Character {
 	private String name;
@@ -89,9 +93,11 @@ public abstract class Character {
 
 		else {
 			this.target.setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
-			this.target.defend(this);
-			if (this.target.getCurrentHp() == 0) {
+			if (this.target.getCurrentHp() <= 0) {
 				this.target.onCharacterDeath();
+			}
+			else{
+				this.target.defend(this);
 			}
 		}
 
@@ -108,22 +114,24 @@ public abstract class Character {
 
 		this.setTarget(c);
 		c.setCurrentHp(c.getCurrentHp() - this.getAttackDmg() / 2);
+		if (c.getCurrentHp() <= 0)
+			c.onCharacterDeath();
 
 	}
 
 	public void onCharacterDeath() {
 		if (this instanceof Zombie) {
-			Game.map[this.getLocation().x][this.getLocation().y] = null;
-			Game.zombies.remove((Zombie) this);
+			Game.map[this.getLocation().x][this.getLocation().y] = new CharacterCell(null);
+			Game.zombies.remove(this);
 			Zombie z = new Zombie();
-
 			Point p = notOccRandomPointGenerator();
 			z.setLocation(p);
 			Game.zombies.add(z);
+			Game.map[p.x][p.y] = new CharacterCell(z);
 
 		} else {
 			if (this instanceof Hero) {
-
+				Game.map[this.getLocation().x][this.getLocation().y] = new CharacterCell(null);
 				Game.heroes.remove((Hero) this);
 
 			}
@@ -137,21 +145,25 @@ public abstract class Character {
 		int y = r.nextInt(15);
 		Point p = new Point(x, y);
 
-		if (!isOccupied(p))
+		if (!Occupied(p))
 			return p;
 		else
 			return notOccRandomPointGenerator();
 	}
 
-	public static boolean isOccupied(Point p) {
+	public static boolean Occupied(Point p) {
 		if (Game.map[p.x][p.y] instanceof CharacterCell) {
 			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
 				return false;
 			else
 				return true;
 
-		}
-		return false;
+		} else if (Game.map[p.x][p.y] instanceof TrapCell)
+			return true;
+		else if (Game.map[p.x][p.y] instanceof CollectibleCell)
+			return true;
+		else
+			return false;
 
 	}
 

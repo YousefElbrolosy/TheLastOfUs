@@ -92,9 +92,10 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.UP)) {
 				int x = (this.getLocation().x) + 1;
 				int y = this.getLocation().y;
-				if (x > 14 || super.isOccupied(new Point(x, y)))
+				if (x > 14 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
+					Game.map[x - 1][y] = new CharacterCell(null);
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
@@ -102,7 +103,6 @@ public abstract class Hero extends Character {
 						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
 						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y] = new CharacterCell(null);
 						}
 
 						else {
@@ -124,9 +124,10 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.DOWN)) {
 				int x = (this.getLocation().x) - 1;
 				int y = this.getLocation().y;
-				if (x < 0 || super.isOccupied(new Point(x, y)))
+				if (x < 0 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
+					Game.map[x + 1][y] = new CharacterCell(null);
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
@@ -134,7 +135,7 @@ public abstract class Hero extends Character {
 						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
 						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y] = new CharacterCell(null);
+
 						}
 
 						else {
@@ -157,9 +158,10 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.LEFT)) {
 				int x = (this.getLocation().x);
 				int y = (this.getLocation().y) - 1;
-				if (y < 0 || super.isOccupied(new Point(x, y)))
+				if (y < 0 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
+					Game.map[x][y + 1] = new CharacterCell(null);
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
@@ -167,7 +169,7 @@ public abstract class Hero extends Character {
 						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
 						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y] = new CharacterCell(null);
+
 						}
 
 						else {
@@ -190,9 +192,10 @@ public abstract class Hero extends Character {
 			if (d.equals(Direction.RIGHT)) {
 				int x = (this.getLocation().x);
 				int y = (this.getLocation().y) + 1;
-				if (y > 14 || super.isOccupied(new Point(x, y)))
+				if (y > 14 || isOccupied(new Point(x, y)))
 					throw new MovementException("Invalid move");
 				else {
+					Game.map[x][y - 1] = new CharacterCell(null);
 					this.setLocation(new Point(x, y));
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
@@ -200,7 +203,7 @@ public abstract class Hero extends Character {
 						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
 						if (curr <= 0) {
 							this.onCharacterDeath();
-							Game.map[loc.x][loc.y] = new CharacterCell(null);
+
 						}
 
 						else {
@@ -230,6 +233,17 @@ public abstract class Hero extends Character {
 		}
 
 	}
+	public static boolean isOccupied(Point p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
+				return true;
+
+		} else
+			return false;
+
+	}
 
 	public static boolean isAdjacent(Point point1, Point point2) {
 		int x = (point2.x - point1.x);
@@ -243,14 +257,14 @@ public abstract class Hero extends Character {
 
 	// or isoccupied that check for if instance of character cell
 	// public boolean isOccupied(Point p) {
-	// 	if (Game.map[p.x][p.y] instanceof CharacterCell) {
-	// 		if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
-	// 			return false;
-	// 		else
-	// 			return true;
+	// if (Game.map[p.x][p.y] instanceof CharacterCell) {
+	// if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+	// return false;
+	// else
+	// return true;
 
-	// 	}
-	// 	return false;
+	// }
+	// return false;
 
 	// }
 

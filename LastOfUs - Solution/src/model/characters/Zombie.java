@@ -1,7 +1,5 @@
 package model.characters;
 
-import engine.Game;
-
 public class Zombie extends Character {
 	static int ZOMBIES_COUNT = 1;
 
