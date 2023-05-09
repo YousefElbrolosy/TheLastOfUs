@@ -11,9 +11,8 @@ public class Fighter extends Hero{
 	}
 
 	public void useSpecial() throws NoAvailableResourcesException,NotEnoughActionsException,InvalidTargetException{
-		// if (this.getTarget() instanceof Hero)
-	    //   throw new InvalidTargetException();
 	    super.useSpecial();
+		this.attack();
 	}
 	
 
