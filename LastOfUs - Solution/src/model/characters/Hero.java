@@ -221,18 +221,22 @@ public abstract class Hero extends Character {
 				}
 
 			}
+			if (this.getCurrentHp() > 0) {
+				for (int i = 0; i < Game.map.length; i++) {
+					for (int j = 0; j < Game.map[i].length; j++) {
+						if (isAdjacent(this.getLocation(), new Point(i, j))) {
 
-			for (int i = 0; i < Game.map.length; i++) {
-				for (int j = 0; j < Game.map[i].length; j++) {
-					if (isAdjacent(this.getLocation(), new Point(i, j))) {
-						Game.map[i][j].setVisible(true);
+							Game.map[i][j].setVisible(true);
+						}
 					}
-				}
 
+				}
 			}
+
 		}
 
 	}
+
 	public static boolean isOccupied(Point p) {
 		if (Game.map[p.x][p.y] instanceof CharacterCell) {
 			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
