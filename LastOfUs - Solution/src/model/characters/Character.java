@@ -80,22 +80,26 @@ public abstract class Character {
 			return false;
 	}
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		Point targetLoc = getTarget().location;
-		Point characterLoc = this.getLocation();
-		if (!isAdjacent(targetLoc, characterLoc) || this.getTarget() == null ||!(this.getTarget() instanceof Zombie))
-			throw new InvalidTargetException("Cannot attack this cell");
+		//check attack on newLogic
+		if(this.getTarget()!= null){
+			if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
+				if((this instanceof Hero && this.getTarget() instanceof Zombie)||(this instanceof Zombie && this.getTarget() instanceof Hero)){
+					this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
-		else {
-			this.getTarget().setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
-			if (this.getTarget().getCurrentHp() <= 0) {
-				this.getTarget().defend(this);
-				this.getTarget().onCharacterDeath();
-			}
-			else{
-				this.getTarget().defend(this);
-			}
-		}
-
+					if (this.getTarget().getCurrentHp() <=0){
+						this.getTarget().defend(this);
+						this.getTarget().onCharacterDeath();
+					}
+					else{
+						this.getTarget().defend(this);
+					}
+							
+				}
+				else throw new InvalidTargetException("Please select a valid target");
+			}	
+			else throw new InvalidTargetException("Please select a valid target");
+		}	
+		else throw new InvalidTargetException("Please select a valid target");
 	}
 	public void defend(Character c) {
 
