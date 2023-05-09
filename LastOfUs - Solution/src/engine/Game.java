@@ -350,13 +350,18 @@ public class Game {
 	}
 
 	public static boolean isAdjacent(Point point1, Point point2) {
-		int x = (point2.x - point1.x);
-		int y = (point2.y - point1.y);
-		double d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-		if (d == 1 || d == Math.sqrt(2))
-			return true;
-		else
+		if ((point1.x>=0)&&(point1.y>=0)&&(point2.y>=0)&&(point2.y>=0)){
+				int x =(point2.x-point1.x);
+				int y = (point2.y-point1.y);
+				double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+				if(d==1 || d==Math.sqrt(2))
+					return true; 
+				else
+					return false;
+		}
+		else{
 			return false;
+		}
 	}
 
 }
