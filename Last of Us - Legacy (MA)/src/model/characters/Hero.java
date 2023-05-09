@@ -301,13 +301,13 @@ public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesE
 	}
 
 }
-public void cure()throws InvalidTargetException,NoAvailableResourcesException{
-	if(this.getVaccineInventory().size()>0){	
-		if(this.getTarget()instanceof Zombie){	
-			if(this.getActionsAvailable()>0){
-				if(isAdjacent(this.getLocation(),this.getTarget().getLocation())){
-					Vaccine v = getVaccineInventory().get(getVaccineInventory().size()-1);
-					//Mechanics of curing
+public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
+	if (this.getVaccineInventory().size() > 0) {
+		if (this.getTarget() instanceof Zombie) {
+			if (this.getActionsAvailable() > 0) {
+				if (isAdjacent(this.getLocation(), this.getTarget().getLocation())) {
+					Vaccine v = getVaccineInventory().get(getVaccineInventory().size() - 1);
+					// Mechanics of curing
 					int y = Game.availableHeroes.size();
 					Random r = new Random();
 					int yRand = r.nextInt(y);
@@ -318,13 +318,18 @@ public void cure()throws InvalidTargetException,NoAvailableResourcesException{
 					zombieCell.setCharacter(h);
 					Game.zombies.remove(this.getTarget());
 					this.getTarget().setLocation(null);
-					//modifying Points and Array
+					// modifying Points and Array
 					int x = this.getActionsAvailable();
-					this.setActionsAvailable(x--);
+					this.setActionsAvailable(--x);
 					v.use(this);
-				}
-			}
-		}
-	}
+				} else
+					throw new InvalidTargetException("Invalid Target");
+			} else
+				throw new NotEnoughActionsException("No enough actions avaliable");
+
+		} else
+			throw new InvalidTargetException("Invalid target");
+	} else
+		throw new NoAvailableResourcesException("No vaccines available");
 }
 }
