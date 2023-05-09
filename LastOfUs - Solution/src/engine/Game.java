@@ -264,18 +264,7 @@ public class Game {
 	}
 
 	public static void attackZombie(Zombie z) throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
-		// int x = z.getLocation().x;
-		// int y = z.getLocation().y;
-		/*
-		 * Point p1 = new Point(x+1, y);
-		 * Point p2 = new Point(x-1, y);
-		 * Point p3 = new Point(x+1, y+1);
-		 * Point p4 = new Point(x+1, y-1);
-		 * Point p5 = new Point(x-1, y+1);
-		 * Point p6 = new Point(x-1, y-1);
-		 * Point p7 = new Point(x, y-1);
-		 * Point p8 = new Point(x, y+1);
-		 */
+		
 		for (int i = 0; i < Game.map.length; i++) {
 			for (int j = 0; j < Game.map[0].length; j++) {
 				Point p1 = new Point(i, j);
@@ -285,56 +274,7 @@ public class Game {
 				}
 			}
 		}
-		/*
-		 * if((isOccupiedHeroes(p1))){
-		 * if((isAdjacent(z.getLocation(), p1))==true){
-		 * z.setTarget(getOccupiedHeroes(p1));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p2))){
-		 * if((isAdjacent(z.getLocation(), p2))==true){
-		 * z.setTarget(getOccupiedHeroes(p2));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p3))){
-		 * if((isAdjacent(z.getLocation(), p3))==true){
-		 * z.setTarget(getOccupiedHeroes(p3));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p4))){
-		 * if((isAdjacent(z.getLocation(), p4))==true){
-		 * z.setTarget(getOccupiedHeroes(p4));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p5))){
-		 * if((isAdjacent(z.getLocation(), p5))==true){
-		 * z.setTarget(getOccupiedHeroes(p5));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p6))){
-		 * if((isAdjacent(z.getLocation(), p6))==true){
-		 * z.setTarget(getOccupiedHeroes(p6));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p7))){
-		 * if((isAdjacent(z.getLocation(), p7))==true){
-		 * z.setTarget(getOccupiedHeroes(p7));
-		 * z.attack();
-		 * }
-		 * }
-		 * else if((isOccupiedHeroes(p8))){
-		 * if((isAdjacent(z.getLocation(), p8))==true){
-		 * z.setTarget(getOccupiedHeroes(p8));
-		 * z.attack();
-		 * }
-		 * }
-		 */
+
 	}
 
 	public static boolean isOccupiedHeroes(Point p) {
