@@ -221,7 +221,7 @@ public class Game {
 			i++;
 		}
 
-		// resetting each heroes maxActions
+		// resetting each heroes maxActions and SpecialActions
 		while (j < Game.heroes.size()) {
 			Game.heroes.get(i).setActionsAvailable(Game.heroes.get(i).getMaxActions());
 			// here I assumed initial target of each hero is null
@@ -259,7 +259,7 @@ public class Game {
 		z.setLocation(p);
 		Game.zombies.add(z);
 		// instead of initialising a variable I won't use
-		new CharacterCell(z);
+		Game.map[p.x][p.y] = new CharacterCell(z);
 
 	}
 
