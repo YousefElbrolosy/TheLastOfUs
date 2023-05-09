@@ -241,7 +241,7 @@ public class Game {
 				x++;
 		}
 		while(y<Game.map[0].length){
-			Cell cell = Game.map[x][y];
+			Cell cell = Game.map[x-1][y];
 			cell.setVisible(false);
 			y++;
 		}
@@ -266,9 +266,9 @@ public class Game {
 
 	}
 	public static void attackZombie(Zombie z) throws NotEnoughActionsException, InvalidTargetException{
-		int x = z.getLocation().x;
-		int y = z.getLocation().y;
-
+		// int x = z.getLocation().x;
+		// int y = z.getLocation().y;
+/* 
 		Point p1 = new Point(x+1, y);
 		Point p2 = new Point(x-1, y);
 		Point p3 = new Point(x+1, y+1);
@@ -277,7 +277,17 @@ public class Game {
 		Point p6 = new Point(x-1, y-1);
 		Point p7 = new Point(x, y-1);
 		Point p8 = new Point(x, y+1);
-		
+		*/
+		for(int i = 0; i<Game.map.length;i++){
+			for(int j = 0; j<Game.map[0].length;j++){
+				Point p1 = new Point(i, j);
+				if((isAdjacent(z.getLocation(), p1))==true){
+					z.setTarget(getOccupiedHeroes(p1));
+					z.attack();
+				}
+			}
+		} 
+/* 		
 		if((isOccupiedHeroes(p1))){
 			if((isAdjacent(z.getLocation(), p1))==true){
 					z.setTarget(getOccupiedHeroes(p1));
@@ -326,8 +336,7 @@ public class Game {
 							z.attack();
 					}
 			}
-
-
+*/
 }
 
 	public static boolean isOccupiedHeroes(Point p){
