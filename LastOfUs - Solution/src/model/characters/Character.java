@@ -5,8 +5,6 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.lang.model.util.ElementScanner14;
-
 import engine.Game;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughActionsException;
@@ -131,6 +129,7 @@ public abstract class Character {
 			Game.map[p.x][p.y] = new CharacterCell(z);
 
 		} else  {
+				this.setLocation(null);
 				Game.map[loc.x][loc.y] = new CharacterCell(null);
 				Game.heroes.remove(this);
 
