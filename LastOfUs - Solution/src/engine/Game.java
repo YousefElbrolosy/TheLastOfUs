@@ -252,6 +252,7 @@ public class Game {
 				heroCell.setVisible(true);
 			}
 		}
+		
 		// spawning a Zombie Randomly on the map
 		Zombie z = new Zombie();
 		// Randomizing point
