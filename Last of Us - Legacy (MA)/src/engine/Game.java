@@ -280,47 +280,47 @@ public class Game {
 					z.attack();
 			}
 		}
-		if((isOccupiedHeroes(p2))){
-			if((isAdjacent(z.getLocation(), p2))==true){
-					z.setTarget(getOccupiedHeroes(p2));
-					z.attack();
-			}
+		else if((isOccupiedHeroes(p2))){
+				if((isAdjacent(z.getLocation(), p2))==true){
+						z.setTarget(getOccupiedHeroes(p2));
+						z.attack();
+				}
 		}
-		if((isOccupiedHeroes(p3))){
-			if((isAdjacent(z.getLocation(), p3))==true){
-					z.setTarget(getOccupiedHeroes(p3));
-					z.attack();
-			}
+		else if((isOccupiedHeroes(p3))){
+				if((isAdjacent(z.getLocation(), p3))==true){
+						z.setTarget(getOccupiedHeroes(p3));
+						z.attack();
+				}
 		}
-		if((isOccupiedHeroes(p4))){
-			if((isAdjacent(z.getLocation(), p4))==true){
-					z.setTarget(getOccupiedHeroes(p4));
-					z.attack();
-			}
+		else if((isOccupiedHeroes(p4))){
+				if((isAdjacent(z.getLocation(), p4))==true){
+						z.setTarget(getOccupiedHeroes(p4));
+						z.attack();
+				}
 		}
-		if((isOccupiedHeroes(p5))){
-			if((isAdjacent(z.getLocation(), p5))==true){
-					z.setTarget(getOccupiedHeroes(p5));
-					z.attack();
-			}
+		else if((isOccupiedHeroes(p5))){
+				if((isAdjacent(z.getLocation(), p5))==true){
+						z.setTarget(getOccupiedHeroes(p5));
+						z.attack();
+				}
 		}
-		if((isOccupiedHeroes(p6))){
+		else if((isOccupiedHeroes(p6))){
 			if((isAdjacent(z.getLocation(), p6))==true){
 					z.setTarget(getOccupiedHeroes(p6));
 					z.attack();
 			}
 		}
-		if((isOccupiedHeroes(p7))){
-			if((isAdjacent(z.getLocation(), p7))==true){
-					z.setTarget(getOccupiedHeroes(p7));
-					z.attack();
-			}
+		else if((isOccupiedHeroes(p7))){
+				if((isAdjacent(z.getLocation(), p7))==true){
+						z.setTarget(getOccupiedHeroes(p7));
+						z.attack();
+				}
 		}
-		if((isOccupiedHeroes(p8))){
-			if((isAdjacent(z.getLocation(), p8))==true){
-					z.setTarget(getOccupiedHeroes(p8));
-					z.attack();
-			}
+		else if((isOccupiedHeroes(p8))){
+				if((isAdjacent(z.getLocation(), p8))==true){
+						z.setTarget(getOccupiedHeroes(p8));
+						z.attack();
+				}
 		}
 
 
