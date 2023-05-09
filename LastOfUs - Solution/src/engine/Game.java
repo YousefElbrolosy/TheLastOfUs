@@ -217,13 +217,13 @@ public class Game {
 		int i = 0;
 		int j = 0;
 		while (i < Game.zombies.size()) {
-			attackZombie(Game.zombies.get(i));
+			Game.zombies.get(i).attack();
 			i++;
 		}
 
 		// resetting each heroes maxActions and SpecialActions
 		while (j < Game.heroes.size()) {
-			Game.heroes.get(j).setActionsAvailable(Game.heroes.get(i).getMaxActions());
+			Game.heroes.get(j).setActionsAvailable(Game.heroes.get(j).getMaxActions());
 			// here I assumed initial target of each hero is null
 			Game.heroes.get(j).setTarget(null);
 			Game.heroes.get(j).setSpecialAction(false);
@@ -263,20 +263,6 @@ public class Game {
 
 	}
 
-	public static void attackZombie(Zombie z) throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
-		
-		for (int i = 0; i < Game.map.length; i++) {
-			for (int j = 0; j < Game.map[0].length; j++) {
-				Point p1 = new Point(i, j);
-				if ((isAdjacent(z.getLocation(), p1)) == true) {
-					z.setTarget(getOccupiedHeroes(p1));
-					z.attack();
-				}
-			}
-		}
-
-	}
-
 	public static boolean isOccupiedHeroes(Point p) {
 		int i = 0;
 		while (i < Game.heroes.size()) {
@@ -290,18 +276,6 @@ public class Game {
 
 	}
 
-	public static Hero getOccupiedHeroes(Point p) {
-		int i = 0;
-		while (i < Game.heroes.size()) {
-			if (Game.heroes.get(i).getLocation() == p) {
-				return Game.heroes.get(i);
-			} else {
-				i++;
-			}
-		}
-		return null;
-
-	}
 
 	public static Point notOccRandomPointGenerator() {
 		// length of columns (no. of rows)
