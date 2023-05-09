@@ -16,22 +16,12 @@ public class Explorer extends Hero {
 		
 	}
     public void useSpecial() throws NoAvailableResourcesException,NotEnoughActionsException,InvalidTargetException{
-		ArrayList<Supply>x=this.getSupplyInventory();
-		if(x.isEmpty())
-		   throw new NoAvailableResourcesException();
-        if (this.getActionsAvailable()==0||this.isSpecialAction()==false)
-		  throw new NotEnoughActionsException();
-		  if (this.getTarget() instanceof Hero)
-		    throw new InvalidTargetException();
-		if (this.getTarget() instanceof Hero)
-		    throw new InvalidTargetException();
-		
-			for(int i=0;i<15;i++){
+		super.useSpecial();
+		for(int i=0;i<15;i++){
 				for(int j=0;j<15;j++){
 				Game.map[i][j].setVisible(true);	
 			}
 		}
-		super.useSpecial();
 	}
 	
 	
