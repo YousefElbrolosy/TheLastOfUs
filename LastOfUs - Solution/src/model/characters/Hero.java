@@ -82,9 +82,6 @@ public abstract class Hero extends Character {
 		else
 			throw new NotEnoughActionsException("No enough actions avaliable");
 	}
-	// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think
-	// en ehna mafrood n5ly mn el awl el hero yb2a visible kol el adjacent cells el
-	// hwaleh w msh 3aref ezay mafrood n access hewar el cell w hya asln abstract
 
 	public void move(Direction d) throws MovementException, NotEnoughActionsException, NoAvailableResourcesException {
 		int z = this.getActionsAvailable();
@@ -261,19 +258,6 @@ public abstract class Hero extends Character {
 		else
 			return false;
 	}
-
-	// or isoccupied that check for if instance of character cell
-	// public boolean isOccupied(Point p) {
-	// if (Game.map[p.x][p.y] instanceof CharacterCell) {
-	// if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
-	// return false;
-	// else
-	// return true;
-
-	// }
-	// return false;
-
-	// }
 
 	public boolean isTrapCell(Point p) {
 
