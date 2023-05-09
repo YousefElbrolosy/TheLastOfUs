@@ -223,10 +223,10 @@ public class Game {
 
 		// resetting each heroes maxActions and SpecialActions
 		while (j < Game.heroes.size()) {
-			Game.heroes.get(i).setActionsAvailable(Game.heroes.get(i).getMaxActions());
+			Game.heroes.get(j).setActionsAvailable(Game.heroes.get(i).getMaxActions());
 			// here I assumed initial target of each hero is null
-			Game.heroes.get(i).setTarget(null);
-			Game.heroes.get(i).setSpecialAction(false);
+			Game.heroes.get(j).setTarget(null);
+			Game.heroes.get(j).setSpecialAction(false);
 			j++;
 		}
 		// setting visibility of whole map to false
