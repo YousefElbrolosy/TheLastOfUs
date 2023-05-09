@@ -71,7 +71,10 @@ public abstract class Hero extends Character {
 		int x = this.getActionsAvailable();
 
 		if(!(this instanceof Fighter && isSpecialAction())){
-			this.setActionsAvailable(--x);
+			if (x > 0)
+				this.setActionsAvailable(--x);
+			else 
+				throw new NotEnoughActionsException("No actions avaliable");
 		}
 			super.attack();
         	
@@ -211,7 +214,6 @@ public abstract class Hero extends Character {
 						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
 						if (curr <= 0) {
 							this.onCharacterDeath();
-
 						}
 
 						else {
