@@ -245,6 +245,19 @@ public class Game {
 				cell.setVisible(false);
 				y++;
 			}
+<<<<<<< HEAD
+=======
+		}
+		
+		// spawning a Zombie Randomly on the map
+		Zombie z = new Zombie();
+		// Randomizing point
+		Point p = notOccRandomPointGenerator();
+		z.setLocation(p);
+		Game.zombies.add(z);
+		// instead of initialising a variable I won't use
+		Game.map[p.x][p.y] = new CharacterCell(z);
+>>>>>>> 6e63bbc6abf53217e21cd655a3e8e2b48c95211b
 
 			// Updating map //setting visibility of each adjacent cell to each hero to true
 			for (int k = 0; k < Game.heroes.size(); k++) {
