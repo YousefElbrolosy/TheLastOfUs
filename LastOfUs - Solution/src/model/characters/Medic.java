@@ -27,9 +27,7 @@ public class Medic extends Hero {
 		} else {
 			this.getTarget().setCurrentHp(this.getTarget().getMaxHp());
 		}
-		
-		
-		super.attack();
+		super.useSpecial();
 	}
 
 

@@ -21,7 +21,6 @@ public abstract class Hero extends Character {
 	private ArrayList<Vaccine> vaccineInventory;
 	private ArrayList<Supply> supplyInventory;
 	private boolean specialAction;
-	private static boolean specialTurn=false;
 
 	public Hero(String name, int maxHp, int attackDmg, int maxActions) {
 		super(name, maxHp, attackDmg);
@@ -31,12 +30,7 @@ public abstract class Hero extends Character {
 		this.supplyInventory = new ArrayList<Supply>();
 		this.specialAction = false;
 	}
-    public boolean isSpecialTurn(){
-		return specialTurn;
-	}
-	public void setSpecialTurn(boolean s){
-		specialTurn=s;
-	}
+
 	public boolean isSpecialAction() {
 		return specialAction;
 	}
@@ -75,13 +69,13 @@ public abstract class Hero extends Character {
 
 	public void attack() throws InvalidTargetException, NotEnoughActionsException,NoAvailableResourcesException {
 		ArrayList<Supply>y=this.getSupplyInventory();
-		
-			y.get(y.size()-1).use(this);
+		int x = this.getActionsAvailable();
+
+		if(!(this instanceof Fighter && isSpecialAction()==true)){
+			this.setActionsAvailable(--x);
+		}
 			super.attack();
-			int x = this.getActionsAvailable();
-        	if(!(this instanceof Fighter && isSpecialTurn()==true)){
-				this.setActionsAvailable(x--);
-			}
+        	
 	}
 	// n2esly hewar en ana a5ly el cells visible el 2bleh w hwa rayhla w deh i think
 	// en ehna mafrood n5ly mn el awl el hero yb2a visible kol el adjacent cells el
@@ -293,12 +287,12 @@ public abstract class Hero extends Character {
 
 	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException,InvalidTargetException {
 		ArrayList<Supply>s=this.getSupplyInventory();
-		if (this.getTarget() instanceof Zombie)
-		   throw new InvalidTargetException();
 		if(s.isEmpty())
 		   throw new NoAvailableResourcesException();
-        if (this.getActionsAvailable()==0||this.isSpecialAction()==false)
-		  throw new NotEnoughActionsException();
+        if (this.isSpecialAction()==true)
+		  throw new NoAvailableResourcesException ();
+		else 
+			this.setSpecialAction(true);
 		s.get(s.size()-1).use(this);
 		
 		

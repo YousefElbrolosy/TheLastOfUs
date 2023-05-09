@@ -15,23 +15,14 @@ public class Supply implements Collectible {
 		ArrayList<Supply> x = h.getSupplyInventory();
 		x.add(this);
 		h.setSupplyInventory(x);
-		
 	}
-
 	public void use(Hero h) throws NoAvailableResourcesException {
-		
 			ArrayList<Supply> x = h.getSupplyInventory();
 			if(x.size()>0) {
 				x.remove(x.size() - 1);
 				h.setSupplyInventory(x);
-			}
-			
+			}			
 			else
 				throw new NoAvailableResourcesException("No enough supplies in the inventory");
-		
-		
-		
-		
-
 	}
 }
