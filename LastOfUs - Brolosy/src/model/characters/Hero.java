@@ -302,4 +302,19 @@ public abstract class Hero extends Character {
 		}
 
 	
+		public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException,InvalidTargetException {
+			ArrayList<Supply>s=this.getSupplyInventory();
+			if (this.getTarget() instanceof Zombie)
+			   throw new InvalidTargetException();
+			if(s.isEmpty())
+			   throw new NoAvailableResourcesException();
+			if (this.getActionsAvailable()==0||this.isSpecialAction()==false)
+			  throw new NotEnoughActionsException();
+			s.get(s.size()-1).use(this);
+			
+			
+	
+		}
+
+		
 }
