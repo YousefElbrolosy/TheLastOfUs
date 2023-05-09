@@ -112,8 +112,10 @@ public abstract class Character {
 	}
 	public void onCharacterDeath() {
 		Point loc = this.getLocation();
+		Game.map[loc.x][loc.y]=new CharacterCell(null);
+		// ((CharacterCell)Game.map[loc.x][loc.y]).setCharacter(null);;
+
 		if (this instanceof Zombie) {
-			((CharacterCell)Game.map[loc.x][loc.y]).setCharacter(null);;
 			Game.zombies.remove(this);
 			Zombie z = new Zombie();
 			Point p = notOccRandomPointGenerator();
@@ -122,7 +124,6 @@ public abstract class Character {
 			Game.map[p.x][p.y] = new CharacterCell(z);
 
 		} else  {
-				Game.map[loc.x][loc.y] = new CharacterCell(null);
 				Game.heroes.remove(this);
 
 			}

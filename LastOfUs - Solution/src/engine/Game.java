@@ -211,7 +211,8 @@ public class Game {
 
 	}
 
-	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
+	public static void endTurn()
+			throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		// iterates through zombie list and makes each zombie attack if possible
 		// is there a way to make it all at once?
 		int i = 0;
@@ -221,47 +222,49 @@ public class Game {
 			i++;
 		}
 
-		// resetting each heroes maxActions and SpecialActions
+		//resetting each heroes maxActions and SpecialActions
 		while (j < Game.heroes.size()) {
-			Game.heroes.get(j).setActionsAvailable(Game.heroes.get(j).getMaxActions());
-			// here I assumed initial target of each hero is null
-			Game.heroes.get(j).setTarget(null);
-			Game.heroes.get(j).setSpecialAction(false);
-			j++;
+		Game.heroes.get(j).setActionsAvailable(Game.heroes.get(j).getMaxActions());
+		// here I assumed initial target of each hero is null
+		Game.heroes.get(j).setTarget(null);
+		Game.heroes.get(j).setSpecialAction(false);
+		j++;
 		}
-		// setting visibility of whole map to false
-		int x = 0;
-		int y = 0;
-		// x denotes no of rows and y denotes no of columns
-		while (x < Game.map.length) {
-			Cell cell = Game.map[x][y];
-			cell.setVisible(false);
-			x++;
-		}
-		while (y < Game.map[0].length) {
-			Cell cell = Game.map[x - 1][y];
-			cell.setVisible(false);
-			y++;
-		}
-
-		// Updating map //setting visibility of each adjacent cell to each hero to true
-		for (int k = 0; k < Game.heroes.size(); k++) {
-			ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
-			for (int f = 0; f < adjPoints.size(); f++) {
-				CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(f).x][adjPoints.get(f).y];
-				heroCell.setVisible(true);
+	
+			// setting visibility of whole map to false
+			int x = 0;
+			int y = 0;
+			// x denotes no of rows and y denotes no of columns
+			while (x < Game.map.length) {
+				Cell cell = Game.map[x][y];
+				cell.setVisible(false);
+				x++;
 			}
-		}
-		// spawning a Zombie Randomly on the map
-		Zombie z = new Zombie();
-		// Randomizing point
-		Point p = notOccRandomPointGenerator();
-		z.setLocation(p);
-		Game.zombies.add(z);
-		// instead of initialising a variable I won't use
-		Game.map[p.x][p.y] = new CharacterCell(z);
+			while (y < Game.map[0].length) {
+				Cell cell = Game.map[x - 1][y];
+				cell.setVisible(false);
+				y++;
+			}
 
-	}
+			// Updating map //setting visibility of each adjacent cell to each hero to true
+			for (int k = 0; k < Game.heroes.size(); k++) {
+				ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
+				for (int f = 0; f < adjPoints.size(); f++) {
+					CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(f).x][adjPoints.get(f).y];
+					heroCell.setVisible(true);
+				}
+			}
+			// spawning a Zombie Randomly on the map
+			Zombie z = new Zombie();
+			// Randomizing point
+			Point p = notOccRandomPointGenerator();
+			z.setLocation(p);
+			Game.zombies.add(z);
+			// instead of initialising a variable I won't use
+			Game.map[p.x][p.y] = new CharacterCell(z);
+		}
+
+	
 
 	public static boolean isOccupiedHeroes(Point p) {
 		int i = 0;
@@ -275,7 +278,6 @@ public class Game {
 		return false;
 
 	}
-
 
 	public static Point notOccRandomPointGenerator() {
 		// length of columns (no. of rows)

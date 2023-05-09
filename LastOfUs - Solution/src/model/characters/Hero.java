@@ -67,32 +67,30 @@ public abstract class Hero extends Character {
 		this.supplyInventory = supplyInventory;
 	}
 
-	public void attack() throws InvalidTargetException, NotEnoughActionsException,NoAvailableResourcesException {
+	public void attack() throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 		int x = this.getActionsAvailable();
 
-		if(!(this instanceof Fighter && isSpecialAction())){
+		if (!(this instanceof Fighter && isSpecialAction())) {
 			if (x > 0)
 				this.setActionsAvailable(--x);
-			else 
+			else
 				throw new NotEnoughActionsException("No actions avaliable");
 		}
-			super.attack();
-        	
+		super.attack();
+
 	}
-	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException,InvalidTargetException {
-		ArrayList<Supply>s=this.getSupplyInventory();
-		if(s.isEmpty())
-		   throw new NoAvailableResourcesException();
-        if (this.isSpecialAction())
-		  throw new NoAvailableResourcesException ();
-		else 
+
+	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException, InvalidTargetException {
+		ArrayList<Supply> s = this.getSupplyInventory();
+		if (s.isEmpty())
+			throw new NoAvailableResourcesException();
+		if (this.isSpecialAction())
+			throw new NoAvailableResourcesException();
+		else
 			this.setSpecialAction(true);
-		s.get(s.size()-1).use(this);
-		
-		
+		s.get(s.size() - 1).use(this);
 
 	}
-
 
 	public void move(Direction d) throws MovementException, NotEnoughActionsException, NoAvailableResourcesException {
 		int z = this.getActionsAvailable();
@@ -111,7 +109,8 @@ public abstract class Hero extends Character {
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
 					if (isTrapCell(loc)) {
-						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int trapDmg = ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int curr = this.getCurrentHp() - trapDmg;
 						if (curr <= 0) {
 							this.onCharacterDeath();
 						}
@@ -143,7 +142,8 @@ public abstract class Hero extends Character {
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
 					if (isTrapCell(loc)) {
-						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int trapDmg = ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int curr = this.getCurrentHp() - trapDmg;
 						if (curr <= 0) {
 							this.onCharacterDeath();
 
@@ -177,7 +177,8 @@ public abstract class Hero extends Character {
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
 					if (isTrapCell(loc)) {
-						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int trapDmg = ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int curr = this.getCurrentHp() - trapDmg;
 						if (curr <= 0) {
 							this.onCharacterDeath();
 
@@ -211,7 +212,8 @@ public abstract class Hero extends Character {
 					this.setActionsAvailable(--z);
 					Point loc = this.getLocation();
 					if (isTrapCell(loc)) {
-						int curr = this.getCurrentHp() - ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int trapDmg = ((TrapCell) (Game.map[loc.x][loc.y])).getTrapDamage();
+						int curr = this.getCurrentHp() - trapDmg;
 						if (curr <= 0) {
 							this.onCharacterDeath();
 						}
@@ -276,7 +278,6 @@ public abstract class Hero extends Character {
 
 	}
 
-	
 	public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
 		if (this.getVaccineInventory().size() > 0) {
 			if (this.getTarget() instanceof Zombie) {
@@ -290,7 +291,8 @@ public abstract class Hero extends Character {
 						Hero h = Game.availableHeroes.get(yRand);
 						Game.heroes.add(h);
 						h.setLocation(this.getTarget().getLocation());
-						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this.getTarget().getLocation().y];
+						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this
+								.getTarget().getLocation().y];
 						zombieCell.setCharacter(h);
 						Game.zombies.remove(this.getTarget());
 						this.getTarget().setLocation(null);
@@ -302,12 +304,11 @@ public abstract class Hero extends Character {
 						throw new InvalidTargetException("Invalid Target");
 				} else
 					throw new NotEnoughActionsException("No enough actions avaliable");
-	
+
 			} else
 				throw new InvalidTargetException("Invalid target");
 		} else
 			throw new NoAvailableResourcesException("No vaccines available");
 	}
 
-	
 }
