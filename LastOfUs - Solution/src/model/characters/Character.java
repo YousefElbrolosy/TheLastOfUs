@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.Random;
 
 import engine.Game;
+import exceptions.InvalidTargetException;
+import exceptions.NotEnoughActionsException;
 import model.world.*;
 
 
@@ -76,6 +78,32 @@ public abstract class Character {
 			return true;
 		else
 			return false;
+	}
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+		Point targetLoc = getTarget().location;
+		Point characterLoc = this.getLocation();
+		if (!isAdjacent(targetLoc, characterLoc) || this.getTarget() == null ||!(this.getTarget() instanceof Zombie))
+			throw new InvalidTargetException("Cannot attack this cell");
+
+		else {
+			this.getTarget().setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
+			if (this.getTarget().getCurrentHp() <= 0) {
+				this.getTarget().defend(this);
+				this.getTarget().onCharacterDeath();
+			}
+			else{
+				this.getTarget().defend(this);
+			}
+		}
+
+	}
+	public void defend(Character c) {
+
+		this.setTarget(c);
+		c.setCurrentHp(c.getCurrentHp() - this.getAttackDmg() / 2);
+		if (c.getCurrentHp() <= 0)
+			c.onCharacterDeath();
+
 	}
 	public void onCharacterDeath() {
 		Point loc = this.getLocation();
