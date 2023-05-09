@@ -95,7 +95,8 @@ public abstract class Character {
 			this.target.setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
 			if (this.target.getCurrentHp() <= 0) {
 				this.target.onCharacterDeath();
-			} else {
+			}
+			else{
 				this.target.defend(this);
 			}
 		}
@@ -118,73 +119,36 @@ public abstract class Character {
 
 	}
 
-	// public void onCharacterDeath() {
-	// Point loc = this.getLocation();
-	// if (this instanceof Zombie) {
-	// Game.map[loc.x][loc.y] = new CharacterCell(null);
-	// Game.zombies.remove(this);
-	// Zombie z = new Zombie();
-	// Point p = notOccRandomPointGenerator();
-	// z.setLocation(p);
-	// Game.zombies.add(z);
-	// Game.map[p.x][p.y] = new CharacterCell(z);
-
-	// } else {
-	// Game.map[loc.x][loc.y] = new CharacterCell(null);
-	// Game.heroes.remove(this);
-
-	// }
-	// }
-
 	public void onCharacterDeath() {
-		// called only for attack not for cure guaranteeing respawning of zombie
-		// upondeath
-		// make character cell empty? so that it can be used as a trap cell forexample
-		// if
-		// turn ended?
+		Point loc = this.getLocation();
 		if (this instanceof Zombie) {
-			// I dont remove last since last may be a Zombie that has Health < MaxHealth
-			// when accessing zombies out of the list? Is the actions done on themupdated?
-			// int length = Game.zombies.size();
-			// missing setting Character cell to be null
-			if (Game.map[(int) this.getLocation().getX()][(int) this.getLocation().getY()] instanceof CharacterCell) {
-				// this made sure that the location is same
-				CharacterCell characterCell = new CharacterCell(this);
-				// this makes it null
-				characterCell.setCharacter(null);
-
-			}
-
-			Game.zombies.remove((Zombie) this);
+			Game.map[loc.x][loc.y] = new CharacterCell(null);
+			Game.zombies.remove(this);
 			Zombie z = new Zombie();
-			// Randomizing point
 			Point p = notOccRandomPointGenerator();
 			z.setLocation(p);
 			Game.zombies.add(z);
-			// does where I place it in the new zombies List matter?
+			Game.map[p.x][p.y] = new CharacterCell(z);
 
-			/*
-			 * Start of first comment
-			 * Does this mean that I have to check before every operation
-			 * that the zombie is in the list?
-			 * Should I handle target to become null?
-			 */
-			/*
-			 * Start of 2nd comment
-			 * Random Generation of new Full Healthed zombie in map
-			 */
-
-		} else {
-			if (this instanceof Hero) {
-				// need to search for this and remove it specifically
-				// do I type cast it to hero?
-				Game.heroes.remove((Hero) this);
+		} else  {
+				Game.map[loc.x][loc.y] = new CharacterCell(null);
+				Game.heroes.remove(this);
 
 			}
 		}
-		// I think this line is useless because since they are not in the array
-		// they won't be used and therefore their locations won't be used
-		this.setLocation(null);
+
+	
+
+	public static Point notOccRandomPointGenerator() {
+		Random r = new Random();
+		int x = r.nextInt(15);
+		int y = r.nextInt(15);
+		Point p = new Point(x, y);
+
+		if (!Occupied(p))
+			return p;
+		else
+			return notOccRandomPointGenerator();
 	}
 
 	public static boolean Occupied(Point p) {
