@@ -1,6 +1,10 @@
 package model.characters;
 
 import java.awt.Point;
+import java.util.Random;
+
+import engine.Game;
+import model.world.*;
 
 
 public abstract class Character {
@@ -64,5 +68,60 @@ public abstract class Character {
 		return attackDmg;
 	}
 	
+	public static boolean isAdjacent(Point point1, Point point2) {
+		int x = (point2.x - point1.x);
+		int y = (point2.y - point1.y);
+		double d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+		if (d == 1 || d == Math.sqrt(2))
+			return true;
+		else
+			return false;
+	}
+	public void onCharacterDeath() {
+		Point loc = this.getLocation();
+		if (this instanceof Zombie) {
+			((CharacterCell)Game.map[loc.x][loc.y]).setCharacter(null);;
+			Game.zombies.remove(this);
+			Zombie z = new Zombie();
+			Point p = notOccRandomPointGenerator();
+			z.setLocation(p);
+			Game.zombies.add(z);
+			Game.map[p.x][p.y] = new CharacterCell(z);
 
+		} else  {
+				Game.map[loc.x][loc.y] = new CharacterCell(null);
+				Game.heroes.remove(this);
+
+			}
+		}
+
+	
+
+	public static Point notOccRandomPointGenerator() {
+		Random r = new Random();
+		int x = r.nextInt(15);
+		int y = r.nextInt(15);
+		Point p = new Point(x, y);
+
+		if (!Occupied(p))
+			return p;
+		else
+			return notOccRandomPointGenerator();
+	}
+
+	public static boolean Occupied(Point p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
+				return true;
+
+		} else if (Game.map[p.x][p.y] instanceof TrapCell)
+			return true;
+		else if (Game.map[p.x][p.y] instanceof CollectibleCell)
+			return true;
+		else
+			return false;
+
+	}
 }
