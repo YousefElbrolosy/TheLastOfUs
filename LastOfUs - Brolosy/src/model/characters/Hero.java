@@ -78,6 +78,14 @@ public abstract class Hero extends Character {
 			return supplyInventory;
 		}
 
+		public void setVaccineInventory(ArrayList<Vaccine> vaccineInventory) {
+			this.vaccineInventory = vaccineInventory;
+		}
+
+		public void setSupplyInventory(ArrayList<Supply> supplyInventory) {
+			this.supplyInventory = supplyInventory;
+		}
+
 		public void attack() throws InvalidTargetException, NotEnoughActionsException {
 			if(this.getActionsAvailable()>=1) {
 				super.attack();
