@@ -247,8 +247,8 @@ public class Game {
 		// Updating map //setting visibility of each adjacent cell to each hero to true
 		for (int k = 0; k < Game.heroes.size(); k++) {
 			ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
-			for (y = 0; y < adjPoints.size(); y++) {
-				CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(y).x][adjPoints.get(y).y];
+			for (int f = 0; f < adjPoints.size(); f++) {
+				CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(f).x][adjPoints.get(f).y];
 				heroCell.setVisible(true);
 			}
 		}
