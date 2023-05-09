@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.characters.*;
 import model.characters.Character;
@@ -210,7 +211,7 @@ public class Game {
 
 	}
 
-	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException {
+	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		// iterates through zombie list and makes each zombie attack if possible
 		// is there a way to make it all at once?
 		int i = 0;
@@ -262,7 +263,7 @@ public class Game {
 
 	}
 
-	public static void attackZombie(Zombie z) throws NotEnoughActionsException, InvalidTargetException {
+	public static void attackZombie(Zombie z) throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		// int x = z.getLocation().x;
 		// int y = z.getLocation().y;
 		/*

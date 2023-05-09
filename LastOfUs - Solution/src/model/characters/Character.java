@@ -5,6 +5,7 @@ import java.util.Random;
 
 import engine.Game;
 import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.world.*;
 
@@ -79,7 +80,7 @@ public abstract class Character {
 		else
 			return false;
 	}
-	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+	public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		//check attack on newLogic
 		if(this.getTarget()!= null){
 			if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
