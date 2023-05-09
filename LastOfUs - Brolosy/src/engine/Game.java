@@ -330,34 +330,34 @@ public class Game {
 
 }
 
-public static boolean isOccupiedHeroes(Point p){
-	int i = 0;
-	while(i<Game.heroes.size()){
-		if(Game.heroes.get(i).getLocation()==p){
-			return true;
+	public static boolean isOccupiedHeroes(Point p){
+		int i = 0;
+		while(i<Game.heroes.size()){
+			if(Game.heroes.get(i).getLocation()==p){
+				return true;
+			}
+			else{
+				i++;
+			}
 		}
-		else{
-			i++;
-		}
-	}
-	return false;
+		return false;
 
 
-}	
-public static Hero getOccupiedHeroes(Point p){
-	int i = 0;
-	while(i<Game.heroes.size()){
-		if(Game.heroes.get(i).getLocation()==p){
-			return Game.heroes.get(i);
+	}	
+	public static Hero getOccupiedHeroes(Point p){
+		int i = 0;
+		while(i<Game.heroes.size()){
+			if(Game.heroes.get(i).getLocation()==p){
+				return Game.heroes.get(i);
+			}
+			else{
+				i++;
+			}
 		}
-		else{
-			i++;
-		}
-	}
-	return null;
+		return null;
 
 
-}	
+	}	
 
 	public static Point notOccRandomPointGenerator(){
 		//length of columns (no. of rows)
@@ -437,5 +437,5 @@ public static Hero getOccupiedHeroes(Point p){
 		}
 	}
 
-	
+		
 }
