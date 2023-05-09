@@ -7,6 +7,7 @@ import java.util.Random;
 
 import engine.Game;
 import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.world.CharacterCell;
 
@@ -81,23 +82,18 @@ public abstract class Character {
 	}
 
 	// attacking method
-	public void attack() throws NotEnoughActionsException, InvalidTargetException {
+	public void attack() throws NotEnoughActionsException, InvalidTargetException,NoAvailableResourcesException {
 		Point targetLoc = getTarget().location;
 		Point characterLoc = this.getLocation();
 		if (!isAdjacent(targetLoc, characterLoc))
 			throw new InvalidTargetException("Cannot attack this cell");
-
 		else {
 			this.target.setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
 			this.target.defend(this);
 			if (this.target.getCurrentHp() == 0)
-
 				this.target.onCharacterDeath();
-
 			else if (this.getCurrentHp() == 0)
-
 				this.onCharacterDeath();
-
 		}
 
 	}
@@ -189,7 +185,7 @@ public abstract class Character {
 
 	}
 
-	public void attackZombie() throws NotEnoughActionsException, InvalidTargetException {
+	public void attackZombie() throws NotEnoughActionsException, InvalidTargetException,NoAvailableResourcesException {
 		int x = this.getLocation().x;
 		int y = this.getLocation().y;
 

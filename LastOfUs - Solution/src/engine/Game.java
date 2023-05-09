@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import exceptions.InvalidTargetException;
+import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.characters.*;
 import model.characters.Character;
@@ -20,7 +21,7 @@ public class Game {
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
-
+    
 	public static void loadHeroes(String filePath) throws IOException {
 
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -213,7 +214,7 @@ public class Game {
 		else
 			return false;
 	}
-	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException{
+	public static void endTurn() throws NotEnoughActionsException, InvalidTargetException,NoAvailableResourcesException{
 		//iterates through zombie list and makes each zombie attack if possible
 		//is there a way to make it all at once?
 		int i = 0; int j = 0;

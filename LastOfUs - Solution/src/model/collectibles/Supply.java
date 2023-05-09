@@ -24,7 +24,6 @@ public class Supply implements Collectible {
 			if(x.size()>0) {
 				x.remove(x.size() - 1);
 				h.setSupplyInventory(x);
-
 			}
 			
 			else
