@@ -70,6 +70,22 @@ public abstract class Hero extends Character {
 
 
 
+
+
+		public void setVaccineInventory(ArrayList<Vaccine> vaccineInventory) {
+			this.vaccineInventory = vaccineInventory;
+		}
+
+
+
+
+
+		public void setSupplyInventory(ArrayList<Supply> supplyInventory) {
+			this.supplyInventory = supplyInventory;
+		}
+
+
+
 		
 
 	
