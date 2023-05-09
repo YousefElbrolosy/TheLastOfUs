@@ -24,8 +24,11 @@ public class Medic extends Hero {
 
 		if (this.getCurrentHp() < this.getMaxHp()) {
 			this.setCurrentHp(this.getMaxHp());
+			this.setSpecialAction(false);
 		} else {
 			this.getTarget().setCurrentHp(this.getTarget().getMaxHp());
+			this.setSpecialAction(false);
+
 		}
 
 	}
