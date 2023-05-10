@@ -11,8 +11,10 @@ public class Fighter extends Hero {
 
 	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
 		super.useSpecial();
-
-		this.attack();
+		if (this.getTarget() instanceof Zombie)
+			this.attack();
+		else
+			throw new InvalidTargetException("Invalid Target");
 	}
 
 }

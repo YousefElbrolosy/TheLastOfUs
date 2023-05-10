@@ -70,7 +70,7 @@ public abstract class Hero extends Character {
 	public void attack() throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 		int x = this.getActionsAvailable();
 		if(this.getTarget() instanceof Zombie){
-			if (!(this instanceof Fighter && isSpecialAction())) {
+			if (!(this instanceof Fighter)) {
 				if (x > 0)
 					this.setActionsAvailable(--x);
 				else
@@ -87,9 +87,9 @@ public abstract class Hero extends Character {
 	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException, InvalidTargetException {
 		ArrayList<Supply> s = this.getSupplyInventory();
 		if (s.isEmpty())
-			throw new NoAvailableResourcesException();
+			throw new NoAvailableResourcesException("No supplies");
 		if (this.isSpecialAction())
-			throw new NoAvailableResourcesException();
+			throw new NoAvailableResourcesException("Already true");
 		else
 			this.setSpecialAction(true);
 		s.get(s.size() - 1).use(this);
@@ -238,6 +238,7 @@ public abstract class Hero extends Character {
 
 			}
 			if (this.getCurrentHp() > 0) {
+				Game.map[this.getLocation().x][this.getLocation().y].setVisible(true);
 				for (int i = 0; i < Game.map.length; i++) {
 					for (int j = 0; j < Game.map[i].length; j++) {
 						if (isAdjacent(this.getLocation(), new Point(i, j))) {
