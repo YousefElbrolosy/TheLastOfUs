@@ -88,20 +88,23 @@ public abstract class Character {
 	public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		//check attack on newLogic
 		if(this.getTarget()!= null){
-			if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
-					this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+			if(!(this instanceof Hero && this.getTarget() instanceof Hero)){
+				if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
+						this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
-					if (this.getTarget().getCurrentHp() <=0){
-						this.getTarget().defend(this);
-						this.getTarget().onCharacterDeath();
-					}
-					else{
-						this.getTarget().defend(this);
-					}
-							
-				
-			}	
-			else throw new InvalidTargetException("Please select a valid target");
+						if (this.getTarget().getCurrentHp() <=0){
+							this.getTarget().defend(this);
+							this.getTarget().onCharacterDeath();
+						}
+						else{
+							this.getTarget().defend(this);
+						}
+								
+					
+				}	
+				else throw new InvalidTargetException("Please select a valid target");
+			}
+			else throw new InvalidTargetException("Please select a valid target");	
 		}	
 		else throw new InvalidTargetException("Please select a valid target");
 	}
