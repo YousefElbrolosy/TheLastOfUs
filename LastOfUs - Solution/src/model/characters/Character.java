@@ -1,6 +1,7 @@
 package model.characters;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 
 import engine.Game;
