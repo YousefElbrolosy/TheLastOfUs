@@ -289,24 +289,30 @@ public abstract class Hero extends Character {
 			if (this.getTarget() instanceof Zombie) {
 				if (this.getActionsAvailable() > 0) {
 					if (isAdjacent(this.getLocation(), this.getTarget().getLocation())) {
-						Vaccine v = getVaccineInventory().get(getVaccineInventory().size() - 1);
-						// Mechanics of curing
-						int y = Game.availableHeroes.size();
-						Random r = new Random();
-						int yRand = r.nextInt(y);
-						Hero h = Game.availableHeroes.get(yRand);
-						Game.heroes.add(h);
-						h.setLocation(this.getTarget().getLocation());
-						CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this
-								.getTarget().getLocation().y];
-						zombieCell.setCharacter(h);
-						Game.zombies.remove(this.getTarget());
-						this.getTarget().setLocation(null);
-						// modifying Points and Array
-						int x = this.getActionsAvailable();
-						this.setActionsAvailable(--x);
-						this.setTarget(null);
+						int length = vaccineInventory.size();
+
+						Vaccine v = getVaccineInventory().get(length - 1);
+						vaccineInventory.remove(length - 1);
+						this.setVaccineInventory(vaccineInventory);
 						v.use(this);
+						int x = this.getActionsAvailable();
+
+						this.setActionsAvailable(--x);
+
+						// Mechanics of curing
+						// int y = Game.availableHeroes.size();
+						// Random r = new Random();
+						// int yRand = r.nextInt(y);
+						// Hero h = Game.availableHeroes.get(yRand);
+						// Game.heroes.add(h);
+						// h.setLocation(this.getTarget().getLocation());
+						// CharacterCell zombieCell = (CharacterCell) Game.map[this.getTarget().getLocation().x][this
+						// 		.getTarget().getLocation().y];
+						// zombieCell.setCharacter(h);
+						// Game.zombies.remove(this.getTarget());
+						// this.getTarget().setLocation(null);
+						// // modifying Points and Array
+						// this.setTarget(null);
 					} else
 						throw new InvalidTargetException("Invalid Target");
 				} else
