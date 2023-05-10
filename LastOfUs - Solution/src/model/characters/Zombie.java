@@ -119,6 +119,7 @@ public class Zombie extends Character {
 // 			}
 
 // }
+/* 
 public static boolean isOccupiedHeroes(Point p){
 	int i = 0;
 	while(i++<Game.heroes.size()){
@@ -145,6 +146,7 @@ public static Hero getOccupiedHeroes(Point p){
 
 
 }	
+*/
 }
 
 
