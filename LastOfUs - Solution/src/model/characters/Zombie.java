@@ -26,6 +26,7 @@ public class Zombie extends Character {
 						Character x= ((CharacterCell) Game.map[p1.x][p1.y]).getCharacter();
 						this.setTarget(x);
 						super.attack();
+						break;
 					}
 					
 				}

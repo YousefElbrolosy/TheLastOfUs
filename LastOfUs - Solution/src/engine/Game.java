@@ -222,48 +222,68 @@ public class Game {
 			i++;
 		}
 
-		//resetting each heroes maxActions and SpecialActions
+		// resetting each heroes maxActions and SpecialActions
 		while (j < Game.heroes.size()) {
-		Game.heroes.get(j).setActionsAvailable(Game.heroes.get(j).getMaxActions());
-		// here I assumed initial target of each hero is null
-		Game.heroes.get(j).setTarget(null);
-		Game.heroes.get(j).setSpecialAction(false);
-		j++;
+			Game.heroes.get(j).setActionsAvailable(Game.heroes.get(j).getMaxActions());
+			// here I assumed initial target of each hero is null
+			Game.heroes.get(j).setTarget(null);
+			Game.heroes.get(j).setSpecialAction(false);
+			j++;
 		}
-	
-			// setting visibility of whole map to false
-			int x = 0;
-			int y = 0;
-			// x denotes no of rows and y denotes no of columns
-			while (x < Game.map.length) {
-				Cell cell = Game.map[x][y];
-				cell.setVisible(false);
-				x++;
-			}
-			while (y < Game.map[0].length) {
-				Cell cell = Game.map[x - 1][y];
-				cell.setVisible(false);
-				y++;
-			}
-		
 
-	// Updating map //setting visibility of each adjacent cell to each hero to true
-	for(
-
-	int k = 0;k<Game.heroes.size();k++)
-	{
-		ArrayList<Point> adjPoints = getAdjacent(Game.heroes.get(k).getLocation());
-		for (int f = 0; f < adjPoints.size(); f++) {
-			CharacterCell heroCell = (CharacterCell) Game.map[adjPoints.get(f).x][adjPoints.get(f).y];
-			heroCell.setVisible(true);
+		// setting visibility of whole map to false
+		int x = 0;
+		int y = 0;
+		// x denotes no of rows and y denotes no of columns
+		while (x < Game.map.length) {
+			Cell cell = Game.map[x][y];
+			cell.setVisible(false);
+			x++;
 		}
+		while (y < Game.map[0].length) {
+			Cell cell = Game.map[x - 1][y];
+			cell.setVisible(false);
+			y++;
+		}
+
+		// Updating map //setting visibility of each adjacent cell to each hero to true
+
+		for (i = 0; i < Game.map.length; i++) {
+			for (j = 0; j < Game.map[i].length; j++) {
+				if (Game.map[i][j] instanceof CharacterCell) {
+					Character z = ((CharacterCell) Game.map[i][j]).getCharacter();
+					if (z instanceof Hero) {
+						setAdjacent(z.getLocation());
+					}
+
+				}
+
+			}
+
+		}
+		for(i=0;i<zombies.size();i++){
+			zombies.get(i).setTarget(null);
+		}
+		// spawning a Zombie Randomly on the map
+		Zombie z = new Zombie();
+		// Randomizing point
+		Point p = notOccRandomPointGenerator();
+		z.setLocation(p);
+		Game.zombies.add(z);
+		// instead of initialising a variable I won't use
+		Game.map[p.x][p.y] = new CharacterCell(z);
 	}
-	// spawning a Zombie Randomly on the map
-	Zombie z = new Zombie();
-	// Randomizing point
-	Point p = notOccRandomPointGenerator();z.setLocation(p);Game.zombies.add(z);
-	// instead of initialising a variable I won't use
-	Game.map[p.x][p.y]=new CharacterCell(z);
+
+	// set visiblity to all adjacent cells and the location of the hero
+	public static void setAdjacent(Point p) {
+		Game.map[p.x][p.y].setVisible(true);
+
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				if (isAdjacent(p, new Point(i, j)))
+					Game.map[i][j].setVisible(true);
+			}
+		}
 	}
 
 	public static boolean isOccupiedHeroes(Point p) {
@@ -347,16 +367,15 @@ public class Game {
 	}
 
 	public static boolean isAdjacent(Point point1, Point point2) {
-		if ((point1.x>=0)&&(point1.y>=0)&&(point2.y>=0)&&(point2.y>=0)){
-				int x =(point2.x-point1.x);
-				int y = (point2.y-point1.y);
-				double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-				if(d==1 || d==Math.sqrt(2))
-					return true; 
-				else
-					return false;
-		}
-		else{
+		if ((point1.x >= 0) && (point1.y >= 0) && (point2.y >= 0) && (point2.y >= 0)) {
+			int x = (point2.x - point1.x);
+			int y = (point2.y - point1.y);
+			double d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+			if (d == 1 || d == Math.sqrt(2))
+				return true;
+			else
+				return false;
+		} else {
 			return false;
 		}
 	}
