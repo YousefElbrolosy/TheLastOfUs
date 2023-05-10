@@ -69,18 +69,16 @@ public abstract class Hero extends Character {
 
 	public void attack() throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 		int x = this.getActionsAvailable();
-		if(this.getTarget() instanceof Zombie){
-			if (!(this instanceof Fighter)) {
+		if (this.getTarget() instanceof Zombie) {
+			if (!(this instanceof Fighter && isSpecialAction())) {
 				if (x > 0)
 					this.setActionsAvailable(--x);
 				else
 					throw new NotEnoughActionsException("No actions avaliable");
 			}
 			super.attack();
-		}
-		else
+		} else
 			throw new InvalidTargetException("Invalid target");
-		
 
 	}
 
@@ -284,6 +282,9 @@ public abstract class Hero extends Character {
 	}
 
 	public void cure() throws InvalidTargetException, NoAvailableResourcesException, NotEnoughActionsException {
+		if (Game.availableHeroes.size() <= 0) {
+			throw new NoAvailableResourcesException("no heroes");
+		}
 		if (this.getVaccineInventory().size() > 0) {
 			if (this.getTarget() instanceof Zombie) {
 				if (this.getActionsAvailable() > 0) {
@@ -304,6 +305,7 @@ public abstract class Hero extends Character {
 						// modifying Points and Array
 						int x = this.getActionsAvailable();
 						this.setActionsAvailable(--x);
+						this.setTarget(null);
 						v.use(this);
 					} else
 						throw new InvalidTargetException("Invalid Target");

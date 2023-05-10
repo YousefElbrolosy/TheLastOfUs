@@ -217,9 +217,13 @@ public class Game {
 		// is there a way to make it all at once?
 		int i = 0;
 		int j = 0;
-		while (i < Game.zombies.size()) {
-			Game.zombies.get(i).attack();
-			i++;
+		for(Zombie zombie : zombies) {
+			Hero x=setForMe(zombie.getLocation());
+			if(x!=null){
+				zombie.setTarget(x);
+				zombie.attack();
+			}
+			
 		}
 
 		// resetting each heroes maxActions and SpecialActions
@@ -232,19 +236,27 @@ public class Game {
 		}
 
 		// setting visibility of whole map to false
-		int x = 0;
-		int y = 0;
-		// x denotes no of rows and y denotes no of columns
-		while (x < Game.map.length) {
-			Cell cell = Game.map[x][y];
-			cell.setVisible(false);
-			x++;
-		}
-		while (y < Game.map[0].length) {
-			Cell cell = Game.map[x - 1][y];
-			cell.setVisible(false);
-			y++;
-		}
+		// int x = 0;
+		// int y = 0;
+		// // x denotes no of rows and y denotes no of columns
+		// while (x < Game.map.length) {
+		// 	Cell cell = Game.map[x][y];
+		// 	cell.setVisible(false);
+		// 	x++;
+		// }
+		// while (y < Game.map[0].length) {
+		// 	Cell cell = Game.map[x - 1][y];
+		// 	cell.setVisible(false);
+		// 	y++;
+		// }
+		for ( i = 0; i < Game.map.length; i++) {
+			for ( j = 0; j < Game.map[i].length; j++) {
+
+					Game.map[i][j].setVisible(false);
+				}
+			}
+
+		
 
 		// Updating map //setting visibility of each adjacent cell to each hero to true
 
@@ -365,7 +377,18 @@ public class Game {
 		}
 		return adjPoints;
 	}
-
+	public static Hero setForMe(Point x){
+		for(int i =0 ; i<map.length;i++){
+			for(int j =0;j<map[0].length;j++){
+			if(isAdjacent(new Point(i,j), x))	
+				if(map[i][j] instanceof CharacterCell){
+					if(((CharacterCell)map[i][j]).getCharacter() instanceof Hero)	
+							return (Hero) ((CharacterCell)map[i][j]).getCharacter();
+				}
+			}
+		}
+		return null;
+	}
 	public static boolean isAdjacent(Point point1, Point point2) {
 		if ((point1.x >= 0) && (point1.y >= 0) && (point2.y >= 0) && (point2.y >= 0)) {
 			int x = (point2.x - point1.x);

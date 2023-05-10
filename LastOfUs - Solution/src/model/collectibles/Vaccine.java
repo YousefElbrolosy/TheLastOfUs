@@ -24,6 +24,7 @@ public class Vaccine implements Collectible {
 			int length = vaccineInventory.size();
 			vaccineInventory.remove(length-1);
 			h.setVaccineInventory(vaccineInventory);
+			
 			}
 			else{
 				throw new NoAvailableResourcesException("no space");

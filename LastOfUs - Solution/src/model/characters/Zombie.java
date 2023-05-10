@@ -18,20 +18,7 @@ public class Zombie extends Character {
 
 	public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		
-		for (int i = 0; i < Game.map.length; i++) {
-			for (int j = 0; j < Game.map[0].length; j++) {
-				Point p1 = new Point(i, j);
-				if ((isAdjacent(this.getLocation(), p1)) == true) {
-					if(isOccupied(p1)){
-						Character x= ((CharacterCell) Game.map[p1.x][p1.y]).getCharacter();
-						this.setTarget(x);
-						super.attack();
-						break;
-					}
-					
-				}
-			}
-		}
+		super.attack();
 
 	}
 	public boolean isOccupied(Point p) {
