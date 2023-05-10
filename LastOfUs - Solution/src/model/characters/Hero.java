@@ -69,14 +69,18 @@ public abstract class Hero extends Character {
 
 	public void attack() throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
 		int x = this.getActionsAvailable();
-
-		if (!(this instanceof Fighter && isSpecialAction())) {
-			if (x > 0)
-				this.setActionsAvailable(--x);
-			else
-				throw new NotEnoughActionsException("No actions avaliable");
+		if(this.getTarget() instanceof Zombie){
+			if (!(this instanceof Fighter && isSpecialAction())) {
+				if (x > 0)
+					this.setActionsAvailable(--x);
+				else
+					throw new NotEnoughActionsException("No actions avaliable");
+			}
+			super.attack();
 		}
-		super.attack();
+		else
+			throw new InvalidTargetException("Invalid target");
+		
 
 	}
 

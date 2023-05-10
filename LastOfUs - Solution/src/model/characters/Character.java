@@ -89,7 +89,6 @@ public abstract class Character {
 		//check attack on newLogic
 		if(this.getTarget()!= null){
 			if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
-				if((this instanceof Hero && this.getTarget() instanceof Zombie)||(this instanceof Zombie && this.getTarget() instanceof Hero)){
 					this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
 					if (this.getTarget().getCurrentHp() <=0){
@@ -100,8 +99,7 @@ public abstract class Character {
 						this.getTarget().defend(this);
 					}
 							
-				}
-				else throw new InvalidTargetException("Please select a valid target");
+				
 			}	
 			else throw new InvalidTargetException("Please select a valid target");
 		}	
