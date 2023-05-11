@@ -112,7 +112,7 @@ public abstract class Character {
 	public void defend(Character c) {
 
 		this.setTarget(c);
-		c.setCurrentHp(c.getCurrentHp() - this.getAttackDmg() / 2);
+		c.setCurrentHp(c.getCurrentHp() - (this.getAttackDmg()/2));
 		if (c.getCurrentHp() <= 0)
 			c.onCharacterDeath();
 
