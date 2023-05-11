@@ -5,15 +5,13 @@ import java.awt.Point;
 import exceptions.*;
 
 public class Medic extends Hero {
-	//Heal amount  attribute - quiz idea
-	
+	// Heal amount attribute - quiz idea
 
-	public Medic(String name,int maxHp, int attackDmg, int maxActions) {
-		super( name, maxHp,  attackDmg,  maxActions) ;
-		
-		
+	public Medic(String name, int maxHp, int attackDmg, int maxActions) {
+		super(name, maxHp, attackDmg, maxActions);
+
 	}
-	
+
 	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
 
 		if (this.getTarget() instanceof Zombie)
@@ -43,5 +41,18 @@ public class Medic extends Hero {
 			return false;
 	}
 
+	public void attack() throws InvalidTargetException, NotEnoughActionsException {
+		int x = this.getActionsAvailable();
+		if (x > 0) {
+
+			x--;
+			this.setActionsAvailable(x);
+			super.attack();
+
+
+		} else {
+			throw new NotEnoughActionsException("no Enough actions avaliable");
+		}
+	}
 
 }

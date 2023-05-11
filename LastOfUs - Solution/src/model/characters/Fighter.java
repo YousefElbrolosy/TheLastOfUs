@@ -10,8 +10,28 @@ public class Fighter extends Hero {
 	}
 
 	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
+
 		super.useSpecial();
-	
+
+	}
+
+	public void attack() throws InvalidTargetException, NotEnoughActionsException {
+		int x = this.getActionsAvailable();
+		if (x > 0) {
+			if (isSpecialAction()) {
+				super.attack();
+
+			}
+			else{
+				x--;
+				this.setActionsAvailable(x);
+				super.attack();
+
+			}
+		}
+		else{
+			throw new NotEnoughActionsException("no Enough actions avaliable");
+		}
 	}
 
 }

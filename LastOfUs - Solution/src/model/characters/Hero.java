@@ -66,19 +66,32 @@ public abstract class Hero extends Character {
 		this.supplyInventory = supplyInventory;
 	}
 
-	public void attack() throws InvalidTargetException, NotEnoughActionsException, NoAvailableResourcesException {
-		int x = this.getActionsAvailable();
-		if (this.getTarget() instanceof Zombie) {
-			if (!(this instanceof Fighter && isSpecialAction())) {
-				if (x > 0)
-					this.setActionsAvailable(--x);
-				else
-					throw new NotEnoughActionsException("No actions avaliable");
-			}
-			super.attack();
-		} else
+	// public void attack() throws InvalidTargetException, NotEnoughActionsException {
+	// 	int x = this.getActionsAvailable();
+	// 	if(this.getTarget()!=null){
+	// 		if (this.getTarget() instanceof Zombie) {
+	// 			if (!(this instanceof Fighter && isSpecialAction())) {
+	// 				if (x > 0)
+	// 					this.setActionsAvailable(--x);
+	// 				else
+	// 					throw new NotEnoughActionsException("No actions avaliable");
+	// 			}
+	// 			super.attack();
+	// 		} else
+	// 			throw new InvalidTargetException("Invalid target");
+	// 	}
+	// 	else
+	// 		throw new InvalidTargetException("Invalid target");
+	// }
+	public void attack()throws InvalidTargetException,NotEnoughActionsException{
+		if(this.getTarget()==null){
 			throw new InvalidTargetException("Invalid target");
-
+		}
+		if(!(this.getTarget() instanceof Zombie))
+			throw new InvalidTargetException("Invalid Target");
+		else{
+			super.attack();
+		}
 	}
 
 	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException, InvalidTargetException {
@@ -245,8 +258,8 @@ public abstract class Hero extends Character {
 					}
 
 				}
-			}
-			else this.onCharacterDeath();
+			} else
+				this.onCharacterDeath();
 
 		}
 
