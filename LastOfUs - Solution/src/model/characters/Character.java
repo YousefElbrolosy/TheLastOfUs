@@ -86,11 +86,41 @@ public abstract class Character {
 			return false;
 		}
 	}
+	// public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
+	// 	//check attack on newLogic
+	// 	if(this.getTarget()!= null){
+	// 		if(!(this instanceof Hero && this.getTarget() instanceof Hero)){
+	// 			if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
+	// 					this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+
+	// 					if (this.getTarget().getCurrentHp() <=0){
+	// 						this.getTarget().defend(this);
+	// 						this.getTarget().onCharacterDeath();
+	// 					}
+	// 					else{
+	// 						this.getTarget().defend(this);
+	// 					}
+								
+					
+	// 			}	
+	// 			else throw new InvalidTargetException("Please select a valid target");
+	// 		}
+	// 		else throw new InvalidTargetException("Please select a valid target");	
+	// 	}	
+	// 	else throw new InvalidTargetException("Please select a valid target");
+	// }
 	public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
 		//check attack on newLogic
-		if(this.getTarget()!= null){
-			if(!(this instanceof Hero && this.getTarget() instanceof Hero)){
-				if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
+		if(this.getTarget()== null){
+			throw new InvalidTargetException("Please select a valid target");
+		}
+			if((this instanceof Hero && this.getTarget() instanceof Hero)){
+				throw new InvalidTargetException("Please select a valid target");
+				}
+				if(!(isAdjacent(this.getLocation(), this.getTarget().getLocation()))){
+					throw new InvalidTargetException("Please select a valid target");
+				}
+					else{
 						this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
 
 						if (this.getTarget().getCurrentHp() <=0){
@@ -103,12 +133,11 @@ public abstract class Character {
 								
 					
 				}	
-				else throw new InvalidTargetException("Please select a valid target");
+				
 			}
-			else throw new InvalidTargetException("Please select a valid target");	
-		}	
-		else throw new InvalidTargetException("Please select a valid target");
-	}
+			
+		
+		
 	public void defend(Character c) {
 
 		this.setTarget(c);
@@ -132,7 +161,6 @@ public abstract class Character {
 
 		} else  {
 				Game.heroes.remove(this);
-
 			}
 		}
 
