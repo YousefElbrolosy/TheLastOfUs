@@ -17,7 +17,7 @@ import model.world.*;
 
 public class Game {
 
-	public static Cell[][] map;
+	public static Cell[][] map=new Cell[15][15];
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
@@ -60,17 +60,24 @@ public class Game {
 	}
 
 	public static void startGame(Hero h) {
-		map = new Cell[15][15];
+		//map = new Cell[15][15];
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++) {
+				
+					map[i][j] = new CharacterCell(null);
+				
+			}
+		}
 		int i1 = 0;
 		while (i1 < 5) {
 			Vaccine v = new Vaccine();
 			CollectibleCell c = new CollectibleCell(v);
 			Point p = generatePoint();
-			if (map[p.x][p.y] == null) {
+			if (!Occupied(p)) {
 
 				map[p.x][p.y] = c;
 			} else {
-				while (map[p.x][p.y] != null) {
+				while (Occupied(p)) {
 					p = generatePoint();
 				}
 				map[p.x][p.y] = c;
@@ -82,10 +89,10 @@ public class Game {
 			Supply v = new Supply();
 			CollectibleCell c = new CollectibleCell(v);
 			Point p = generatePoint();
-			if (map[p.x][p.y] == null) {
+			if (!Occupied(p)) {
 				map[p.x][p.y] = c;
 			} else {
-				while (map[p.x][p.y] != null) {
+				while (Occupied(p)) {
 					p = generatePoint();
 
 				}
@@ -100,20 +107,17 @@ public class Game {
 			zombies.add(v);
 			CharacterCell c = new CharacterCell(v);
 			Point p = generatePoint();
-			Point loc;
-			if (map[p.x][p.y] == null) {
+			if (!Occupied(p)) {
 
 				map[p.x][p.y] = c;
-				loc = new Point(p.x, p.y);
 
 			} else {
-				while (map[p.x][p.y] != null) {
+				while (Occupied(p)) {
 					p = generatePoint();
 				}
 				map[p.x][p.y] = c;
-				loc = new Point(p.x, p.y);
 			}
-			v.setLocation(loc);
+			v.setLocation(p);
 
 			i3++;
 		}
@@ -122,10 +126,10 @@ public class Game {
 		while (i4 < 5) {
 			TrapCell v = new TrapCell();
 			Point p = generatePoint();
-			if (map[p.x][p.y] == null) {
+			if (!Occupied(p)) {
 				map[p.x][p.y] = v;
 			} else {
-				while (map[p.x][p.y] != null) {
+				while (Occupied(p)) {
 					p = generatePoint();
 
 				}
@@ -133,13 +137,7 @@ public class Game {
 			}
 			i4++;
 		}
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {
-				if (map[i][j] == null) {
-					map[i][j] = new CharacterCell(null);
-				}
-			}
-		}
+	
 
 		map[0][0] = new CharacterCell(h);
 		map[0][0].setVisible(true);
@@ -154,7 +152,21 @@ public class Game {
 			}
 		}
 	}
+	public static boolean Occupied(Point p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
+				return true;
 
+		} else if (Game.map[p.x][p.y] instanceof TrapCell)
+			return true;
+		else if (Game.map[p.x][p.y] instanceof CollectibleCell)
+			return true;
+		else
+			return false;
+
+	}
 	public static boolean checkWin() {
 		int hero = 0;
 		for (int i = 0; i < map.length; i++) {
