@@ -246,6 +246,7 @@ public abstract class Hero extends Character {
 
 				}
 			}
+			else this.onCharacterDeath();
 
 		}
 

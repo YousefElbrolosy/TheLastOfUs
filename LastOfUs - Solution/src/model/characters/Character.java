@@ -10,7 +10,6 @@ import exceptions.NoAvailableResourcesException;
 import exceptions.NotEnoughActionsException;
 import model.world.*;
 
-
 public abstract class Character {
 	private String name;
 	private Point location;
@@ -19,18 +18,16 @@ public abstract class Character {
 	private int attackDmg;
 	private Character target;
 
-	
 	public Character() {
 	}
-	
 
 	public Character(String name, int maxHp, int attackDmg) {
-		this.name=name;
+		this.name = name;
 		this.maxHp = maxHp;
 		this.currentHp = maxHp;
 		this.attackDmg = attackDmg;
 	}
-		
+
 	public Character getTarget() {
 		return target;
 	}
@@ -38,7 +35,7 @@ public abstract class Character {
 	public void setTarget(Character target) {
 		this.target = target;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -60,95 +57,148 @@ public abstract class Character {
 	}
 
 	public void setCurrentHp(int currentHp) {
-		if(currentHp < 0) 
+		if (currentHp < 0)
 			this.currentHp = 0;
-		else if(currentHp > maxHp) 
+		else if (currentHp > maxHp)
 			this.currentHp = maxHp;
-		else 
+		else
 			this.currentHp = currentHp;
 	}
 
 	public int getAttackDmg() {
 		return attackDmg;
 	}
-	
+
 	public static boolean isAdjacent(Point point1, Point point2) {
-		if ((point1.x>=0)&&(point1.y>=0)&&(point2.y>=0)&&(point2.y>=0)){
-				int x =(point2.x-point1.x);
-				int y = (point2.y-point1.y);
-				double d = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-				if(d==1 || d==Math.sqrt(2))
-					return true; 
-				else
-					return false;
-		}
-		else{
+		if ((point1.x >= 0) && (point1.y >= 0) && (point2.y >= 0) && (point2.y >= 0)) {
+			int x = (point2.x - point1.x);
+			int y = (point2.y - point1.y);
+			double d = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+			if (d == 1 || d == Math.sqrt(2))
+				return true;
+			else
+				return false;
+		} else {
 			return false;
 		}
 	}
-	// public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
-	// 	//check attack on newLogic
-	// 	if(this.getTarget()!= null){
-	// 		if(!(this instanceof Hero && this.getTarget() instanceof Hero)){
-	// 			if(isAdjacent(this.getLocation(), this.getTarget().getLocation())){
-	// 					this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
+/* 
+	public void attack() throws NotEnoughActionsException,
+			InvalidTargetException, NoAvailableResourcesException {
+		// check attack on newLogic
+		if((this instanceof Hero && Game.heroes.contains(this)) || (this instanceof Zombie && Game.zombies.contains(this))){
+			if (this.getTarget() != null) {
+				if (!(this instanceof Hero && this.getTarget() instanceof Hero)) {
+					if (isAdjacent(this.getLocation(), this.getTarget().getLocation())) {
+						this.getTarget().setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
 
-	// 					if (this.getTarget().getCurrentHp() <=0){
-	// 						this.getTarget().defend(this);
-	// 						this.getTarget().onCharacterDeath();
-	// 					}
-	// 					else{
-	// 						this.getTarget().defend(this);
-	// 					}
-								
-					
-	// 			}	
-	// 			else throw new InvalidTargetException("Please select a valid target");
-	// 		}
-	// 		else throw new InvalidTargetException("Please select a valid target");	
-	// 	}	
-	// 	else throw new InvalidTargetException("Please select a valid target");
-	// }
-	public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
-		//check attack on newLogic
-		if(this.getTarget()== null){
-			throw new InvalidTargetException("Please select a valid target");
-		}
-			if((this instanceof Hero && this.getTarget() instanceof Hero)){
-				throw new InvalidTargetException("Please select a valid target");
-				}
-				if(!(isAdjacent(this.getLocation(), this.getTarget().getLocation()))){
-					throw new InvalidTargetException("Please select a valid target");
-				}
-					else{
-						this.getTarget().setCurrentHp(this.target.getCurrentHp()-this.getAttackDmg());
-
-						if (this.getTarget().getCurrentHp() <=0){
+						if (this.getTarget().getCurrentHp() <= 0) {
 							this.getTarget().defend(this);
 							this.getTarget().onCharacterDeath();
 						}
-						else{
+						else {
 							this.getTarget().defend(this);
 						}
-								
-					
-				}	
-				
+
+					}
+					else throw new InvalidTargetException("Please select a valid target");
+				}
+				else throw new InvalidTargetException("Please select a valid target");
 			}
-			
-		
-		
+			else throw new InvalidTargetException("Please select a valid target");	
+		}
+		else throw new InvalidTargetException("Please select a valid target");	
+	}
+	*/
+/* 
+
+		if(Game.heroes.contains(this))
+			if (this.getTarget() != null) {
+				if (!(this instanceof Hero && this.getTarget() instanceof Hero)) {
+					if (isAdjacent(this.getLocation(), this.getTarget().getLocation())) {
+						this.getTarget().setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
+
+						if (this.getTarget().getCurrentHp() <= 0) {
+							this.getTarget().defend(this);
+							this.getTarget().onCharacterDeath();
+						} else {
+							this.getTarget().defend(this);
+						}
+
+					} else
+						throw new InvalidTargetException("Please select a valid target");
+				} else
+					throw new InvalidTargetException("Please select a valid target");
+			} else
+				throw new InvalidTargetException("Please select a valid target");
+	}
+
+	// public void attack() throws NotEnoughActionsException,
+	// InvalidTargetException, NoAvailableResourcesException {
+	// // check attack on newLogic
+
+	// if (this.getTarget() == null) {
+	// throw new InvalidTargetException("Please select a valid target");
+	// }
+	// if ((this instanceof Hero && this.getTarget() instanceof Hero)) {
+	// throw new InvalidTargetException("Please select a valid target");
+	// }
+	// if (!(isAdjacent(this.getLocation(), this.getTarget().getLocation()))) {
+	// throw new InvalidTargetException("Please select a valid target");
+	// } else {
+	// this.getTarget().setCurrentHp(this.target.getCurrentHp() -
+	// this.getAttackDmg());
+
+	// if (this.getTarget().getCurrentHp() <= 0) {
+	// this.getTarget().defend(this);
+	// this.getTarget().onCharacterDeath();
+	// } else {
+	// this.getTarget().defend(this);
+	// }
+
+	// }
+
+	// }
+
+*/
+	
+	public void attack() throws NotEnoughActionsException, InvalidTargetException, NoAvailableResourcesException {
+		// check attack on newLogic
+
+		if (this.getTarget() == null) {
+			throw new InvalidTargetException("Please select a valid target");
+		}
+		if ((this instanceof Hero && this.getTarget() instanceof Hero)) {
+			throw new InvalidTargetException("Please select a valid target");
+		}
+		if (!(isAdjacent(this.getLocation(), this.getTarget().getLocation()))) {
+			throw new InvalidTargetException("Please select a valid target");
+		} else {
+			this.getTarget().setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
+
+			if (this.getTarget().getCurrentHp() <= 0) {
+				this.getTarget().defend(this);
+				this.getTarget().onCharacterDeath();
+			} else {
+				this.getTarget().defend(this);
+			}
+
+		}
+
+	}
+
 	public void defend(Character c) {
 
 		this.setTarget(c);
-		c.setCurrentHp(c.getCurrentHp() - (this.getAttackDmg()/2));
+		c.setCurrentHp(c.getCurrentHp() - (this.getAttackDmg() / 2));
 		if (c.getCurrentHp() <= 0)
 			c.onCharacterDeath();
 
 	}
+
 	public void onCharacterDeath() {
 		Point loc = this.getLocation();
-		Game.map[loc.x][loc.y]=new CharacterCell(null);
+		Game.map[loc.x][loc.y] = new CharacterCell(null);
 		// ((CharacterCell)Game.map[loc.x][loc.y]).setCharacter(null);;
 
 		if (this instanceof Zombie) {
@@ -159,12 +209,10 @@ public abstract class Character {
 			Game.zombies.add(z);
 			Game.map[p.x][p.y] = new CharacterCell(z);
 
-		} else  {
-				Game.heroes.remove(this);
-			}
+		} else {
+			Game.heroes.remove(this);
 		}
-
-	
+	}
 
 	public static Point notOccRandomPointGenerator() {
 		Random r = new Random();
