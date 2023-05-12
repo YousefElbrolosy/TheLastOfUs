@@ -12,7 +12,7 @@ public class Medic extends Hero {
 
 	}
 
-	public void useSpecial() throws NoAvailableResourcesException, NotEnoughActionsException, InvalidTargetException {
+	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException {
 
 		if (this.getTarget() instanceof Zombie)
 			throw new InvalidTargetException();

@@ -94,7 +94,7 @@ public abstract class Hero extends Character {
 		}
 	}
 
-	public void useSpecial() throws NotEnoughActionsException, NoAvailableResourcesException, InvalidTargetException {
+	public void useSpecial() throws NoAvailableResourcesException, InvalidTargetException {
 		ArrayList<Supply> s = this.getSupplyInventory();
 		if (s.isEmpty())
 			throw new NoAvailableResourcesException("No supplies");
