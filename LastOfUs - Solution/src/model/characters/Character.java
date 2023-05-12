@@ -84,7 +84,7 @@ public abstract class Character {
 
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		if (this.getTarget() == null) {
-			throw new InvalidTargetException("InvalidTarget");
+			throw new InvalidTargetException("Invalid Target1");
 		}
 		if ((this instanceof Hero && this.getTarget() instanceof Hero)) {
 			throw new InvalidTargetException("Please select a valid target");
