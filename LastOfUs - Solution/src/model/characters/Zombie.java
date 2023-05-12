@@ -16,11 +16,7 @@ public class Zombie extends Character {
 		ZOMBIES_COUNT++;
 	}
 
-	public void attack() throws NotEnoughActionsException, InvalidTargetException {
-		if (this.getTarget() instanceof Zombie){
-			throw new InvalidTargetException();
-		}
-		
+	public void attack() throws NotEnoughActionsException, InvalidTargetException {	
 		super.attack();
 		if(this.getCurrentHp()<=0){
 			this.onCharacterDeath();
