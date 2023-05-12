@@ -167,17 +167,17 @@ public abstract class Character {
 
 	public void attack() throws NotEnoughActionsException, InvalidTargetException {
 		if (this.getTarget() == null) {
-			throw new InvalidTargetException("Please select a valid target");
+			throw new InvalidTargetException("InvalidTarget");
 		}
 		if ((this instanceof Hero && this.getTarget() instanceof Hero)) {
 			throw new InvalidTargetException("Please select a valid target");
 		}
-		if ((this instanceof Zombie && this.getTarget() instanceof Zombie)) {
-			throw new InvalidTargetException("Please select a valid target");
-		}
+		
 		if (!(isAdjacent(this.getLocation(), this.getTarget().getLocation()))) {
 			throw new InvalidTargetException("Please select a valid target");
-		} else {
+		} 
+		
+		else {
 			this.getTarget().setCurrentHp(this.target.getCurrentHp() - this.getAttackDmg());
 
 			if (this.getTarget().getCurrentHp() <= 0) {
