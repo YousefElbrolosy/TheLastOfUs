@@ -17,7 +17,7 @@ import model.world.*;
 
 public class Game {
 
-	public static Cell[][] map=new Cell[15][15];
+	public static Cell[][] map = new Cell[15][15];
 	public static ArrayList<Hero> availableHeroes = new ArrayList<Hero>();
 	public static ArrayList<Hero> heroes = new ArrayList<Hero>();
 	public static ArrayList<Zombie> zombies = new ArrayList<Zombie>();
@@ -59,13 +59,29 @@ public class Game {
 		return res;
 	}
 
+	public static boolean Occupied(Point p) {
+		if (Game.map[p.x][p.y] instanceof CharacterCell) {
+			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
+				return false;
+			else
+				return true;
+
+		} else if (Game.map[p.x][p.y] instanceof TrapCell)
+			return true;
+		else if (Game.map[p.x][p.y] instanceof CollectibleCell)
+			return true;
+		else
+			return false;
+
+	}
+
 	public static void startGame(Hero h) {
-		//map = new Cell[15][15];
+		// map = new Cell[15][15];
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				
-					map[i][j] = new CharacterCell(null);
-				
+
+				map[i][j] = new CharacterCell(null);
+
 			}
 		}
 		int i1 = 0;
@@ -73,8 +89,8 @@ public class Game {
 			Vaccine v = new Vaccine();
 			CollectibleCell c = new CollectibleCell(v);
 			Point p = generatePoint();
-			if (!Occupied(p)) {
-
+		if (!Occupied(p)) {
+				//if (!(Game.map[p.x][p.y] instanceof CollectibleCell|| Game.map[p.x][p.y] instanceof TrapCell||(Game.map[p.x][p.y] instanceof CharacterCell) )){
 				map[p.x][p.y] = c;
 			} else {
 				while (Occupied(p)) {
@@ -84,13 +100,15 @@ public class Game {
 			}
 			i1++;
 		}
+		
+
 		int i2 = 0;
 		while (i2 < 5) {
 			Supply v = new Supply();
 			CollectibleCell c = new CollectibleCell(v);
 			Point p = generatePoint();
 			if (!Occupied(p)) {
-				map[p.x][p.y] = c;
+				map[p.x][p.y] = c;			
 			} else {
 				while (Occupied(p)) {
 					p = generatePoint();
@@ -137,7 +155,6 @@ public class Game {
 			}
 			i4++;
 		}
-	
 
 		map[0][0] = new CharacterCell(h);
 		map[0][0].setVisible(true);
@@ -152,21 +169,9 @@ public class Game {
 			}
 		}
 	}
-	public static boolean Occupied(Point p) {
-		if (Game.map[p.x][p.y] instanceof CharacterCell) {
-			if (((CharacterCell) Game.map[p.x][p.y]).getCharacter() == null)
-				return false;
-			else
-				return true;
 
-		} else if (Game.map[p.x][p.y] instanceof TrapCell)
-			return true;
-		else if (Game.map[p.x][p.y] instanceof CollectibleCell)
-			return true;
-		else
-			return false;
 
-	}
+
 	public static boolean checkWin() {
 		int hero = 0;
 		for (int i = 0; i < map.length; i++) {
@@ -229,13 +234,13 @@ public class Game {
 		// is there a way to make it all at once?
 		int i = 0;
 		int j = 0;
-		for(Zombie zombie : zombies) {
-			Hero x=setForMe(zombie.getLocation());
-			if(x!=null){
+		for (Zombie zombie : zombies) {
+			Hero x = setForMe(zombie.getLocation());
+			if (x != null) {
 				zombie.setTarget(x);
 				zombie.attack();
 			}
-			
+
 		}
 
 		// resetting each heroes maxActions and SpecialActions
@@ -247,15 +252,12 @@ public class Game {
 			j++;
 		}
 
-		
-		for ( i = 0; i < Game.map.length; i++) {
-			for ( j = 0; j < Game.map[i].length; j++) {
+		for (i = 0; i < Game.map.length; i++) {
+			for (j = 0; j < Game.map[i].length; j++) {
 
-					Game.map[i][j].setVisible(false);
-				}
+				Game.map[i][j].setVisible(false);
 			}
-
-		
+		}
 
 		// Updating map //setting visibility of each adjacent cell to each hero to true
 
@@ -272,7 +274,7 @@ public class Game {
 			}
 
 		}
-		for(i=0;i<zombies.size();i++){
+		for (i = 0; i < zombies.size(); i++) {
 			zombies.get(i).setTarget(null);
 		}
 		// spawning a Zombie Randomly on the map
@@ -323,7 +325,6 @@ public class Game {
 		p.x = xNew;
 		p.y = yNew;
 
-
 		// note that here x and y are inverted
 		if (!(((Game.map[(int) p.getX()][(int) p.getY()] instanceof CharacterCell)
 				&& (((CharacterCell) (Game.map[(int) p.getX()][(int) p.getY()])).getCharacter() != null)) ||
@@ -334,18 +335,19 @@ public class Game {
 			return notOccRandomPointGenerator();
 	}
 
-	public static Hero setForMe(Point x){
-		for(int i =0 ; i<map.length;i++){
-			for(int j =0;j<map[0].length;j++){
-			if(isAdjacent(new Point(i,j), x))	
-				if(map[i][j] instanceof CharacterCell){
-					if(((CharacterCell)map[i][j]).getCharacter() instanceof Hero)	
-							return (Hero) ((CharacterCell)map[i][j]).getCharacter();
-				}
+	public static Hero setForMe(Point x) {
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[0].length; j++) {
+				if (isAdjacent(new Point(i, j), x))
+					if (map[i][j] instanceof CharacterCell) {
+						if (((CharacterCell) map[i][j]).getCharacter() instanceof Hero)
+							return (Hero) ((CharacterCell) map[i][j]).getCharacter();
+					}
 			}
 		}
 		return null;
 	}
+
 	public static boolean isAdjacent(Point point1, Point point2) {
 		if ((point1.x >= 0) && (point1.y >= 0) && (point2.y >= 0) && (point2.y >= 0)) {
 			int x = (point2.x - point1.x);
@@ -359,5 +361,5 @@ public class Game {
 			return false;
 		}
 	}
-	
+
 }
