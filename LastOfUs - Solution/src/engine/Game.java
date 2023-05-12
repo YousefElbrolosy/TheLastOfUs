@@ -247,20 +247,7 @@ public class Game {
 			j++;
 		}
 
-		// setting visibility of whole map to false
-		// int x = 0;
-		// int y = 0;
-		// // x denotes no of rows and y denotes no of columns
-		// while (x < Game.map.length) {
-		// 	Cell cell = Game.map[x][y];
-		// 	cell.setVisible(false);
-		// 	x++;
-		// }
-		// while (y < Game.map[0].length) {
-		// 	Cell cell = Game.map[x - 1][y];
-		// 	cell.setVisible(false);
-		// 	y++;
-		// }
+		
 		for ( i = 0; i < Game.map.length; i++) {
 			for ( j = 0; j < Game.map[i].length; j++) {
 
@@ -336,9 +323,7 @@ public class Game {
 		p.x = xNew;
 		p.y = yNew;
 
-		/*
-		 * if((isOccupiedZombies(p) && isOccupiedHeroes(p)) == false)
-		 */
+
 		// note that here x and y are inverted
 		if (!(((Game.map[(int) p.getX()][(int) p.getY()] instanceof CharacterCell)
 				&& (((CharacterCell) (Game.map[(int) p.getX()][(int) p.getY()])).getCharacter() != null)) ||
@@ -349,46 +334,6 @@ public class Game {
 			return notOccRandomPointGenerator();
 	}
 
-	public static ArrayList<Point> getAdjacent(Point p) {
-		// Point[] adjPoints = new Point[8];
-		// Should it be 0 or 8?
-		ArrayList<Point> adjPoints = new ArrayList<Point>(0);
-		int x = p.x;
-		int y = p.y;
-		Point p1 = new Point(x + 1, y);
-		Point p2 = new Point(x - 1, y);
-		Point p3 = new Point(x + 1, y + 1);
-		Point p4 = new Point(x + 1, y - 1);
-		Point p5 = new Point(x - 1, y + 1);
-		Point p6 = new Point(x - 1, y - 1);
-		Point p7 = new Point(x, y - 1);
-		Point p8 = new Point(x, y + 1);
-		if (isAdjacent(p1, p)) {
-			adjPoints.add(p1);
-		}
-		if (isAdjacent(p2, p)) {
-			adjPoints.add(p2);
-		}
-		if (isAdjacent(p3, p)) {
-			adjPoints.add(p3);
-		}
-		if (isAdjacent(p4, p)) {
-			adjPoints.add(p4);
-		}
-		if (isAdjacent(p5, p)) {
-			adjPoints.add(p5);
-		}
-		if (isAdjacent(p6, p)) {
-			adjPoints.add(p6);
-		}
-		if (isAdjacent(p7, p)) {
-			adjPoints.add(p7);
-		}
-		if (isAdjacent(p8, p)) {
-			adjPoints.add(p8);
-		}
-		return adjPoints;
-	}
 	public static Hero setForMe(Point x){
 		for(int i =0 ; i<map.length;i++){
 			for(int j =0;j<map[0].length;j++){
@@ -414,5 +359,5 @@ public class Game {
 			return false;
 		}
 	}
-
+	
 }

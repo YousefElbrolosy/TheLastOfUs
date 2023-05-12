@@ -15,7 +15,6 @@ public class Vaccine implements Collectible {
 	}
 
 	public void pickUp(Hero h) {
-		// Vaccine s = new Vaccine();
 		ArrayList<Vaccine> vaccineInventory = h.getVaccineInventory();
 		vaccineInventory.add(this);
 		h.setVaccineInventory(vaccineInventory);
@@ -34,8 +33,6 @@ public class Vaccine implements Collectible {
 		CharacterCell zombieCell = (CharacterCell) Game.map[point.x][point.y];
 		zombieCell.setCharacter(hero);
 		Game.zombies.remove(h.getTarget());
-		// h.getTarget().setLocation(null);
-		// modifying Points and Array
 		h.setTarget(null);
 
 	}

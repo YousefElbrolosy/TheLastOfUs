@@ -15,7 +15,6 @@ public class Supply implements Collectible  {
 	}
 
 	public void pickUp(Hero h){
-		//	Supply s = new Supply();
 			ArrayList<Supply> supplyInventory = h.getSupplyInventory();
 			supplyInventory.add(this);
 			h.setSupplyInventory(supplyInventory);
