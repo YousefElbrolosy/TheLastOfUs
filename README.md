@@ -16,4 +16,4 @@ Milestone 2: Implementing the Game Logic
 Milestone 3: Implementing the GUI (by JavaFx)
 
 Note:
-In order to run the file, you may need to have installed JavaFx manually on your computer
+In order to run the file, you might need to have installed JavaFx manually on your computer, though I have added the Jar files anyway
