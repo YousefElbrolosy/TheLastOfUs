@@ -1,5 +1,5 @@
 # TheLastOfUs
-This is CSEN 401 Game Project
+This is CSEN 401 Game Project Draft Version
 
 The Last of Us: Legacy is a single player survival game set in a zombie apocalyptic world.
 The game is conducted in a turn based manner, in which each player character receives a specific
