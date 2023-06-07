@@ -9,5 +9,11 @@ The player starts the game controlling only one hero, but can gain additional he
 zombies. The objective of the game for the player is to survive as long as it takes in order to
 cure a sufficient number of zombies enough to build a community to survive the apocalypse.
 
+This Object Oriented Programming project was divided to 3 Milestones 
+
+Milestone 1: Creating the skeleton (Hierarchy and Classes)
+Milestone 2: Implementing the Game Logic
+Milestone 3: Implementing the GUI (by JavaFx)
+
 Note:
 In order to run the file, you may need to have installed JavaFx manually on your computer
