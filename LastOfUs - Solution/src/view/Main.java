@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Point;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -19,21 +17,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -48,8 +38,6 @@ import model.characters.Zombie;
 import model.collectibles.Vaccine;
 import model.world.CharacterCell;
 import model.world.CollectibleCell;
-import model.world.TrapCell;
-import view.*;
 
 public class Main extends Application {
 	private Stage primaryStage;
@@ -534,7 +522,7 @@ public class Main extends Application {
 				box.getChildren().add(zIndex, m);
 				
 	
-			} catch (NotEnoughActionsException | InvalidTargetException e) {
+			} catch (NoAvailableResourcesException |NotEnoughActionsException | InvalidTargetException e) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Message");
 				alert.setHeaderText(null);
@@ -573,7 +561,7 @@ public class Main extends Application {
 				box.getChildren().remove(zIndex);
 				box.getChildren().add(zIndex, m);
 				
-			} catch (NotEnoughActionsException | MovementException e) {
+			} catch (NoAvailableResourcesException|NotEnoughActionsException | MovementException e) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Message");
 				alert.setHeaderText(null);
@@ -609,7 +597,7 @@ public class Main extends Application {
 				box.getChildren().remove(zIndex);
 				box.getChildren().add(zIndex, m);
 			
-			} catch (NotEnoughActionsException | MovementException e) {
+			} catch (NoAvailableResourcesException|NotEnoughActionsException | MovementException e) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Message");
 				alert.setHeaderText(null);
@@ -645,7 +633,7 @@ public class Main extends Application {
 				box.getChildren().remove(zIndex);
 				box.getChildren().add(zIndex, m);
 			
-			} catch (NotEnoughActionsException | MovementException e) {
+			} catch (NoAvailableResourcesException|NotEnoughActionsException | MovementException e) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Message");
 				alert.setHeaderText(null);
@@ -681,7 +669,7 @@ public class Main extends Application {
 				box.getChildren().remove(zIndex);
 				box.getChildren().add(zIndex, m);
 
-			} catch (NotEnoughActionsException | MovementException e) {
+			} catch (NoAvailableResourcesException|NotEnoughActionsException | MovementException e) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Message");
 				alert.setHeaderText(null);
